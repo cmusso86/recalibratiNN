@@ -1,9 +1,15 @@
 Package: recalibratiNN
-Title: What the Package Does (One Line, Title Case)
+Title: Quantile Recalibration For Fitted Models
 Version: 0.0.0.9000
 Authors@R: 
-    person("Carolina", "Musso", , "cmusso86@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-8107-6458"))
+    c(person("Carolina", "Musso", , "cmusso86@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-8107-6458")),
+      person("Guilherme", "Rodrigues", , "cmusso86@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-8107-6458")),
+      person("Ricardo", "Torres", , "cmusso86@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-8107-6458")).
+      person("João", "Musso", , "cmusso86@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-8107-6458")))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
