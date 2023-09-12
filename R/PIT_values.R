@@ -1,7 +1,7 @@
 #' Obtain pit-values for the predicted function
 #'
-#' @param x_val a vector, matrix or data frame of covariates/features of the calibration set
-#' @param y_val a vector of outputs of calibration set
+#' @param x_cal a vector, matrix or data frame of covariates/features of the calibration set
+#' @param y_cal a vector of outputs of calibration set
 #' @param model a fitted model
 #'
 #' @return a vector of pit-values
@@ -38,9 +38,9 @@
 PIT_values <- function(x_cal, y_cal,  model){
 
   df <-data.frame(x_cal)
-  names(df) <- names(mod$model)[-1]
-  pred <- predict(mod, newdata = df)
-  pnorm(y_cal, pred, summary(mod)$sigma)
+  names(df) <- names(model$model)[-1]
+  pred <- stats::predict(model, newdata = df)
+  stats::pnorm(y_cal, pred, summary(model)$sigma)
   }
 
 
