@@ -9,7 +9,7 @@
 This package aims to provide post processing methods to recalibrate
 fited models.
 
-<img src="images/recalibratiNN.png" width="407" />
+<img src="images/recalibratiNN.png" width="407" />library(devtools)
 
 ## Installation
 
@@ -52,9 +52,10 @@ y_cal <- y[80001:100000]
 
 mod <- lm(y_test ~ x_test)
 
-pit <- PIT_values(x_cal=x_cal, y_cal=y_cal, model=mod)
+cdf <- CDF_model_lm(x_cal=x_cal, model=mod)
+pit <- PIT_values_lm( y_cal, cdf)
 head(pit)
-#> [1] 0.56208396 0.63054052 0.97502734 0.92887524 0.07526998 0.01665209
+#> [1] 0.68243849 0.27479829 0.02299282 0.02323595 0.45471184 0.53343881
 ```
 
 Then, one can proceed with visualizin this the histogram and testing if
@@ -77,7 +78,7 @@ You can also test if these values fit a uniform distribution.
     #>  Asymptotic two-sample Kolmogorov-Smirnov test
     #> 
     #> data:  pit and runif(10000, -1, 1)
-    #> D = 0.5002, p-value < 2.2e-16
+    #> D = 0.5042, p-value < 2.2e-16
     #> alternative hypothesis: two-sided
 
 in this case we see the distribution doest seem to fit an uniform

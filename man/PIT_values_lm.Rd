@@ -41,9 +41,9 @@ y_cal <- y[80001:100000]
 
 model <- lm(y_test ~ x_test)
 
-pdf <- PDF_model_lm(x_cal=x_cal, model=model)
+cdf <- CDF_model_lm(x_cal=x_cal, model= model)
 
-PIT_values_lm( y_cal, pdf)
+PIT_values_lm( y_cal, cdf)
 
 
 

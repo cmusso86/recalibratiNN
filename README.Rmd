@@ -62,7 +62,7 @@ y_cal <- y[80001:100000]
 mod <- lm(y_test ~ x_test)
 
 cdf <- CDF_model_lm(x_cal=x_cal, model=mod)
-PIT_values( y_cal, cdf)
+pit <- PIT_values_lm( y_cal, cdf)
 head(pit)
 ```
 
