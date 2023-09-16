@@ -47,7 +47,7 @@ gg_cal_qq <- function(pit, y_cal){
   df <- data.frame(pit_theory=pit_theory, pit=pit_emp)
 
   ggplot2:: ggplot(df)+
-    ggplot2::geom_point(ggplot2::aes(x=pit_theory, y=pit), color="#4B5D5D", size=0.01)+
+    ggplot2::geom_point(ggplot2::aes(x=pit_theory, y=pit_emp), color="#4B5D5D", size=0.01)+
     ggplot2::labs(x="Predicted CDF",
                   y="Empirical CDF")+
     ggplot2::geom_abline(slope = 1, linetype="dashed", color="red")+
