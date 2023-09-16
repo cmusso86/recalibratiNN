@@ -8,6 +8,7 @@
 #' @export
 #'
 #' @examples
+#'
 #' n <- 100000
 #'
 #' # generationg heterocedastic data

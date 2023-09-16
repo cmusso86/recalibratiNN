@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 This package aims to provide post processing methods to recalibrate fited models.
 
-![](images/recalibratiNN.png){width="407"}library(devtools)
+![](man/figures/recalibratiNN.png){width="407"}library(devtools)
 
 ## Installation
 

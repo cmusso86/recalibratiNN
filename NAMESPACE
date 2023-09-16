@@ -2,4 +2,6 @@
 
 export(CDF_model_lm)
 export(PIT_values_lm)
+export(gg_cal_qq)
 export(gg_globcal_hist)
+import(stats)
