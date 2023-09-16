@@ -24,6 +24,7 @@ RoxygenNote: 7.2.3
 URL: https://github.com/cmusso86/recalibratiNN
 BugReports: https://github.com/cmusso86/recalibratiNN/issues
 Imports: 
+    ggplot2,
     stats
 Suggests: 
     testthat (>= 3.0.0)

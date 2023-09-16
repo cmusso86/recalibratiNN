@@ -1,8 +1,8 @@
-#' Obtain pit-values for the predicted function
+#' Obtain pit-values for an fitted lm() model
 #'
-#' @param x_cal a vector, matrix or data frame of covariates/features of the calibration set
+#'
 #' @param y_cal a vector of outputs of calibration set
-#' @param model a fitted model
+#' @param pdf A predective cumulative function
 #'
 #' @return a vector of pit-values
 #' @export
@@ -29,18 +29,18 @@
 #' x_cal <- x[80001:100000]
 #' y_cal <- y[80001:100000]
 #'
-#' mod <- lm(y_test ~ x_test)
+#' model <- lm(y_test ~ x_test)
 #'
-#'PIT_values(x_cal, y_cal, model=mod )
+#'cdf <- CDF_model_lm(x_cal=x_cal, model= model)
+#'
+#'PIT_values_lm( y_cal, cdf)
 #'
 #'
+#'
+#
 
-PIT_values <- function(x_cal, y_cal,  model){
-
-  df <-data.frame(x_cal)
-  names(df) <- names(model$model)[-1]
-  pred <- stats::predict(model, newdata = df)
-  stats::pnorm(y_cal, pred, summary(model)$sigma)
+PIT_values_lm <- function( y_cal,pdf){
+  pdf(y_cal)
   }
 
 
