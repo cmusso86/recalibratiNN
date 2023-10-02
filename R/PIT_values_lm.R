@@ -40,8 +40,8 @@
 #'
 #
 
-PIT_values_lm <- function( y_cal,pdf){
-  pdf(y_cal)
+PIT_values_lm <- function( y_cal,cdf){
+  cdf(y_cal)
   }
 
 
