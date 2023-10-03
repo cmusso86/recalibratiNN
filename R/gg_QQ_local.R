@@ -49,7 +49,7 @@ gg_QQ_local <- function(pit_local,
                          ...){
 
   pit_theory <- sort(stats::qunif(seq(0,1, by=(1/(dplyr::pull(pit_local[1,3])-1)))))
-  pit_emp <- purrr:::map_dfc(dplyr::pull(unique(pit_local[,1])),
+  pit_emp <- purrr::map_dfc(dplyr::pull(unique(pit_local[,1])),
               ~sort(dplyr::pull(pit_local[(pit_local[,1])==.,2]))
   )
   names(pit_emp) <- stringr::str_c("part_", (seq(1,length(pit_emp))))
@@ -62,7 +62,7 @@ gg_QQ_local <- function(pit_local,
 if(facet==F){
   ggplot2:: ggplot(df_long)+
     ggplot2::geom_point(ggplot2::aes(x=pit_theory, y=pit_emp,
-                                     color=part),
+                                     color=dplyr::pull(pit_local[,1])),
                         size=psz)+
     ggplot2::labs(x="Predicted CDF",
                   y="Empirical CDF")+
@@ -73,7 +73,7 @@ if(facet==F){
 }else{
   ggplot2:: ggplot(df_long)+
     ggplot2::geom_point(ggplot2::aes(x=pit_theory, y=pit_emp,
-                                     color=part),
+                                     color=dplyr::pull(pit_local[,1])),
                         size=psz)+
     ggplot2::labs(x="Predicted CDF",
                   y="Empirical CDF")+
