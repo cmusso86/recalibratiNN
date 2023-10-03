@@ -34,13 +34,13 @@
 #'
 #'cdf <- CDF_model_lm(x_cal=x_cal, model= model)
 #'
-#'PIT_values_lm( y_cal, cdf)
+#'PIT_global_lm( y_cal, cdf)
 #'
 #'
 #'
 #
 
-PIT_values_lm <- function( y_cal,cdf){
+PIT_global_lm <- function( y_cal,cdf){
   cdf(y_cal)
   }
 

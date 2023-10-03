@@ -2,7 +2,7 @@
 % Please edit documentation in R/gg_local_pit.R
 \name{gg_local_pit}
 \alias{gg_local_pit}
-\title{Density grsph for local PIT}
+\title{Density graph for local PIT}
 \usage{
 gg_local_pit(
   pit_local,
@@ -30,7 +30,7 @@ gg_local_pit(
 A ggplot
 }
 \description{
-Density grsph for local PIT
+Density graph for local PIT
 }
 \examples{
 n <- 100000
