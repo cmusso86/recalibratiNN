@@ -9,7 +9,7 @@ PIT_values_lm(y_cal, cdf)
 \arguments{
 \item{y_cal}{a vector of outputs of calibration set}
 
-\item{pdf}{A predective cumulative function}
+\item{cdf}{A predective cumulative function}
 }
 \value{
 a vector of pit-values
@@ -42,9 +42,9 @@ y_cal <- y[80001:100000]
 
 model <- lm(y_test ~ x_test)
 
-pdf <- CDF_model_lm(x_cal=x_cal, model= model)
+cdf <- CDF_model_lm(x_cal=x_cal, model= model)
 
-PIT_values_lm( y_cal, pdf)
+PIT_values_lm( y_cal, cdf)
 
 
 

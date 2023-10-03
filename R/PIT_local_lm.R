@@ -41,8 +41,8 @@
 #'
 #'
 PIT_local_lm <- function(xcal, ycal,  clusters=5,
-                         n_neighboor=1000, fx=recalibratiNN::CDF_model_lm,
-                         pit=recalibratiNN::PIT_values_lm,
+                         n_neighboor=1000, fx=CDF_model_lm,
+                         pit=PIT_values_lm,
                          mod){
 
   # Select centroids
@@ -62,7 +62,7 @@ PIT_local_lm <- function(xcal, ycal,  clusters=5,
 
   names(pit_val) <- stringr::str_c("var_", (seq(1,length(x_cal_local))))
   pit_val |>
-    tidyr::pivot_longer(tidyverse::everything(), names_to = "part",
+    tidyr::pivot_longer(dplyr::everything(), names_to = "part",
                         values_to = "pit")
 }
 
