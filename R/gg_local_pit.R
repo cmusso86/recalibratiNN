@@ -1,4 +1,4 @@
-#' Density grsph for local PIT
+#' Density graph for local PIT
 #'
 #' @param pit_local Data frame with two collumn names "part" and "pit"
 #' @param alpha double 0-1 to indicate transparency of fill
