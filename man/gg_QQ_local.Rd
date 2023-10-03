@@ -8,7 +8,7 @@ from calibrated distributions and the empirical pit_values}
 gg_QQ_local(
   pit_local,
   psz = 0.01,
-  abline = "red",
+  abline = "darkgrey",
   pal = "Set1",
   facet = FALSE,
   ...

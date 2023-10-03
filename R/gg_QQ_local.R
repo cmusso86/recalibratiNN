@@ -43,7 +43,7 @@
 #'
 gg_QQ_local <- function(pit_local,
                         psz=0.01,
-                        abline="red",
+                        abline="darkgrey",
                         pal="Set1",
                         facet=FALSE,
                          ...){
