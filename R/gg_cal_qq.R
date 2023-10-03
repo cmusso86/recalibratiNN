@@ -33,15 +33,15 @@
 #'
 #'cdf <- CDF_model_lm(x_cal=x_cal, model= model)
 #'
-#'pit <- PIT_values_lm( y_cal, cdf)
+#'pit <- PIT_global_lm( y_cal, cdf)
 #'
 #'
-#'gg_cal_qq(pit, y_cal)
+#'gg_global_qq(pit, y_cal)
 #'
 #'
 
 
-gg_cal_qq <- function(pit, y_cal){
+gg_global_qq <- function(pit, y_cal){
   pit_theory <- sort(stats::qunif(seq(0,1, by=(1/(length(y_cal)-1)))))
   pit_emp <- sort(pit)
   df <- data.frame(pit_theory=pit_theory, pit=pit_emp)

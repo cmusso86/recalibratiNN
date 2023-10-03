@@ -3,7 +3,7 @@
 export(CDF_model_lm)
 export(PIT_global_lm)
 export(PIT_local_lm)
-export(gg_cal_qq)
 export(gg_global_pit)
+export(gg_global_qq)
 export(gg_local_pit)
 import(stats)
