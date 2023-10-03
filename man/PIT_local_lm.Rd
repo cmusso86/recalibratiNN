@@ -10,7 +10,7 @@ PIT_local_lm(
   clusters = 5,
   n_neighboor = 1000,
   fx = CDF_model_lm,
-  pit = PIT_values_lm,
+  pit = PIT_global_lm,
   mod
 )
 }
