@@ -2,7 +2,7 @@
 #'
 #'
 #' @param y_cal a vector of outputs of calibration set
-#' @param pdf A predective cumulative function
+#' @param cdf A predective cumulative function
 #'
 #' @return a vector of pit-values
 #' @export
@@ -32,9 +32,9 @@
 #'
 #' model <- lm(y_test ~ x_test)
 #'
-#'pdf <- CDF_model_lm(x_cal=x_cal, model= model)
+#'cdf <- CDF_model_lm(x_cal=x_cal, model= model)
 #'
-#'PIT_values_lm( y_cal, pdf)
+#'PIT_values_lm( y_cal, cdf)
 #'
 #'
 #'
