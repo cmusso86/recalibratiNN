@@ -45,7 +45,7 @@ PIT_local_lm <- function(xcal, ycal,  clusters=5,
                          mod){
 
   # Select centroids
-  cluster_means <- sort(stats::kmeans(xcal, 5, iter.max=10000)$centers)
+  cluster_means <- sort(stats::kmeans(xcal, clusters, iter.max=10000)$centers)
 
   #Select neighboors
   knn <- RANN::nn2(xcal, cluster_means,  k=n_neighboor)$nn.idx

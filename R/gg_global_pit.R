@@ -44,8 +44,7 @@
 gg_global_pit <- function(pit){
 
   ggplot2::ggplot(NULL, ggplot2::aes(pit, ggplot2::after_stat(density)))+
-    ggplot2::geom_histogram(breaks=seq(0, 1, 0.05),
-                   fill="steelblue4", color="#4a555f", alpha=0.8)+
+    ggplot2::geom_density(fill="steelblue4", color="#4a555f", alpha=0.8)+
     ggplot2::geom_hline(yintercept = 1, linetype="dashed")+
     ggplot2::labs(x="Cumulative probability", y="Density")+
     ggplot2::scale_x_continuous(expand = c(0, 0), limits = c(0,1.01)) +
