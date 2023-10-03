@@ -37,9 +37,8 @@ Data Frame of pit-values in different partitions.
 Creates pit values for k partition of the calibration set
 }
 \examples{
-#' n <- 100000
+n <- 100000
 
-# generationg heterocedastic data
 mu <- function(x1){
 10 + 5*x1^2
 }
@@ -60,7 +59,7 @@ y_cal <- y[80001:100000]
 
 model <- lm(y_test ~ x_test)
 
-PIT_values_local(x_cal=x_cal, y_cal=y_cal, mod=model)
+PIT_local_lm(xcal=x_cal, ycal=y_cal, mod=model)
 
 
 
