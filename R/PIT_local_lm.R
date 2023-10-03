@@ -1,12 +1,13 @@
 #' Creates pit values for k partition of the calibration set
 #'
-#' @param x_cal Observation vector/matrix of the calibration set
+#' @param xcal Covariates (features) vector/matrix of the calibration set
+#' @param ycal Output/Observations vector of the calibration set
 #' @param clusters Number of local clusters one whats to evaluate
 #' @param n_neighboor Number of neighbors for the mean of each cluster
 #' @param fx Predictive Cumulative Distribution of the fitted lm() model.
 #' @param pit Function that returns pit values of a lm() model.
 #'  correspond to the pit values for each partition.
-#' @param model A lm() model.
+#' @param mod A lm() model.
 #'
 #' @return Data Frame of pit-values in different partitions.
 #' @export
@@ -39,10 +40,10 @@
 #'
 #'
 #'
-PIT_values_local <- function(xcal, ycal,  clusters=5,
-                             n_neighboor=1000, fx=recalibratiNN::CDF_model_lm,
-                             pit=recalibratiNN::PIT_values_lm,
-                             mod){
+PIT_local_lm <- function(xcal, ycal,  clusters=5,
+                         n_neighboor=1000, fx=recalibratiNN::CDF_model_lm,
+                         pit=recalibratiNN::PIT_values_lm,
+                         mod){
 
   # Select centroids
   cluster_means <- sort(stats::kmeans(xcal, 5, iter.max=10000)$centers)
@@ -54,15 +55,15 @@ PIT_values_local <- function(xcal, ycal,  clusters=5,
   x_cal_local <- purrr::map(1:nrow(knn), ~  xcal[knn[.,]] )
   y_cal_local <- purrr::map(1:nrow(knn),  ~ycal[knn[.,]])
 
-  pit_val <- nrowmap_dfc(1:length(x_cal_local), ~{
-  pit(cdf=fx(x_cal_local[[.]], model),
-                y_cal=y_cal_local[[.]])
+  pit_val <- purrr::map_dfc(1:length(x_cal_local), ~{
+    pit(cdf=fx(x_cal_local[[.]], model),
+        y_cal=y_cal_local[[.]])
   })
 
   names(pit_val) <- stringr::str_c("var_", (seq(1,length(x_cal_local))))
-  pit_val %>%
-    tidyr::pivot_longer(everything(), names_to = "part",
-                 values_to = "pit")
+  pit_val |>
+    tidyr::pivot_longer(tidyverse::everything(), names_to = "part",
+                        values_to = "pit")
 }
 
 

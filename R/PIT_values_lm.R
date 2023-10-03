@@ -32,9 +32,9 @@
 #'
 #' model <- lm(y_test ~ x_test)
 #'
-#'cdf <- CDF_model_lm(x_cal=x_cal, model= model)
+#'pdf <- CDF_model_lm(x_cal=x_cal, model= model)
 #'
-#'PIT_values_lm( y_cal, cdf)
+#'PIT_values_lm( y_cal, pdf)
 #'
 #'
 #'

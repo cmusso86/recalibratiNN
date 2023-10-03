@@ -4,7 +4,7 @@
 \alias{PIT_values_lm}
 \title{Obtain pit-values for an fitted lm() model}
 \usage{
-PIT_values_lm(y_cal, pdf)
+PIT_values_lm(y_cal, cdf)
 }
 \arguments{
 \item{y_cal}{a vector of outputs of calibration set}
@@ -42,9 +42,9 @@ y_cal <- y[80001:100000]
 
 model <- lm(y_test ~ x_test)
 
-cdf <- CDF_model_lm(x_cal=x_cal, model= model)
+pdf <- CDF_model_lm(x_cal=x_cal, model= model)
 
-PIT_values_lm( y_cal, cdf)
+PIT_values_lm( y_cal, pdf)
 
 
 
