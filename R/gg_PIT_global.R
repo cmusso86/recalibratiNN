@@ -35,13 +35,13 @@
 #'
 #' pit <- PIT_global_lm( y_cal, cdf)
 #'
-#' gg_global_pit(pit)
+#' gg_PIT_global(pit)
 #'
 #'
 #'
 #'
 
-gg_global_pit <- function(pit){
+gg_PIT_global <- function(pit){
 
   ggplot2::ggplot(NULL, ggplot2::aes(pit, ggplot2::after_stat(density)))+
     ggplot2::geom_density(fill="steelblue4", color="#4a555f", alpha=0.8)+

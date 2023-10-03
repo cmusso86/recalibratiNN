@@ -39,7 +39,7 @@
 #'
 #'
 #'
-PIT_local_lm <- function(xcal, ycal,  clusters=5,
+PIT_local_lm <- function(xcal, ycal,  clusters=6,
                          n_neighboor=1000, fx=CDF_model_lm,
                          pit=PIT_global_lm,
                          mod){
@@ -59,10 +59,11 @@ PIT_local_lm <- function(xcal, ycal,  clusters=5,
         y_cal=y_cal_local[[.]])
   })
 
-  names(pit_val) <- stringr::str_c("var_", (seq(1,length(x_cal_local))))
+  names(pit_val) <- stringr::str_c("part_", (seq(1,length(x_cal_local))))
   pit_val |>
     tidyr::pivot_longer(dplyr::everything(), names_to = "part",
-                        values_to = "pit")
+                        values_to = "pit") |>
+    dplyr::mutate(n=n_neighboor)
 }
 
 

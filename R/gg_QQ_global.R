@@ -1,4 +1,6 @@
-#' QQPlot to diagnose calibration bases on  p_values
+#'  QQPlot to diagnose calibration globally bases on theoretical PIT_values
+#' from calibrated distributions and the empirical pit_values
+#'
 #'
 #' @param pit vector of pit values
 #' @param y_cal vector of y calibration set
@@ -36,12 +38,12 @@
 #'pit <- PIT_global_lm( y_cal, cdf)
 #'
 #'
-#'gg_global_qq(pit, y_cal)
+#'gg_QQ_global(pit, y_cal)
 #'
 #'
 
 
-gg_global_qq <- function(pit, y_cal){
+gg_QQ_global <- function(pit, y_cal){
   pit_theory <- sort(stats::qunif(seq(0,1, by=(1/(length(y_cal)-1)))))
   pit_emp <- sort(pit)
   df <- data.frame(pit_theory=pit_theory, pit=pit_emp)

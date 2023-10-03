@@ -33,10 +33,10 @@
 #'
 #'pit_local <- PIT_local_lm(xcal=x_cal, ycal=y_cal, mod=model)
 #'
-#'gg_local_pit(pit_local)
+#'gg_PIT_local(pit_local)
 
 
-gg_local_pit <- function(pit_local,
+gg_PIT_local <- function(pit_local,
                          alpha=0.4,
                          linewidth=1,
                          pal="Set2",
@@ -45,9 +45,9 @@ gg_local_pit <- function(pit_local,
 
 if(facet==F){
 ggplot2::ggplot(pit_local)+
-    ggplot2::geom_density(ggplot2::aes(x=unlist(pit_local[,2]),
-                                       color=unlist(pit_local[,1]),
-                                       fill=unlist(pit_local[,1]),
+    ggplot2::geom_density(ggplot2::aes(x=dplyr::pull(pit_local[,2]),
+                                       color=dplyr::pull(pit_local[,1]),
+                                       fill=dplyr::pull(pit_local[,1]),
                                        ggplot2::after_stat(density)),
                alpha=alpha, linewidth=linewidth, ...)+
   ggplot2::scale_color_brewer( "", palette =pal)+
@@ -60,9 +60,9 @@ ggplot2::ggplot(pit_local)+
   ggplot2::theme_classic(base_size = 12)
 }else{
   ggplot2::ggplot(pit_local)+
-    ggplot2::geom_density(ggplot2::aes(unlist(pit_local[,2]),
-                                       color=unlist(pit_local[,1]),
-                                       fill=unlist(pit_local[,1]),
+    ggplot2::geom_density(ggplot2::aes(dplyr::pull(pit_local[,2]),
+                                       color=dplyr::pull(pit_local[,1]),
+                                       fill=dplyr::pull(pit_local[,1]),
                                        ggplot2::after_stat(density)),
                  alpha=alpha, linewidth=linewidth)+
     ggplot2::geom_hline(yintercept = 1, linetype="dashed")+
