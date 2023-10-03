@@ -35,13 +35,13 @@
 #'
 #'pit <- PIT_values_lm( y_cal, cdf)
 #'
-#'gg_globcal_hist(pit)
+#'gg_global_pit(pit)
 #'
-#'gg_cal_qq(pit, y_cal)
+#'
 #'
 #'
 
-gg_globcal_hist <- function(pit){
+gg_global_pit <- function(pit){
 
   ggplot2::ggplot(NULL, ggplot2::aes(pit, ggplot2::after_stat(density)))+
     ggplot2::geom_histogram(breaks=seq(0, 1, 0.05),
