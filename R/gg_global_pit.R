@@ -31,11 +31,11 @@
 #'
 #' model <- lm(y_test ~ x_test)
 #'
-#'cdf <- CDF_model_lm(x_cal=x_cal, model= model)
+#' cdf <- CDF_model_lm(x_cal=x_cal, model= model)
 #'
-#'pit <- PIT_values_lm( y_cal, cdf)
+#' pit <- PIT_global_lm( y_cal, cdf)
 #'
-#'gg_global_pit(pit)
+#' gg_global_pit(pit)
 #'
 #'
 #'
