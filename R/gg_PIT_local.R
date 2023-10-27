@@ -1,11 +1,18 @@
-#' Density graph for local PIT
+#' Density graph for local PIT-values
+#' @description
 #'
-#' @param pit_local Data frame with two collumn names "part" and "pit"
-#' @param alpha double 0-1 to indicate transparency of fill
-#' @param linewidth integer linewidth of density line
-#' @param pal a chosen RBrewer color pallete
-#' @param facet Logical
-#' @param ... Other parameters for ggplot()
+#' A function based on ggplot2 to observe the local the density of PIT-values.
+#' To use this function we recommend providing the PIT-values returned by the PIT_local function from this package or an object of equivalent format.
+#' Layers can be edited like in http://cran.nexr.com/web/packages/ggpmisc/vignettes/user-guide-4.html.
+#'
+#'
+#' @param pit_local A tibble with five column names "part", "y_cal",
+#' "y_hat", "pit" and "n".
+#' @param alpha double 0-1 to indicate transparency of fill. Default is 0.4.
+#' @param linewidth integer linewidth of density line. Default set to 1.
+#' @param pal a chosen RBrewer color pallete. Default is "Set2"
+#' @param facet Logical iforming if the plot should use face_wrap() to separate the different localities.
+#' @param ... Other parameters for geom_density()
 #'
 #' @return A ggplot
 #' @export
@@ -23,15 +30,15 @@
 #'x <- runif(n, 2, 20)
 #'y <- rnorm(n, mu(x), sigma_v(x))
 #'
-#'x_test <- x[1:80000]
-#'y_test <- y[1:80000]
+#'x_train <- x[1:80000]
+#'y_train <- y[1:80000]
 #'
 #'x_cal <- x[80001:100000]
 #'y_cal <- y[80001:100000]
 #'
-#'model <- lm(y_test ~ x_test)
+#'model <- lm(y_train ~ x_train)
 #'
-#'pit_local <- PIT_local_lm(xcal=x_cal, ycal=y_cal, mod=model)
+#'pit_local <- PIT_local_lm(xcal = x_cal, ycal=y_cal, mod=model)
 #'
 #'gg_PIT_local(pit_local)
 
@@ -43,13 +50,16 @@ gg_PIT_local <- function(pit_local,
                          facet=F,
                          ...){
 
+
 if(facet==F){
 ggplot2::ggplot(pit_local)+
-    ggplot2::geom_density(ggplot2::aes(x=dplyr::pull(pit_local[,2]),
+    ggplot2::geom_density(ggplot2::aes(x=as.numeric(dplyr::pull(pit_local[,4])),
                                        color=dplyr::pull(pit_local[,1]),
                                        fill=dplyr::pull(pit_local[,1]),
                                        ggplot2::after_stat(density)),
-               alpha=alpha, linewidth=linewidth, ...)+
+                          alpha=alpha,
+                          linewidth=linewidth,
+                          bounds = c(0, 1), ...)+
   ggplot2::scale_color_brewer( "", palette =pal)+
   ggplot2::scale_fill_brewer("",  palette=pal)+
   ggplot2::geom_hline(yintercept = 1, linetype="dashed")+
@@ -59,15 +69,42 @@ ggplot2::ggplot(pit_local)+
                               breaks = c(.25, .5, .75, 1)) +
   ggplot2::theme_classic(base_size = 12)
 }else{
-  ggplot2::ggplot(pit_local)+
-    ggplot2::geom_density(ggplot2::aes(dplyr::pull(pit_local[,2]),
-                                       color=dplyr::pull(pit_local[,1]),
-                                       fill=dplyr::pull(pit_local[,1]),
+
+  unif <- function(n){
+    set.seed(1234)
+    runif(n, 0,1)
+  }
+  parts <- dplyr::pull(unique(pit_local[,1]))
+  ks <-  purrr::map_dfc(parts, ~{
+    times <- dplyr::pull(pit_local[1,3])
+    ksn <- round(ks.test(dplyr::pull(pit_local[(pit_local[,1])==.,2]),
+            unif(times))$p.value ,3)
+    ksn <- paste0("p-value ",ifelse(ksn<=0.0001,"<0.0001", ksn ))
+    rep(ksn, times)
+  })
+  names(ks) <- parts
+  ks_l <- ks |>
+    tidyr::pivot_longer(dplyr::everything())|>
+    dplyr::select(-name)
+
+  pit_local_p <- tibble::tibble(pit_local,  ks_l)
+
+  ggplot2::ggplot(pit_local_p)+
+    ggplot2::geom_density(ggplot2::aes(dplyr::pull(pit_local_p[,2]),
+                                       color=dplyr::pull(pit_local_p[,1]),
+                                       fill=dplyr::pull(pit_local_p[,1]),
+                                       group=dplyr::pull(pit_local_p[,1]),
                                        ggplot2::after_stat(density)),
-                 alpha=alpha, linewidth=linewidth)+
+                 alpha=alpha, linewidth=linewidth,
+                 bounds = c(0, 1), ...)+
     ggplot2::geom_hline(yintercept = 1, linetype="dashed")+
     ggplot2::scale_color_brewer("", palette =pal)+
     ggplot2::scale_fill_brewer("",  palette=pal)+
+    ggplot2::geom_text(ggplot2::aes(0.5, 0.5,
+                                    label=dplyr::pull(pit_local_p[,4])
+                                    ),
+                       inherit.aes = F,
+                       size=2.4)+
     ggplot2::facet_wrap(~part)+
     ggplot2::theme_classic()+
     ggplot2::labs(x="Cumulative probability", y="Density")+

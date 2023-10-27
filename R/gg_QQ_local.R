@@ -28,13 +28,13 @@
 #' x <- runif(n, 2, 20)
 #' y <- rnorm(n, mu(x), sigma_v(x))
 #'
-#' x_test <- x[1:80000]
-#' y_test <- y[1:80000]
+#' x_train <- x[1:80000]
+#' y_train <- y[1:80000]
 #'
 #' x_cal <- x[80001:100000]
 #' y_cal <- y[80001:100000]
 #'
-#' model <- lm(y_test ~ x_test)
+#' model <- lm(y_train ~ x_train)
 #'
 #'pit_local <-PIT_local_lm(xcal=x_cal, ycal=y_cal, mod=model)
 #'
@@ -43,35 +43,40 @@
 #'
 gg_QQ_local <- function(pit_local,
                         psz=0.01,
-                        abline="darkgrey",
+                        abline="black",
                         pal="Set1",
                         facet=FALSE,
                          ...){
 
-  pit_theory <- sort(stats::qunif(seq(0,1, by=(1/(dplyr::pull(pit_local[1,3])-1)))))
-  pit_emp <- purrr::map_dfc(dplyr::pull(unique(pit_local[,1])),
-              ~sort(dplyr::pull(pit_local[(pit_local[,1])==.,2]))
-  )
-  names(pit_emp) <- stringr::str_c("part_", (seq(1,length(pit_emp))))
+  df <- purrr::map_dfr(unique(pit_local$part),~{
 
+    loc <- pit_local |>
+      dplyr::filter(part==.)
 
-  df <- data.frame(pit_theory=pit_theory, pit_emp)
-  df_long <- df |>
-    tidyr::pivot_longer(-pit_theory, names_to = "part",
-                        values_to = "pit_emp")
+    purrr::map_dfr(1:nrow(loc), ~{
+
+      pit_emp <- mean(loc[,2] <= qnorm(p=dplyr::pull(loc[.,4]),
+                                       mean=dplyr::pull(loc[,3]),
+                                       sd=sqrt(MSE)))
+      pit_theory <- dplyr::pull(loc[.,4])
+      tibble::tibble(part=loc$part[1],pit_theory, pit_emp)
+
+    } )
+  })
 if(facet==F){
-  ggplot2:: ggplot(df_long)+
+  ggplot2:: ggplot(df)+
     ggplot2::geom_point(ggplot2::aes(x=pit_theory, y=pit_emp,
-                                     color=dplyr::pull(pit_local[,1])),
+                                     color=part),
                         size=psz)+
     ggplot2::labs(x="Predicted CDF",
                   y="Empirical CDF")+
     ggplot2::scale_color_brewer( "", palette =pal)+
     ggplot2::geom_abline(slope = 1, linetype="dashed", color=abline)+
     ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size=2))) +
-    ggplot2::theme_classic(base_size = 14)
+    ggplot2::theme_classic(base_size = 14)+
+    ggplot2:: theme(panel.background = ggplot2::element_rect(fill = "lightgrey"))
 }else{
-  ggplot2:: ggplot(df_long)+
+  ggplot2:: ggplot(df)+
     ggplot2::geom_point(ggplot2::aes(x=pit_theory, y=pit_emp,
                                      color=dplyr::pull(pit_local[,1])),
                         size=psz)+
@@ -81,7 +86,8 @@ if(facet==F){
     ggplot2::geom_abline(slope = 1, linetype="dashed", color=abline)+
     ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size=2))) +
     ggplot2::facet_wrap(~part)+
-    ggplot2::theme_classic(base_size = 12)
+    ggplot2::theme_classic(base_size = 12)+
+    ggplot2:: theme(panel.background = ggplot2::element_rect(fill = "lightgrey"))
 
 
 }}
