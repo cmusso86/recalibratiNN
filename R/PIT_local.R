@@ -39,8 +39,9 @@
 #'y_cal <- y[80001:100000]
 #'
 #'model <- lm(y_train ~ x_train)
-#'
-#'PIT_local_lm(xcal = x_cal, ycal=y_cal, mod=model)
+#' y_hat <- predict(model, newdata=data.frame(x_test=x_cal))
+#' MSE <- (summary(model)$sigma)^2
+#' PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE)
 #'
 
 

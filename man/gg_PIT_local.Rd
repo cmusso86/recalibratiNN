@@ -2,35 +2,29 @@
 % Please edit documentation in R/gg_PIT_local.R
 \name{gg_PIT_local}
 \alias{gg_PIT_local}
-\title{Density graph for local PIT}
+\title{Density graph for local PIT-values}
 \usage{
-gg_PIT_local(
-  pit_local,
-  alpha = 0.4,
-  linewidth = 1,
-  pal = "Set2",
-  facet = F,
-  ...
-)
+gg_PIT_local(pit_local, alpha = 0.4, linewidth = 1, pal = "Set2", facet = F)
 }
 \arguments{
-\item{pit_local}{Data frame with two collumn names "part" and "pit"}
+\item{pit_local}{A tibble with five column names "part", "y_cal",
+"y_hat", "pit" and "n".}
 
-\item{alpha}{double 0-1 to indicate transparency of fill}
+\item{alpha}{double 0-1 to indicate transparency of fill. Default is 0.4.}
 
-\item{linewidth}{integer linewidth of density line}
+\item{linewidth}{integer linewidth of density line. Default set to 1.}
 
-\item{pal}{a chosen RBrewer color pallete}
+\item{pal}{a chosen RBrewer color pallete. Default is "Set2"}
 
-\item{facet}{Logical}
-
-\item{...}{Other parameters for ggplot()}
+\item{facet}{Logical iforming if the plot should use face_wrap() to separate the different localities.}
 }
 \value{
 A ggplot
 }
 \description{
-Density graph for local PIT
+A function based on ggplot2 to observe the local the density of PIT-values.
+To use this function we recommend providing the PIT-values returned by the PIT_local function from this package or an object of equivalent format.
+Layers can be edited like in http://cran.nexr.com/web/packages/ggpmisc/vignettes/user-guide-4.html.
 }
 \examples{
 n <- 100000
@@ -45,15 +39,16 @@ sigma_v <- function(x1){
 x <- runif(n, 2, 20)
 y <- rnorm(n, mu(x), sigma_v(x))
 
-x_test <- x[1:80000]
-y_test <- y[1:80000]
+x_train <- x[1:80000]
+y_train <- y[1:80000]
 
 x_cal <- x[80001:100000]
 y_cal <- y[80001:100000]
 
-model <- lm(y_test ~ x_test)
-
-pit_local <- PIT_local_lm(xcal=x_cal, ycal=y_cal, mod=model)
+model <- lm(y_train ~ x_train)
+y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
+MSE <- (summary(model)$sigma)^2
+pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE)
 
 gg_PIT_local(pit_local)
 }

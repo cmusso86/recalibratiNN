@@ -33,14 +33,13 @@
 #' x_train <- x[1:80000]
 #' y_train <- y[1:80000]
 #'
-#' xcal <- x[80001:100000]
-#' ycal <- y[80001:100000]
+#' x_cal <- x[80001:100000]
+#' y_cal <- y[80001:100000]
 #'
-#' model <- lm(y_train ~ x_train)
-#'
-#' cdf <- CDF_model_lm(xcal = x_cal, model= model)
-#'
-#' pit <- PIT_global_lm( ycal = y_cal, cdf)
+#'model <- lm(y_train ~ x_train)
+#'y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
+#'MSE <- (summary(model)$sigma)^2
+#'pit <- PIT_global(ycal=y_cal, yhat=y_hat, mse=MSE)
 #'
 #' gg_PIT_global(pit)
 #'

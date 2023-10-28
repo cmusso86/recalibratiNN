@@ -2,13 +2,52 @@
 % Please edit documentation in R/PIT_global.R
 \name{PIT_global}
 \alias{PIT_global}
-\title{Title}
+\title{Obtain the PIT-values of a model.}
 \usage{
-PIT_global(x_cal, y_cal, y_hat, MSE)
+PIT_global(ycal, yhat, mse)
 }
 \arguments{
-\item{MSE}{}
+\item{ycal}{observations of the recalibration set}
+
+\item{yhat}{predictions of the recalibration set from the uncalibrated model}
+
+\item{mse}{Mean Squared Error of the trained model. Is you fitted a
+lm() model you should square the the sigma parameter.}
+}
+\value{
+Vector of PIT-values
 }
 \description{
-Title
+A function to obtain the (possibly uncalibrated) PIT-values of any fitted model that
+assumes a normal distribution for the output, such as (but not limited to), a lm() or a neural network
+that used the Mean Squared Error as the loss function.
+}
+\examples{
+n <- 100000
+
+# generating heterocedastic data
+mu <- function(x1){
+10 + 5*x1^2
+}
+
+sigma_v <- function(x1){
+30*x1
+}
+
+
+x <- runif(n, 2, 20)
+y <- rnorm(n, mu(x), sigma_v(x))
+
+x_train <- x[1:80000]
+y_train <- y[1:80000]
+
+x_cal <- x[80001:100000]
+y_cal <- y[80001:100000]
+
+model <- lm(y_train ~ x_train)
+y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
+MSE <- (summary(model)$sigma)^2
+
+PIT_global(ycal=y_cal, yhat=y_hat, mse=MSE)
+
 }

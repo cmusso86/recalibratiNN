@@ -7,6 +7,7 @@
 #' @param pit vector of global PIT-values
 #' @param ycal vector of y calibration set
 #' @param yhat vector of predicted y on calibration set
+#' @param mse Mean Squared Error from fitted model
 #' @return a ggplot point graph
 #' @export
 #'
@@ -33,10 +34,9 @@
 #' x_cal <- x[80001:100000]
 #' y_cal <- y[80001:100000]
 #'
-#' model <- lm(y_train ~ x_train)
-#' MSE <- (summary(model)$sigma)^2
-#' y_hat <- predict(model, newdata=data.frame(x_test=x_cal))
-#' MSE <- (summary(model)$sigma)^2
+#'model <- lm(y_train ~ x_train)
+#'y_hat <- predict(model, newdata=data.frame(x_test=x_cal))
+#'MSE <- (summary(model)$sigma)^2
 #'
 #'pit <- PIT_global( y_cal, y_hat,  MSE)
 #'

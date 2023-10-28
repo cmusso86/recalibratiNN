@@ -1,5 +1,7 @@
-#' QQPlot to diagnose calibration locally bases on theoretical PIT_values
-#' from calibrated distributions and the empirical pit_values
+#' QQPlot diagnose calibration locally
+#'
+#' @description
+#' ggplot to visualize predicted vs empirical cumulative distributions locally
 #'
 #' @param pit_local A dataframe obtained from PIT_local_lm
 #' @param psz double that indicates size of the points that compose the lines.
@@ -34,9 +36,10 @@
 #' x_cal <- x[80001:100000]
 #' y_cal <- y[80001:100000]
 #'
-#' model <- lm(y_train ~ x_train)
-#'
-#'pit_local <-PIT_local_lm(xcal=x_cal, ycal=y_cal, mod=model)
+#'model <- lm(y_train ~ x_train)
+#'y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
+#'MSE <- (summary(model)$sigma)^2
+#'pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE)
 #'
 #'gg_QQ_local(pit_local)
 #'gg_QQ_local(pit_local, facet=TRUE)

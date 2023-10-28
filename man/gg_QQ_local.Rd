@@ -2,13 +2,12 @@
 % Please edit documentation in R/gg_QQ_local.R
 \name{gg_QQ_local}
 \alias{gg_QQ_local}
-\title{QQPlot to diagnose calibration locally bases on theoretical PIT_values
-from calibrated distributions and the empirical pit_values}
+\title{QQPlot diagnose calibration locally}
 \usage{
 gg_QQ_local(
   pit_local,
   psz = 0.01,
-  abline = "darkgrey",
+  abline = "black",
   pal = "Set1",
   facet = FALSE,
   ...
@@ -32,8 +31,7 @@ Default is 0.001}
 a ggplot graph
 }
 \description{
-QQPlot to diagnose calibration locally bases on theoretical PIT_values
-from calibrated distributions and the empirical pit_values
+ggplot to visualize predicted vs empirical cumulative distributions locally
 }
 \examples{
 
@@ -51,15 +49,16 @@ sigma_v <- function(x1){
 x <- runif(n, 2, 20)
 y <- rnorm(n, mu(x), sigma_v(x))
 
-x_test <- x[1:80000]
-y_test <- y[1:80000]
+x_train <- x[1:80000]
+y_train <- y[1:80000]
 
 x_cal <- x[80001:100000]
 y_cal <- y[80001:100000]
 
-model <- lm(y_test ~ x_test)
-
-pit_local <-PIT_local_lm(xcal=x_cal, ycal=y_cal, mod=model)
+model <- lm(y_train ~ x_train)
+y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
+MSE <- (summary(model)$sigma)^2
+pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE)
 
 gg_QQ_local(pit_local)
 gg_QQ_local(pit_local, facet=TRUE)

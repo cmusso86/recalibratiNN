@@ -2,22 +2,24 @@
 % Please edit documentation in R/gg_QQ_global.R
 \name{gg_QQ_global}
 \alias{gg_QQ_global}
-\title{QQPlot to diagnose calibration globally bases on theoretical PIT_values
-from calibrated distributions and the empirical pit_values}
+\title{QQPlot diagnose calibration globally}
 \usage{
-gg_QQ_global(pit, y_cal)
+gg_QQ_global(pit, ycal, yhat, mse)
 }
 \arguments{
-\item{pit}{vector of pit values}
+\item{pit}{vector of global PIT-values}
 
-\item{y_cal}{vector of y calibration set}
+\item{ycal}{vector of y calibration set}
+
+\item{yhat}{vector of predicted y on calibration set}
+
+\item{mse}{Mean Squared Error from fitted model}
 }
 \value{
-a ggplot histogram graph
+a ggplot point graph
 }
 \description{
-QQPlot to diagnose calibration globally bases on theoretical PIT_values
-from calibrated distributions and the empirical pit_values
+ggplot to visualize predicted vs empirical cumulative distributions
 }
 \examples{
 
@@ -36,20 +38,20 @@ sigma_v <- function(x1){
 x <- runif(n, 2, 20)
 y <- rnorm(n, mu(x), sigma_v(x))
 
-x_test <- x[1:80000]
-y_test <- y[1:80000]
+x_train <- x[1:80000]
+y_train <- y[1:80000]
 
 x_cal <- x[80001:100000]
 y_cal <- y[80001:100000]
 
-model <- lm(y_test ~ x_test)
+model <- lm(y_train ~ x_train)
+y_hat <- predict(model, newdata=data.frame(x_test=x_cal))
+MSE <- (summary(model)$sigma)^2
 
-cdf <- CDF_model_lm(x_cal=x_cal, model= model)
-
-pit <- PIT_global_lm( y_cal, cdf)
+pit <- PIT_global( y_cal, y_hat,  MSE)
 
 
-gg_QQ_global(pit, y_cal)
+gg_QQ_global(pit,y_cal, y_hat, MSE)
 
 
 }

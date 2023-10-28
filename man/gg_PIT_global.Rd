@@ -4,16 +4,19 @@
 \alias{gg_PIT_global}
 \title{Plot to diagnose calibration bases on  p_values}
 \usage{
-gg_PIT_global(pit)
+gg_PIT_global(pit, ...)
 }
 \arguments{
 \item{pit}{vector of pit values}
+
+\item{...}{other static parameters passed to geom_density()}
 }
 \value{
-a ggplot histogram graph
+a ggplot density graph
 }
 \description{
-Plot to diagnose calibration bases on  p_values
+A function based on ggplot2 to observe the global the density of PIT-values.
+Layers can be edited like in http://cran.nexr.com/web/packages/ggpmisc/vignettes/user-guide-4.html.
 }
 \examples{
 
@@ -32,17 +35,16 @@ sigma_v <- function(x1){
 x <- runif(n, 2, 20)
 y <- rnorm(n, mu(x), sigma_v(x))
 
-x_test <- x[1:80000]
-y_test <- y[1:80000]
+x_train <- x[1:80000]
+y_train <- y[1:80000]
 
 x_cal <- x[80001:100000]
 y_cal <- y[80001:100000]
 
-model <- lm(y_test ~ x_test)
-
-cdf <- CDF_model_lm(x_cal=x_cal, model= model)
-
-pit <- PIT_global_lm( y_cal, cdf)
+model <- lm(y_train ~ x_train)
+y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
+MSE <- (summary(model)$sigma)^2
+pit <- PIT_global(ycal=y_cal, yhat=y_hat, mse=MSE)
 
 gg_PIT_global(pit)
 

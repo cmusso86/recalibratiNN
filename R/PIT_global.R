@@ -5,7 +5,6 @@
 #'assumes a normal distribution for the output, such as (but not limited to), a lm() or a neural network
 #'that used the Mean Squared Error as the loss function.
 #'
-#' @param xcal covariates/features of the recalibration set
 #' @param ycal observations of the recalibration set
 #' @param yhat predictions of the recalibration set from the uncalibrated model
 #' @param mse Mean Squared Error of the trained model. Is you fitted a
@@ -15,7 +14,7 @@
 #' @export
 #'
 #' @examples
-#' #' n <- 100000
+#' n <- 100000
 #'
 #' # generating heterocedastic data
 #' mu <- function(x1){
@@ -33,14 +32,14 @@
 #' x_train <- x[1:80000]
 #' y_train <- y[1:80000]
 #'
-#' xcal <- x[80001:100000]
-#' ycal <- y[80001:100000]
+#' x_cal <- x[80001:100000]
+#' y_cal <- y[80001:100000]
 #'
 #' model <- lm(y_train ~ x_train)
 #' y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
 #' MSE <- (summary(model)$sigma)^2
 #'
-#' PIT_global(ycal=y_cal, ycal=y_hat, mse=MSE)
+#' PIT_global(ycal=y_cal, yhat=y_hat, mse=MSE)
 #'
 
 
