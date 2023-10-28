@@ -31,8 +31,7 @@ Imports:
     stats,
     tidyr,
     tibble,
-    glue,
-    recalibratiNN
+    glue
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
