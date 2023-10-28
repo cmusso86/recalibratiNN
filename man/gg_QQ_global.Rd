@@ -13,7 +13,7 @@ gg_QQ_global(pit, ycal, yhat, mse)
 
 \item{yhat}{vector of predicted y on calibration set}
 
-\item{mse}{Mean Squared Error from fitted model}
+\item{mse}{Mean Squared Error from calibration set}
 }
 \value{
 a ggplot point graph
@@ -24,6 +24,7 @@ ggplot to visualize predicted vs empirical cumulative distributions
 \examples{
 
 n <- 100000
+split <- 0.8
 
 # generating heterocedastic data
 mu <- function(x1){
@@ -34,24 +35,24 @@ sigma_v <- function(x1){
 30*x1
 }
 
-
-x <- runif(n, 2, 20)
+x <- runif(n, 1, 10)
 y <- rnorm(n, mu(x), sigma_v(x))
 
-x_train <- x[1:80000]
-y_train <- y[1:80000]
+x_train <- x[1:(n*split)]
+y_train <- y[1:(n*split)]
 
-x_cal <- x[80001:100000]
-y_cal <- y[80001:100000]
+x_cal <- x[(n*split+1):n]
+y_cal <- y[(n*split+1):n]
 
 model <- lm(y_train ~ x_train)
-y_hat <- predict(model, newdata=data.frame(x_test=x_cal))
-MSE <- (summary(model)$sigma)^2
 
-pit <- PIT_global( y_cal, y_hat,  MSE)
+y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
 
+MSE_cal <- mean((y_hat - y_cal)^2)
 
-gg_QQ_global(pit,y_cal, y_hat, MSE)
+pit <- PIT_global( y_cal, y_hat,  MSE_cal)
+
+gg_QQ_global(pit,y_cal, y_hat, MSE_cal)
 
 
 }

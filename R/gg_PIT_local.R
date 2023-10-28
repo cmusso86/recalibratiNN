@@ -17,28 +17,31 @@
 #' @export
 #'
 #' @examples
-#' n <- 100000
-#' mu <- function(x1){
-#' 10 + 5*x1^2
+#'  n <- 100000
+#'  mu <- function(x1){
+#'   10 + 5*x1^2
+#'   }
+#'
+#' sigma_v <- function(x1){
+#'  30*x1
 #' }
 #'
-#'sigma_v <- function(x1){
-#'  30*x1
-#'}
+#' x <- runif(n, 2, 20)
+#' y <- rnorm(n, mu(x), sigma_v(x))
 #'
-#'x <- runif(n, 2, 20)
-#'y <- rnorm(n, mu(x), sigma_v(x))
+#' x_train <- x[1:(n*0.8)]
+#' y_train <- y[1:(n*0.8)]
 #'
-#'x_train <- x[1:80000]
-#'y_train <- y[1:80000]
+#' x_cal <- x[(n*0.8+1):n]
+#' y_cal <- y[(n*0.8+1):n]
 #'
-#'x_cal <- x[80001:100000]
-#'y_cal <- y[80001:100000]
+#' model <- lm(y_train ~ x_train)
 #'
-#'model <- lm(y_train ~ x_train)
-#'y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
-#'MSE <- (summary(model)$sigma)^2
-#'pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE)
+#' y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
+#'
+#' MSE_cal <- mean((y_hat - y_cal)^2)
+#'
+#' pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
 #'
 #'gg_PIT_local(pit_local)
 

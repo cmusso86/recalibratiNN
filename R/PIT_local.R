@@ -9,18 +9,27 @@
 #' @param yhat predicted outputs from the calibrations et
 #' @param clusters Number of partitions to create for local calibration. Centroids calculated by k-means method.
 #' Default set to 6.
-#' @param n_neighboor Number of neighboors in the KNN method.
+#' @param n_neighbours Number of neighboors in the KNN method.
 #' @param mse Mean Squared Error of the model
 #' @param PIT function to return the PIT-values. Default set to PIT_global() from this package.
-
 #'
-#' @return A tibble with five column names "part", "y_cal",
-#' "y_hat", "pit" and "n"
+#' @return A tibble with five containing in the first column containing unique names for the partition, "y_cal",
+#' the second column containing the yhat the third the pit-values  and the last the number of neighbors in each partition.
+#'
+#' @import stats
+#' @import RANN
+#' @import purrr
+#' @import tibble
+#' @import dplyr
+#' @import glue
 #'
 #' @export
 #'
 #' @examples
+#'
 #' n <- 100000
+#' split <- 0.8
+#'
 #' mu <- function(x1){
 #' 10 + 5*x1^2
 #' }
@@ -29,25 +38,28 @@
 #'  30*x1
 #'}
 #'
-#'x <- runif(n, 2, 20)
-#'y <- rnorm(n, mu(x), sigma_v(x))
+#' x <- runif(n, 1, 10)
+#' y <- rnorm(n, mu(x), sigma_v(x))
 #'
-#'x_train <- x[1:80000]
-#'y_train <- y[1:80000]
+#' x_train <- x[1:(n*split)]
+#' y_train <- y[1:(n*split)]
 #'
-#'x_cal <- x[80001:100000]
-#'y_cal <- y[80001:100000]
+#' x_cal <- x[(n*split+1):n]
+#' y_cal <- y[(n*split+1):n]
 #'
-#'model <- lm(y_train ~ x_train)
-#' y_hat <- predict(model, newdata=data.frame(x_test=x_cal))
-#' MSE <- (summary(model)$sigma)^2
-#' PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE)
+#' model <- lm(y_train ~ x_train)
+#'
+#' y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
+#'
+#' MSE_cal <- mean((y_hat - y_cal)^2)
+#'
+#' PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
 #'
 
 
 PIT_local <- function(xcal, ycal,
                       yhat,mse,  clusters=6,
-                      n_neighboor=1000,
+                      n_neighbours=1000,
                       PIT=PIT_global
 ){
 
@@ -60,9 +72,9 @@ PIT_local <- function(xcal, ycal,
 
 
   #Select neighboors
-  knn_cal <- RANN::nn2(xcal, cluster_means_cal,  k=n_neighboor)$nn.idx
+  knn_cal <- RANN::nn2(xcal, cluster_means_cal,  k=n_neighbours)$nn.idx
 
-  # get gorresponding neighboors in data
+  # get corresponding neighbors in data
   y_cal_local <- purrr::map(1:nrow(knn_cal),  ~ycal[knn_cal[.,]])
   y_hat_local <-purrr::map(1:nrow(knn_cal),  ~yhat[knn_cal[.,]])
 
@@ -71,7 +83,7 @@ PIT_local <- function(xcal, ycal,
     pit <- PIT( ycal = y_cal_local[[.]], yhat=y_hat_local[[.]],
                 mse=mse)
     tibble::tibble(part=glue::glue("part_{.}"),y_cal=y_cal_local[[.]],
-                   y_hat=y_hat_local[[.]], pit, n=n_neighboor)
+                   y_hat=y_hat_local[[.]], pit, n=n_neighbours)
   })
   return(pit_val)
 }

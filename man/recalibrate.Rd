@@ -10,11 +10,35 @@ recalibrate(
   yhat,
   pit_values,
   mse,
-  n_neighboors = 1000,
-  epsilon = 1,
   method = c("gui", "kuleshov1"),
-  type = c("local", "global")
+  type = c("local", "global"),
+  n_neighbours = 1000,
+  epsilon = 1
 )
+}
+\arguments{
+\item{xcal}{The covariates/features of the validation set}
+
+\item{xnew}{A new set of covariates, for which ther is no corresponding observation}
+
+\item{yhat}{Predicted values of the calibration set}
+
+\item{pit_values}{Global PIT-values of the calculated on the calibration set}
+
+\item{mse}{Mean Squared Error of the calibration set}
+
+\item{method}{One of the two available recalibration methods.
+The method "gui" (Rodrigues et al 2023) is inspired in Aproximate Bayesian Computation and
+"kuleshov1" in the recalibration method presented in (Kuleshov et al 2018).}
+
+\item{type}{Choose between local of global calibration.}
+
+\item{n_neighbours}{Number of neighbors for the local calibration. This paramether will be available when chooseing local calibration.}
+
+\item{epsilon}{Approximation for the KNN method. Default epsilon=1 which returns the exact distance. This paramether will be available when chooseing local calibration}
+}
+\value{
+A list containing the calibrated predicted mean and samples of the recalibrated predictive distribution.
 }
 \description{
 Obtain recalibrated samples of the predictive distribution
