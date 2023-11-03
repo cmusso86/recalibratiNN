@@ -17,7 +17,7 @@
 #'
 #' @examples
 #'
-#' n <- 100000
+#' n <- 10000
 #' split <- 0.8
 #'
 #' mu <- function(x1){
@@ -56,25 +56,30 @@ gg_QQ_local <- function(pit_local,
                         facet=FALSE,
                          ...){
 
-  df <- purrr::map_dfr(unique(pit_local$part),~{
+  df <- do.call(rbind, purrr::map(unique(pit_local$part),~{
 
     loc <- pit_local |>
       dplyr::filter(part==.)
 
-  purrr::map_dfr(1:nrow(loc), ~{
+  do.call(rbind,
+          purrr::map(1:nrow(loc), ~{
 
-    tibble::tibble(part=loc$part[1],
-                   pit_emp =mean(loc[,2] <= qnorm(p=dplyr::pull(loc[.,4]),
+    c(part=loc$part[1],
+      pit_emp =mean(loc[,2] <= qnorm(p=dplyr::pull(loc[.,4]),
                                        mean=dplyr::pull(loc[,3]),
                                        sd=sqrt(MSE_cal))),
-                   pit_pred = dplyr::pull(loc[.,4]),)
-    })
-  })
+      pit_pred = dplyr::pull(loc[.,4]))
+    }))
+  })) |>  as.data.frame()
+
+  df[,2] <- as.numeric(df[,2])
+  df[,3] <- as.numeric(df[,3])
+
 
 if(facet==F){
-  ggplot2:: ggplot()+
-    ggplot2::geom_point(ggplot2::aes(x=dplyr::pull(df[,3]), y=dplyr::pull(df[,2]),
-                                     color=dplyr::pull(df[,1])),
+  ggplot2:: ggplot(df)+
+    ggplot2::geom_point(ggplot2::aes(x=df[,3], y=df[,2],
+                                     color=df[,1]),
                         size=psz)+
     ggplot2::labs(x="Predicted CDF",
                   y="Empirical CDF")+
@@ -82,11 +87,11 @@ if(facet==F){
     ggplot2::geom_abline(slope = 1, linetype="dashed", color=abline)+
     ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size=2))) +
     ggplot2::theme_classic(base_size = 14)+
-    ggplot2:: theme(panel.background = ggplot2::element_rect(fill = "lightgrey"))
+    ggplot2:: theme(panel.background = ggplot2::element_rect(fill = "#E0E0E0"))
 }else{
   ggplot2:: ggplot(df)+
-    ggplot2::geom_point(ggplot2::aes(x=dplyr::pull(df[,3]), y=dplyr::pull(df[,2]),
-                                     color=dplyr::pull(df[,1])),
+    ggplot2::geom_point(ggplot2::aes(x=df[,3], y=df[,2],
+                                     color=df[,1]),
                         size=psz)+
     ggplot2::labs(x="Predicted CDF",
                   y="Empirical CDF")+
@@ -95,7 +100,7 @@ if(facet==F){
     ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size=2))) +
     ggplot2::facet_wrap(~part)+
     ggplot2::theme_classic(base_size = 12)+
-    ggplot2:: theme(panel.background = ggplot2::element_rect(fill = "lightgrey"))
+    ggplot2:: theme(panel.background = ggplot2::element_rect(fill = "#E0E0E0"))
 
 
 }}

@@ -4,7 +4,13 @@
 \alias{gg_PIT_local}
 \title{Density graph for local PIT-values}
 \usage{
-gg_PIT_local(pit_local, alpha = 0.4, linewidth = 1, pal = "Set2", facet = F)
+gg_PIT_local(
+  pit_local,
+  alpha = 0.4,
+  linewidth = 1,
+  pal = "Set2",
+  facet = FALSE
+)
 }
 \arguments{
 \item{pit_local}{A tibble with five column names "part", "y_cal",
@@ -27,7 +33,7 @@ To use this function we recommend providing the PIT-values returned by the PIT_l
 Layers can be edited like in http://cran.nexr.com/web/packages/ggpmisc/vignettes/user-guide-4.html.
 }
 \examples{
- n <- 100000
+ n <- 10000
  mu <- function(x1){
   10 + 5*x1^2
   }
@@ -54,4 +60,5 @@ MSE_cal <- mean((y_hat - y_cal)^2)
 pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
 
 gg_PIT_local(pit_local)
+gg_PIT_local(pit_local, facet=TRUE)
 }

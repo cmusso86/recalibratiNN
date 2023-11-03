@@ -17,7 +17,7 @@
 #' @export
 #'
 #' @examples
-#'  n <- 100000
+#'  n <- 10000
 #'  mu <- function(x1){
 #'   10 + 5*x1^2
 #'   }
@@ -44,16 +44,17 @@
 #' pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
 #'
 #'gg_PIT_local(pit_local)
+#'gg_PIT_local(pit_local, facet=TRUE)
 
 
 gg_PIT_local <- function(pit_local,
                          alpha=0.4,
                          linewidth=1,
                          pal="Set2",
-                         facet=F){
+                         facet=FALSE){
 
 
-  if(facet==F){
+  if(facet==FALSE){
     ggplot2::ggplot(pit_local)+
       ggplot2::geom_density(ggplot2::aes(x=as.numeric(dplyr::pull(pit_local[,4])),
                                          color=dplyr::pull(pit_local[,1]),

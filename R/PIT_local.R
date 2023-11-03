@@ -27,7 +27,7 @@
 #'
 #' @examples
 #'
-#' n <- 100000
+#' n <- 10000
 #' split <- 0.8
 #'
 #' mu <- function(x1){

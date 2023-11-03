@@ -17,7 +17,7 @@
 #'
 #' @return A list containing the calibrated predicted mean and samples of the recalibrated predictive distribution.
 #' For local calibration, the weighted variance and the weights are also provided.
-#' @import Hmisc
+#'
 #' @export
 #'
 #' @details

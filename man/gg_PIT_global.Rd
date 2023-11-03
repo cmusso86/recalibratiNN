@@ -20,7 +20,7 @@ For more detailed edition of layers a posteriori, please refer to ggplot2 User G
 }
 \examples{
 
-n <- 100000
+n <- 10000
 split <- 0.8
 
 # generating heterocedastic data

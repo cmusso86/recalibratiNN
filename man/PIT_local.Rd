@@ -40,7 +40,7 @@ The vicinity of such centroids are selected though a aproximate k-nearst neighbo
 }
 \examples{
 
-n <- 100000
+n <- 10000
 split <- 0.8
 
 mu <- function(x1){

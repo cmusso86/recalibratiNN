@@ -15,7 +15,7 @@
 #'
 #' @examples
 #'
-#' n <- 100000
+#' n <- 10000
 #' split <- 0.8
 #'
 #' # generating heterocedastic data
@@ -51,18 +51,20 @@
 
 gg_QQ_global <- function(pit, ycal, yhat, mse){
 
-  df <- purrr::map_dfr(1:length(pit), ~{
 
-    tibble::tibble(pit_emp = mean(ycal <= qnorm(p=pit[.] ,
+  df <- do.call(rbind, purrr::map(1:length(pit), ~{
+
+    c(pit_emp = mean(ycal <= qnorm(p=pit[.] ,
                                    mean=yhat,
                                    sd=sqrt(mse))),
                    pit_hat=pit[.])
 
-  } )
+  } ))
+
 
 
   ggplot2:: ggplot()+
-    ggplot2::geom_point(ggplot2::aes(x=dplyr::pull(df[,2]), y=dplyr::pull(df[,1])),
+    ggplot2::geom_point(ggplot2::aes(x=df[,2], y=df[,1]),
                         color="#4B5D5D", size=0.01)+
     ggplot2::labs(x="Predicted CDF",
                   y="Empirical CDF")+

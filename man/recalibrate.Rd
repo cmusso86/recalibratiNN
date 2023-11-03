@@ -87,7 +87,7 @@ y_hat_new <- predict(model, newdata=data.frame(x_train=x_new))
 
 pit <- PIT_global(ycal=y_cal, yhat= y_hat_cal, mse=MSE_cal)
 
-recalibrate(
+recalibrated <- recalibrate(
   entry_cal=x_cal,
   entry_new=x_new,
   output_new_hat=y_hat_new,
