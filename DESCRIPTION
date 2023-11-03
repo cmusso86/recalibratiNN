@@ -31,7 +31,8 @@ Imports:
     stats,
     tidyr,
     tibble,
-    glue
+    glue,
+    Hmisc
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

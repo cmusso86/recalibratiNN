@@ -17,6 +17,7 @@
 #'
 #' @return A list containing the calibrated predicted mean and samples of the recalibrated predictive distribution.
 #' For local calibration, the weighted variance and the weights are also provided.
+#' @import Hmisc
 #' @export
 #'
 #' @details
@@ -51,21 +52,21 @@
 #' x_cal <- x[(n*split+1):n]
 #' y_cal <- y[(n*split+1):n]
 #'
-#' x_new <- rnorm(n, mu(x_new), sigma_v(x_new))
+#' x_new <- runif(n, 1, 10)
 #'
 #' model <- lm(y_train ~ x_train)
 #'
 #' y_hat_cal <- predict(model, newdata=data.frame(x_train=x_cal))
-#' MSE_cal <- mean((y_hat - y_cal)^2)
+#' MSE_cal <- mean((y_hat_cal - y_cal)^2)
 #'
 #' y_hat_new <- predict(model, newdata=data.frame(x_train=x_new))
 #'
 #' pit <- PIT_global(ycal=y_cal, yhat= y_hat_cal, mse=MSE_cal)
 #'
-#' recalibrate(
+#' recalibrated <- recalibrate(
 #'   entry_cal=x_cal,
 #'   entry_new=x_new,
-#'   output_new_hat,
+#'   output_new_hat=y_hat_new,
 #'   pit_values=pit,
 #'   mse= MSE_cal,
 #'   method="torres",
