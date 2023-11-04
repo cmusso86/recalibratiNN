@@ -9,7 +9,7 @@
 #' @param yhat predicted outputs from the calibrations et
 #' @param clusters Number of partitions to create for local calibration. Centroids calculated by k-means method.
 #' Default set to 6.
-#' @param n_neighbours Number of neighboors in the KNN method.
+#' @param p_neighbours Proportion of xcal to localize neighboors in the KNN method. Default is 0.1.
 #' @param mse Mean Squared Error of the model
 #' @param PIT function to return the PIT-values. Default set to PIT_global() from this package.
 #'
@@ -59,11 +59,13 @@
 
 PIT_local <- function(xcal, ycal,
                       yhat,mse,  clusters=6,
-                      n_neighbours=1000,
+                      p_neighbours=0.1,
                       PIT=PIT_global
 ){
 
 
+  if(!is.matrix(xcal)){xcall<-as.matrix(xcal)}
+  n_neighbours = trunc(p_neighbours*nrow(xcal))
   # Select centroids
   cluster_means_cal <- stats::kmeans(xcal,clusters)$centers
   cluster_means_cal <- cluster_means_cal[order(cluster_means_cal[,1]),]

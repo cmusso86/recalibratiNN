@@ -10,7 +10,7 @@
 #' @param output_new_hat Predicted values of the new (test) set
 #' @param pit_values Global Probability Integral Transform (PIT) values calculated on the calibration set..
 #' @param mse Mean Squared Error of the calibration/validation set
-#' @param n_neighbours Number of neighbors for the local calibration. This paramether will be available when choosing local calibration.
+#' @param p_neighbours Proportion of the entry_cal to be used as number of neighboors for the KNN. If p_neighbours=1 calibration but weighted by distance. Default is set to 0.1.
 #' @param epsilon Approximation for the K-nearest neighbors (KNN) method. Default is epsilon = 1, which returns the exact distance. This parameter is available when choosing local calibration.
 #' @param method Choose one of the two available recalibration methods.
 #' @param type Choose between local or global calibration.
@@ -81,17 +81,19 @@ recalibrate <- function (
     mse,
     method=c("torres","kuleshov1"),
     type=c("local", "global"),
-    n_neighbours=1000,
+    p_neighbours=0.1,
     epsilon = 1
 ) {
+
 
   if(!is.matrix(entry_cal)){entry_cal<-as.matrix(entry_cal)}
   if(!is.matrix(entry_new)){entry_new<-as.matrix(entry_new)}
 
 m <- length(output_new_hat)
 epk_kernel <- function (x) {.75 * (1 - (x / max(x))^2)}
+n_neighbours <- trunc(p_neighbours*nrow(entry_new))
 
-  if(method=="torres"){
+if(method=="torres"){
 
 
     if(type=="local"){
