@@ -63,13 +63,10 @@ PIT_local <- function(xcal, ycal,
                       PIT=PIT_global
 ){
 
-  # Select centroids
-  cluster_means_cal <- data.frame(stats::kmeans(xcal,
-                                                clusters)$centers)
-  cluster_means_cal <- dplyr::arrange(cluster_means_cal,
-                                      cluster_means_cal[,1])|>
-    dplyr::pull()
 
+  # Select centroids
+  cluster_means_cal <- stats::kmeans(xcal,clusters)$centers
+  cluster_means_cal <- cluster_means_cal[order(cluster_means_cal[,1]),]
 
   #Select neighboors
   knn_cal <- RANN::nn2(xcal, cluster_means_cal,  k=n_neighbours)$nn.idx
@@ -77,13 +74,26 @@ PIT_local <- function(xcal, ycal,
   # get corresponding neighbors in data
   y_cal_local <- purrr::map(1:nrow(knn_cal),  ~ycal[knn_cal[.,]])
   y_hat_local <-purrr::map(1:nrow(knn_cal),  ~yhat[knn_cal[.,]])
+  if(length(mse)>1){mse_wt <- purrr::map(1:nrow(knn_cal),  ~mse[knn_cal[.,]])}else{mse_wt <- mse}
 
   # calculate pit_local
   pit_val <- purrr::map_dfr(1:length(y_cal_local), ~{
-    pit <- PIT( ycal = y_cal_local[[.]], yhat=y_hat_local[[.]],
-                mse=mse)
-    tibble::tibble(part=glue::glue("part_{.}"),y_cal=y_cal_local[[.]],
-                   y_hat=y_hat_local[[.]], pit, n=n_neighbours)
+
+    if(length(mse_wt)>1){
+    pit=PIT( ycal = y_cal_local[[.]],
+             yhat=y_hat_local[[.]],
+            mse_wt[[.]])
+    }else{
+      pit=PIT( ycal = y_cal_local[[.]],
+                       yhat=y_hat_local[[.]],
+                       mse_wt)
+            }
+
+    tibble::tibble(part=glue::glue("part_{.}"),
+                   y_cal=y_cal_local[[.]],
+                   y_hat=y_hat_local[[.]],
+                   pit,
+                   n=n_neighbours)
   })
   return(pit_val)
 }

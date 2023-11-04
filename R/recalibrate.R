@@ -31,7 +31,7 @@
 #'
 #' @examples
 #'
-#' n <- 100000
+#' n <- 10000
 #' split <- 0.8
 #'
 #' # generating heterocedastic data
@@ -52,7 +52,7 @@
 #' x_cal <- x[(n*split+1):n]
 #' y_cal <- y[(n*split+1):n]
 #'
-#' x_new <- runif(n, 1, 10)
+#' x_new <- runif(n/5, 1, 10)
 #'
 #' model <- lm(y_train ~ x_train)
 #'
@@ -85,6 +85,15 @@ recalibrate <- function (
     epsilon = 1
 ) {
 
+  # entry_cal=x_cal
+  # entry_new=y_cal
+  # output_new_hat=y_hat_new
+  # pit_values=pit
+  # mse=MSE_cal
+  # method="torres"
+  # type="local"
+  # n_neighbours=500
+  # epsilon = 1
 
 m <- length(output_new_hat)
 epk_kernel <- function (x) {.75 * (1 - (x / max(x))^2)}
@@ -99,7 +108,8 @@ epk_kernel <- function (x) {.75 * (1 - (x / max(x))^2)}
           query = matrix(entry_new),
           k = n_neighbours,
           eps = epsilon)
-        wts <- epk_kernel(knn$nn.dists)
+
+        wts <- do.call(rbind, map(1:m, ~{epk_kernel(knn$nn.dists[.,])}))
 
 
       y_samples <-  do.call(
