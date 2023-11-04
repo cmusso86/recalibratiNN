@@ -55,7 +55,7 @@ Both of these methods can be applied either globally or locally.
 }
 \examples{
 
-n <- 100000
+n <- 10000
 split <- 0.8
 
 # generating heterocedastic data
@@ -76,7 +76,7 @@ y_train <- y[1:(n*split)]
 x_cal <- x[(n*split+1):n]
 y_cal <- y[(n*split+1):n]
 
-x_new <- runif(n, 1, 10)
+x_new <- runif(n/5, 1, 10)
 
 model <- lm(y_train ~ x_train)
 

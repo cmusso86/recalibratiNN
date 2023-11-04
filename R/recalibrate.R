@@ -85,15 +85,8 @@ recalibrate <- function (
     epsilon = 1
 ) {
 
-  # entry_cal=x_cal
-  # entry_new=y_cal
-  # output_new_hat=y_hat_new
-  # pit_values=pit
-  # mse=MSE_cal
-  # method="torres"
-  # type="local"
-  # n_neighbours=500
-  # epsilon = 1
+  if(!is.matrix(entry_cal)){entry_cal<-as.matrix(entry_cal)}
+  if(!is.matrix(entry_new)){entry_new<-as.matrix(entry_new)}
 
 m <- length(output_new_hat)
 epk_kernel <- function (x) {.75 * (1 - (x / max(x))^2)}
@@ -104,8 +97,8 @@ epk_kernel <- function (x) {.75 * (1 - (x / max(x))^2)}
     if(type=="local"){
 
         knn <- RANN::nn2(
-          data = matrix(entry_cal),
-          query = matrix(entry_new),
+          data = entry_cal,
+          query = entry_new,
           k = n_neighbours,
           eps = epsilon)
 
