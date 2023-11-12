@@ -2,43 +2,52 @@
 % Please edit documentation in R/recalibrate.R
 \name{recalibrate}
 \alias{recalibrate}
-\title{Obtain recalibrated samples of the predictive distribution.}
+\title{Obtain recalibrated samples of the predictive distribution using Torres et al. (2024) method.}
 \usage{
 recalibrate(
-  entry_cal,
-  entry_new,
-  output_new_hat,
+  yhat_new,
+  yhat_cal = NULL,
+  ycal = NULL,
+  space_cal = NULL,
+  space_new = NULL,
   pit_values,
   mse,
+  cum_prob = c(0.025, 0.5, 0.975),
   method = c("torres", "kuleshov1"),
   type = c("local", "global"),
-  n_neighbours = 1000,
+  p_neighbours = 0.1,
   epsilon = 1
 )
 }
 \arguments{
-\item{entry_cal}{The covariates/features of the calibration/validation
+\item{yhat_new}{Predicted values of the new (test) set}
+
+\item{yhat_cal}{Predicted values of the calibration/validation set. It is only used in the "kuleshov" method.}
+
+\item{space_cal}{The covariates/features of the calibration/validation
 set or any representation of those covariates, such as an intermediate layer or an output layer of a neural network.}
 
-\item{entry_new}{A new set of covariates or other representation of those covariates, provided they are in the same space as the ones in entry_cal.}
-
-\item{output_new_hat}{Predicted values of the new (test) set}
+\item{space_new}{A new set of covariates or other representation of those covariates, provided they are in the same space as the ones in space_cal.}
 
 \item{pit_values}{Global Probability Integral Transform (PIT) values calculated on the calibration set..}
 
-\item{mse}{Mean Squared Error of the calibration/validation set}
+\item{mse}{Mean Squared Error of the calibration/validation set.}
+
+\item{cum_prob}{A numeric vector of length 3 containing the cumulative probabilities to obtain the respective quantiles. Default is set to c(0.025, 0.5, 0.975),
+which extremes corresponds to the usual extremes for a 95\% confidence interval and the central value corresponds to the median.}
 
 \item{method}{Choose one of the two available recalibration methods.}
 
 \item{type}{Choose between local or global calibration.}
 
-\item{n_neighbours}{Number of neighbors for the local calibration. This paramether will be available when choosing local calibration.}
+\item{p_neighbours}{Double between (0,1] that represents the proportion of the x_cal is to be used as the number of neighboors for the KNN. If p_neighbours=1 calibration but weighted by distance. Default is set to 0.1.}
 
 \item{epsilon}{Approximation for the K-nearest neighbors (KNN) method. Default is epsilon = 1, which returns the exact distance. This parameter is available when choosing local calibration.}
 }
 \value{
-A list containing the calibrated predicted mean and samples of the recalibrated predictive distribution.
-For local calibration, the weighted variance and the weights are also provided.
+For the "torres" method, list containing the calibrated predicted mean/variance along with samples
+from the recalibrated predictive distribution with its respective weights.
+In the case of the Kuleshov method, the confidence intervals and median are provided instead of the mean/variance.
 }
 \description{
 This function offers two approaches to obtain samples and the mean of a
@@ -87,10 +96,21 @@ y_hat_new <- predict(model, newdata=data.frame(x_train=x_new))
 
 pit <- PIT_global(ycal=y_cal, yhat= y_hat_cal, mse=MSE_cal)
 
-recalibrated <- recalibrate(
-  entry_cal=x_cal,
-  entry_new=x_new,
-  output_new_hat=y_hat_new,
+recalibrate(
+  space_cal=x_cal,
+  space_new=x_new,
+  y_hat_new=y_hat_new,
+  pit_values=pit,
+  mse= MSE_cal,
+  method="torres",
+  type="local")
+
+recalibrate(
+  yhat_new=y_hat_new,
+  yhat_cal = y_hat_cal,
+  ycal = y_cal,
+  space_cal=x_cal,
+  space_new=x_new,
   pit_values=pit,
   mse= MSE_cal,
   method="torres",

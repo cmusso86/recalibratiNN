@@ -1,5 +1,5 @@
 Package: recalibratiNN
-Title: Quantile Recalibration For Fitted Models
+Title: Quantile Recalibration For Regression Models
 Version: 0.0.0.9000
 Authors@R: 
   c(person(given = "Carolina",
@@ -7,16 +7,22 @@ Authors@R:
            role = c("aut", "cre"),
            email = "cmusso86@gmail.com",
            comment = c(ORCID = "0000-0002-8107-6458")),
-    person(given = "Guilherme",
+     person(given = "Guilherme",
            family = "Rodrigues",
-           role = "ctb"),
-    person(given = "Ricardo",
+           role = c("ctb","ths"),
+           email = "guilhermerodrigues@unb.br",
+           comment = c(ORCID = "0000-0003-2009-4844")),
+     person(given = "Ricardo",
            family = "Torres",
-           role = "ctb"),
-    person(given = "João",
-           family = "Torres",
-           role = "ctb"))
-Description: What the package does (one paragraph).
+           role = c("ctb"),
+           email = "ricardotbreis@gmail.com",
+           comment = c(ORCID = "0009-0000-9100-7125")),
+     person(given = "João",
+           family = "Reis",
+           role = c("ctb"),
+           email = "j.rodriguesreis@gmail.com")
+           )
+Description: The recalibratiNN R package empowers users to enhance the calibration of regression models. It offers global and local calibration visualization tools and provides two distinct recalibration methods: one inspired by Approximate Bayesian Computation (ABC) and the other based on isotonic regression. These methods enable users to adjust model predictions, improving alignment with observed data. By allowing for global and local recalibration, the package ensures precise adjustments tailored to specific data subsets or regions of interest. With recalibratiNN, users can increase the reliability and accuracy of their regression models, making them better suited for real-world applications.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

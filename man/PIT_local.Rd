@@ -10,7 +10,7 @@ PIT_local(
   yhat,
   mse,
   clusters = 6,
-  n_neighbours = 1000,
+  p_neighbours = 0.2,
   PIT = PIT_global
 )
 }
@@ -26,7 +26,7 @@ PIT_local(
 \item{clusters}{Number of partitions to create for local calibration. Centroids calculated by k-means method.
 Default set to 6.}
 
-\item{n_neighbours}{Number of neighboors in the KNN method.}
+\item{p_neighbours}{Proportion of xcal to localize neighboors in the KNN method. Default is 0.2.}
 
 \item{PIT}{function to return the PIT-values. Default set to PIT_global() from this package.}
 }
