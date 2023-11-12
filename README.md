@@ -79,7 +79,7 @@ it fits a uniform distribution.
 gg_PIT_global(pit)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="ggP.png" width="80%" style="display: block; margin: auto;" />
 
 In this case, since we are fiting an lm() to an heterocedastic model,
 the histogram seems shifted indication a misscalibration. In the image
@@ -95,37 +95,29 @@ empirical cumulative distribution.
 gg_QQ_global(pit, y_cal, y_hat, MSE_cal)
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="ggQ.png" width="80%" style="display: block; margin: auto;" />
 
 #### Local Calibration
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
-
-```
+``` r
 pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
 
 gg_PIT_local(pit_local)
 ```
 
-``` r
-gg_PIT_local(pit_local, facet=T)
-```
-
-<img src="plot1PL.png" width="100%" />
+<img src="plot1PL.png" width="80%" style="display: block; margin: auto;" />
 
 Or you can facet the graph:
 
-``` r
-knitr::include_graphics("plot2PL.png")
-```
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;" />
 
-<img src="plot2PL.png" width="100%" />
+<img src="plot2PL.png" width="80%" style="display: block; margin: auto;" />
 
-Alternatevely you can observe the miscalibration in the QQ-graph.
+Alternatively you can observe the miscalibration in the QQ-graph.
 
 ``` r
 gg_QQ_local(pit_local)
 gg_QQ_local(pit_local, facet=T)
 ```
 
-<img src="plotQL1.png" width="100%" /><img src="plotQL2.png" width="100%" />
+<img src="plotQL1.png" width="80%" style="display: block; margin: auto;" /><img src="plotQL2.png" width="80%" style="display: block; margin: auto;" />

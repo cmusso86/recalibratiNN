@@ -9,7 +9,9 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "80%",
+  fig.align = "center"
+  
 )
 ```
 
@@ -81,59 +83,71 @@ head(pit)
 
 Then, one can proceed with visualizing this the histogram and testing if it fits a uniform distribution.
 
-```{r }
+```{r echo=F, message=FALSE, warning=FALSE}
+library(ggplot2)
+ggP <- gg_PIT_global(pit)
+ggsave(plot=ggP, "ggP.png")
+```
+
+
+```{r eval=F}
 gg_PIT_global(pit)
+```
+
+```{r echo=F}
+knitr::include_graphics("ggP.png")
 ```
 
 In this case, since we are fiting an lm() to an heterocedastic model, the histogram seems shifted indication a misscalibration. In the image we also present the p_value from the hispothesis testing of Kolmogorov-Smirnov test, performed with the `ks.test()` function from `stats` package.
 
 One can also want to visualize the miscalibration as QQ-plot-like graph, showing the cumulative predictive distribution in the x-axis versus the empirical cumulative distribution. 
 
-```{r }
+```{r eval=F}
 gg_QQ_global(pit, y_cal, y_hat, MSE_cal)
 ```
 
+```{r, echo=F, message=FALSE, warning=FALSE}
+ggQ <- gg_QQ_global(pit, y_cal, y_hat, MSE_cal)
+ggsave(plot=ggQ, "ggQ.png")
+knitr::include_graphics("ggQ.png")
+```
 
 #### Local Calibration
 
 ```{r echo=F, message=FALSE, warning=FALSE}
-library(ggplot2)
+
 pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
 
-gg_PIT_local(pit_local)
 
-g1pl <- gg_QQ_local(pit_local)
-g2pl <- gg_QQ_local(pit_local, facet=T)
+g1pl <- gg_PIT_local(pit_local)
+g2pl <- gg_PIT_local(pit_local, facet=T)
 
 ggsave(plot=g1pl, "plot1PL.png")
 ggsave(plot=g2pl, "plot2PL.png")
 ```
 
-
-```{ eval=F}
+```{r  eval=F}
 pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
 
 gg_PIT_local(pit_local)
 
 ```
 
-
-```{r eval=F}
-gg_PIT_local(pit_local, facet=T)
-```
-
 ```{r echo=F}
 knitr::include_graphics("plot1PL.png")
-
 ```
 
 Or you can facet the graph:
 
-```{r}
+```{r echo=F}
+gg_PIT_local(pit_local, facet=T)
+```
+
+```{r echo=F}
 knitr::include_graphics("plot2PL.png")
 ```
 
-Alternatevely you can observe the miscalibration in the QQ-graph.
+Alternatively you can observe the miscalibration in the QQ-graph.
 
 ```{r eval=F}
 gg_QQ_local(pit_local)
