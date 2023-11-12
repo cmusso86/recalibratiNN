@@ -34,6 +34,10 @@ devtools::install_github("cmusso86/recalibratiNN")
 
 ## Example
 
+### Diagnosing miscalibration
+
+#### Global Calibration
+
 This is a basic example which shows you how to solve a common problem using the fuction PIT_values() to obtain pit-values for the fitted model for a calibration set.
 
 ```{r example, warning=FALSE}
@@ -82,3 +86,28 @@ gg_PIT_global(pit)
 ```
 
 In this case, since we are fiting an lm() to an heterocedastic model, the histogram seems shifted indication a misscalibration. In the image we also present the p_value from the hispothesis testing of Kolmogorov-Smirnov test, performed with the `ks.test()` function from `stats` package.
+
+One can also want to visualize the miscalibration as QQ-plot-like graph, showing the cumulative predictive distribution in the x-axis versus the empirical cumulative distribution. 
+
+```{r }
+gg_QQ_global(pit, y_cal, y_hat, MSE_cal)
+```
+
+
+#### Local Calibration
+
+```{r}
+pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
+
+gg_PIT_local(pit_local)
+```
+```{r}
+gg_PIT_local(pit_local, facet=T)
+```
+
+```{r}
+gg_QQ_local(pit_local)
+gg_QQ_local(pit_local, fact=T)
+
+```
+

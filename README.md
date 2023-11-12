@@ -24,6 +24,10 @@ devtools::install_github("cmusso86/recalibratiNN")
 
 ## Example
 
+### Diagnosing miscalibration
+
+#### Global Calibration
+
 This is a basic example which shows you how to solve a common problem
 using the fuction PIT_values() to obtain pit-values for the fitted model
 for a calibration set.
@@ -82,3 +86,48 @@ the histogram seems shifted indication a misscalibration. In the image
 we also present the p_value from the hispothesis testing of
 Kolmogorov-Smirnov test, performed with the `ks.test()` function from
 `stats` package.
+
+One can also want to visualize the miscalibration as QQ-plot-like graph,
+showing the cumulative predictive distribution in the x-axis versus the
+empirical cumulative distribution.
+
+``` r
+gg_QQ_global(pit, y_cal, y_hat, MSE_cal)
+```
+
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+#### Local Calibration
+
+``` r
+pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
+
+gg_PIT_local(pit_local)
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+``` r
+gg_PIT_local(pit_local, facet=T)
+#> New names:
+#> • `` -> `...1`
+#> • `` -> `...2`
+#> • `` -> `...3`
+#> • `` -> `...4`
+#> • `` -> `...5`
+#> • `` -> `...6`
+```
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
+``` r
+gg_QQ_local(pit_local)
+```
+
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+``` r
+gg_QQ_local(pit_local, fact=T)
+```
+
+<img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
