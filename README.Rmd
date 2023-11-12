@@ -124,6 +124,8 @@ g2pl <- gg_PIT_local(pit_local, facet=T)
 
 ggsave(plot=g1pl, "plot1PL.png")
 ggsave(plot=g2pl, "plot2PL.png")
+
+
 ```
 
 ```{r  eval=F}
@@ -139,7 +141,7 @@ knitr::include_graphics("plot1PL.png")
 
 Or you can facet the graph:
 
-```{r echo=F}
+```{r eval=F}
 gg_PIT_local(pit_local, facet=T)
 ```
 

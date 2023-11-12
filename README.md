@@ -109,7 +109,9 @@ gg_PIT_local(pit_local)
 
 Or you can facet the graph:
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;" />
+``` r
+gg_PIT_local(pit_local, facet=T)
+```
 
 <img src="plot2PL.png" width="80%" style="display: block; margin: auto;" />
 
