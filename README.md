@@ -115,12 +115,11 @@ gg_PIT_local(pit_local, facet=T)
 
 ``` r
 gg_QQ_local(pit_local)
-```
-
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
-
-``` r
 gg_QQ_local(pit_local, facet=T)
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
+``` r
+knitr::include_graphics("plot1.png")
+```
+
+<img src="plot1.png" width="100%" />

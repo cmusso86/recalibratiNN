@@ -105,9 +105,23 @@ gg_PIT_local(pit_local)
 gg_PIT_local(pit_local, facet=T)
 ```
 
-```{r}
+```{r eval=F}
 gg_QQ_local(pit_local)
 gg_QQ_local(pit_local, facet=T)
 
 ```
+
+```{r echo=F, message=FALSE, warning=FALSE}
+library(ggplot2)
+g1 <- gg_QQ_local(pit_local)
+g2 <- gg_QQ_local(pit_local, facet=T)
+
+ggsave(plot=g1, "plot1.png")
+ggsave(plot=g2, "plot3.png")
+```
+
+```{r echo=F}
+knitr::include_graphics("plot1.png")
+```
+
 
