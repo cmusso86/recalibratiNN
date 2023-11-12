@@ -78,16 +78,18 @@ gg_PIT_local <- function(pit_local,
       runif(n, 0,1)
     }
     parts <- dplyr::pull(unique(pit_local[,1]))
-    ks <-  purrr::map_dfc(parts, ~{
+    ks <-  do.call(cbind, purrr::map(parts, ~{
       times <- dplyr::pull(pit_local[1,5])
       ksn <- round(ks.test(dplyr::pull(pit_local[(pit_local[,1])==.,4]),
                            unif(times))$p.value ,3)
       ksn <- paste0("p-value ",ifelse(ksn<=0.0001,"<0.0001", ksn ))
       rep(ksn, times)
-    })
+    }))
     names(ks) <- parts
     ks_l <- ks |>
-      tidyr::pivot_longer(dplyr::everything())
+      as.data.frame()|>
+      tidyr::pivot_longer(dplyr::everything()) |>
+      suppressMessages()
 
     ks_l <- ks_l |>
       dplyr::arrange(ks_l[,1])|>

@@ -101,13 +101,13 @@ pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
 
 gg_PIT_local(pit_local)
 ```
-```{r}
+```{r warning=F, error=FALSE}
 gg_PIT_local(pit_local, facet=T)
 ```
 
 ```{r}
 gg_QQ_local(pit_local)
-gg_QQ_local(pit_local, fact=T)
+gg_QQ_local(pit_local, facet=T)
 
 ```
 

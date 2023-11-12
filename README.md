@@ -109,13 +109,6 @@ gg_PIT_local(pit_local)
 
 ``` r
 gg_PIT_local(pit_local, facet=T)
-#> New names:
-#> • `` -> `...1`
-#> • `` -> `...2`
-#> • `` -> `...3`
-#> • `` -> `...4`
-#> • `` -> `...5`
-#> • `` -> `...6`
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
@@ -127,7 +120,7 @@ gg_QQ_local(pit_local)
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 ``` r
-gg_QQ_local(pit_local, fact=T)
+gg_QQ_local(pit_local, facet=T)
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
