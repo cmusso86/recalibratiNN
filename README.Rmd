@@ -36,7 +36,7 @@ devtools::install_github("cmusso86/recalibratiNN")
 
 This is a basic example which shows you how to solve a common problem using the fuction PIT_values() to obtain pit-values for the fitted model for a calibration set.
 
-```{r example}
+```{r example, warning=FALSE}
 library(recalibratiNN)
 ## basic example code
 set.seed(42)

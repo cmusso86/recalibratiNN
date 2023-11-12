@@ -30,10 +30,6 @@ for a calibration set.
 
 ``` r
 library(recalibratiNN)
-#> Warning: replacing previous import 'dplyr::lag' by 'stats::lag' when loading
-#> 'recalibratiNN'
-#> Warning: replacing previous import 'dplyr::filter' by 'stats::filter' when
-#> loading 'recalibratiNN'
 ## basic example code
 set.seed(42)
 n <- 10000
