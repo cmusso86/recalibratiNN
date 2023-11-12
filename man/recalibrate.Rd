@@ -20,14 +20,16 @@ recalibrate(
 )
 }
 \arguments{
-\item{yhat_new}{Predicted values of the new (test) set}
+\item{yhat_new}{Predicted values of the new (test) set.}
 
 \item{yhat_cal}{Predicted values of the calibration/validation set. It is only used in the "kuleshov" method.}
 
-\item{space_cal}{The covariates/features of the calibration/validation
+\item{ycal}{True observations of the calibration set. This parameter will be required when used in the Kulheshov method.}
+
+\item{space_cal}{Used in local recalibration. The covariates/features of the calibration/validation
 set or any representation of those covariates, such as an intermediate layer or an output layer of a neural network.}
 
-\item{space_new}{A new set of covariates or other representation of those covariates, provided they are in the same space as the ones in space_cal.}
+\item{space_new}{Used in local recalibration. A new set of covariates or other representation of those covariates, provided they are in the same space as the ones in space_cal.}
 
 \item{pit_values}{Global Probability Integral Transform (PIT) values calculated on the calibration set..}
 
@@ -99,7 +101,7 @@ pit <- PIT_global(ycal=y_cal, yhat= y_hat_cal, mse=MSE_cal)
 recalibrate(
   space_cal=x_cal,
   space_new=x_new,
-  y_hat_new=y_hat_new,
+  yhat_new=y_hat_new,
   pit_values=pit,
   mse= MSE_cal,
   method="torres",

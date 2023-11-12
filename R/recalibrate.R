@@ -4,11 +4,12 @@
 #' This function offers two approaches to obtain samples and the mean of a
 #' recalibrated predictive distribution for any regression model, using Mean Squared Error (MSE) as the loss function.
 #'
-#' @param space_cal The covariates/features of the calibration/validation
-#' set or any representation of those covariates, such as an intermediate layer or an output layer of a neural network.
-#' @param space_new A new set of covariates or other representation of those covariates, provided they are in the same space as the ones in space_cal.
-#' @param yhat_new Predicted values of the new (test) set
+#' @param yhat_new Predicted values of the new (test) set.
 #' @param yhat_cal Predicted values of the calibration/validation set. It is only used in the "kuleshov" method.
+#' @param ycal True observations of the calibration set. This parameter will be required when used in the Kulheshov method.
+#' @param space_cal Used in local recalibration. The covariates/features of the calibration/validation
+#' set or any representation of those covariates, such as an intermediate layer or an output layer of a neural network.
+#' @param space_new Used in local recalibration. A new set of covariates or other representation of those covariates, provided they are in the same space as the ones in space_cal.
 #' @param pit_values Global Probability Integral Transform (PIT) values calculated on the calibration set..
 #' @param mse Mean Squared Error of the calibration/validation set.
 #' @param cum_prob A numeric vector of length 3 containing the cumulative probabilities to obtain the respective quantiles. Default is set to c(0.025, 0.5, 0.975),
@@ -22,7 +23,7 @@
 #' from the recalibrated predictive distribution with its respective weights.
 #' In the case of the Kuleshov method, the confidence intervals and median are provided instead of the mean/variance.
 #'
-#'
+#' @importFrom magrittr %>%
 #' @export
 #'
 #' @details
@@ -71,7 +72,7 @@
 #' recalibrate(
 #'   space_cal=x_cal,
 #'   space_new=x_new,
-#'   y_hat_new=y_hat_new,
+#'   yhat_new=y_hat_new,
 #'   pit_values=pit,
 #'   mse= MSE_cal,
 #'   method="torres",
@@ -104,19 +105,6 @@ recalibrate <- function (
     epsilon = 1
 ) {
 
-
-  # space_cal=x_cal
-  # space_new=x_new
-  # yhat_new=y_hat_new
-  # yhat_cal=y_hat_cal
-  # ycal=y_cal
-  # pit_values=pit
-  # mse=MSE_cal
-  # cum_prob = c(0.025, 0.5, 0.975)
-  # method="kuleshov1"
-  # type="local"
-  # p_neighbours=0.5
-  # epsilon = 1
 
   if(type=="local"&(is.null(space_cal)|is.null(space_new))){stop("Local calibration needs a space both in the calibration and test/new set to find the nearst neighbors.")}
   if(method=="kuleshov1"&(is.null(ycal))){stop("Kuleshov calibration needs the ycal observations to calculate empirical distribution of pit-values.")}
@@ -185,7 +173,7 @@ recalibrate <- function (
       y_samples_calibrated <-do.call(rbind,
                           purrr::map(1:m, ~qnorm(
                             pit_values,
-                            mean = y_hat_new[.],
+                            mean = yhat_new[.],
                             sd = sqrt(mse))))
 
       N <- ncol(y_samples_calibrated)
@@ -215,7 +203,7 @@ recalibrate <- function (
 
    wts <- do.call(rbind, map(1:m, ~{epk_kernel(knn$nn.dists[.,])}))
 
-   quantil_local <- do.call(rbind, map(1:length(y_hat_new), ~{
+   quantil_local <- do.call(rbind, map(1:length(yhat_new), ~{
 
     pit_local <- pit_values[knn$nn.idx[.,]]
     y_hat_cal_local <- yhat_cal[knn$nn.idx[.,]]
@@ -229,26 +217,23 @@ recalibrate <- function (
         c(estim, emp)
       } ))
 
-    ir_local <- isoreg(df[,1], df[,2])
+    ir_local <- stats::isoreg(df[,1], df[,2])
 
     df_trat <- df %>%
       as.data.frame()%>%
-      rename(estim=V1,
-             emp=V2) %>%
-      arrange(estim) %>%
-      mutate(recal=as.stepfun(ir_local)(estim))
-
-    df_trat %>%
-      dplyr::mutate(dif1=abs(recal-cum_prob[1]),
-                    dif2=abs(recal-cum_prob[2]),
-                    dif3=abs(recal-cum_prob[3])) %>%
-      dplyr::filter(dif1==min(dif1)|
-                      dif2==min(dif2)|
-                      dif3==min(dif3)) %>%
-      dplyr::distinct(dif1, .keep_all = T) %>%
-      dplyr:: distinct(dif2, .keep_all = T) %>%
-      dplyr:: distinct(dif3, .keep_all = T) %>%
-      dplyr::pull(estim)
+      mutate(recal=as.stepfun(ir_local)(.[[1]])) %>%
+      dplyr::mutate(dif1=abs(.[[3]]-cum_prob[1]),
+                    dif2=abs(.[[3]]-cum_prob[2]),
+                    dif3=abs(.[[3]]-cum_prob[3])) %>%
+      dplyr::filter(.[[4]]==min(.[[4]])|
+                      .[[5]]==min(.[[5]])|
+                      .[[6]]==min(.[[6]])) %>%
+      dplyr::distinct(.[[4]], .keep_all = T) %>%
+      dplyr:: distinct(.[[5]], .keep_all = T) %>%
+      dplyr:: distinct(.[[6]], .keep_all = T) %>%
+      dplyr::select(1) %>%
+      dplyr::arrange(.[[1]]) %>%
+      dplyr::pull()
 
 
 }))
@@ -279,27 +264,25 @@ recalibrate <- function (
 
       ir <- stats::isoreg(df[,1], df[,2])
 
-      df_trat <- df %>%
-        as.data.frame() %>%
-        dplyr::rename(estim=V1,
-               emp=V2) %>%
-        dplyr::arrange(estim) %>%
-        dplyr::mutate(recal=stats::as.stepfun(ir)(estim))
 
      # find correct probability
 
+      y_quantis <- df %>%
+        as.data.frame()%>%
+        mutate(recal=as.stepfun(ir)(.[[1]])) %>%
+        dplyr::mutate(dif1=abs(.[[3]]-cum_prob[1]),
+                      dif2=abs(.[[3]]-cum_prob[2]),
+                      dif3=abs(.[[3]]-cum_prob[3])) %>%
+        dplyr::filter(.[[4]]==min(.[[4]])|
+                        .[[5]]==min(.[[5]])|
+                        .[[6]]==min(.[[6]])) %>%
+        dplyr::distinct(.[[4]], .keep_all = T) %>%
+        dplyr:: distinct(.[[5]], .keep_all = T) %>%
+        dplyr:: distinct(.[[6]], .keep_all = T) %>%
+        dplyr::select(1) %>%
+        dplyr::arrange(.[[1]]) %>%
+        dplyr::pull()
 
-      y_quantis <- df_trat %>%
-        dplyr::mutate(dif1=abs(recal-cum_prob[1]),
-                      dif2=abs(recal-cum_prob[2]),
-                      dif3=abs(recal-cum_prob[3])) %>%
-        dplyr::filter(dif1==min(dif1)|
-                        dif2==min(dif2)|
-                        dif3==min(dif3)) %>%
-        dplyr::distinct(dif1, .keep_all = T) %>%
-        dplyr:: distinct(dif2, .keep_all = T) %>%
-        dplyr:: distinct(dif3, .keep_all = T) %>%
-        dplyr::pull(estim)
 
      quantiles <- do.call(rbind,
                           purrr::map(1:length(yhat_new),
