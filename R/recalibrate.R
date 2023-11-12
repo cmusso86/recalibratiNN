@@ -9,18 +9,21 @@
 #' @param ycal True observations of the calibration set. This parameter will be required when used in the Kulheshov method.
 #' @param space_cal Used in local recalibration. The covariates/features of the calibration/validation
 #' set or any representation of those covariates, such as an intermediate layer or an output layer of a neural network.
-#' @param space_new Used in local recalibration. A new set of covariates or other representation of those covariates, provided they are in the same space as the ones in space_cal.
-#' @param pit_values Global Probability Integral Transform (PIT) values calculated on the calibration set..
+#' @param space_new Used in local recalibration. A new set of covariates or other representation of those covariates,
+#'  provided they are in the same space as the ones in space_cal.
+#' @param pit_values Global Probability Integral Transform (PIT) values calculated on the calibration set.
 #' @param mse Mean Squared Error of the calibration/validation set.
 #' @param cum_prob A numeric vector of length 3 containing the cumulative probabilities to obtain the respective quantiles. Default is set to c(0.025, 0.5, 0.975),
 #'  which extremes corresponds to the usual extremes for a 95% confidence interval and the central value corresponds to the median.
-#' @param p_neighbours Double between (0,1] that represents the proportion of the x_cal is to be used as the number of neighboors for the KNN. If p_neighbours=1 calibration but weighted by distance. Default is set to 0.1.
-#' @param epsilon Approximation for the K-nearest neighbors (KNN) method. Default is epsilon = 1, which returns the exact distance. This parameter is available when choosing local calibration.
+#' @param p_neighbours Double between (0,1] that represents the proportion of the x_cal is to be used as the number of neighboors for the KNN.
+#' If p_neighbours=1 calibration but weighted by distance. Default is set to 0.1.
+#' @param epsilon Approximation for the K-nearest neighbors (KNN) method. Default is epsilon = 0, which returns the exact distance. This parameter is available when choosing local calibration.
 #' @param method Choose one of the two available recalibration methods.
 #' @param type Choose between local or global calibration.
 #'
 #' @return For the "torres" method, list containing the calibrated predicted mean/variance along with samples
-#' from the recalibrated predictive distribution with its respective weights.
+#' from the recalibrated predictive distribution with its respective weights. Weights are calculated with an Epanechnikov kernel
+#' over the distances obtained from KNN.
 #' In the case of the Kuleshov method, the confidence intervals and median are provided instead of the mean/variance.
 #'
 #' @importFrom magrittr %>%
@@ -102,7 +105,7 @@ recalibrate <- function (
     method=c("torres","kuleshov1"),
     type=c("local", "global"),
     p_neighbours=0.1,
-    epsilon = 1
+    epsilon = 0
 ) {
 
 
@@ -141,7 +144,7 @@ recalibrate <- function (
       y_samples_wt <- do.call(rbind,
                               map(1:nrow(y_samples_raw), ~{
                                 sample(y_samples_raw[.,],
-                                       prob =knn$nn.dists[.,],
+                                       prob =wts[.,],
                                        replace=T)
       }))
 
@@ -176,9 +179,9 @@ recalibrate <- function (
                             mean = yhat_new[.],
                             sd = sqrt(mse))))
 
-      N <- ncol(y_samples_calibrated)
-      y_hat_cal <- rowSums(y_samples_calibrated)/N
-      y_var_cal <- rowSums((y_samples_calibrated-y_hat_cal)^2)/(N-1)
+     N <- ncol(y_samples_calibrated)
+     y_hat_cal <- rowSums(y_samples_calibrated)/N
+     y_var_cal <- rowSums((y_samples_calibrated-y_hat_cal)^2)/(N-1)
 
       return(
         list(

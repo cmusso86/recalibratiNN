@@ -16,7 +16,7 @@ recalibrate(
   method = c("torres", "kuleshov1"),
   type = c("local", "global"),
   p_neighbours = 0.1,
-  epsilon = 1
+  epsilon = 0
 )
 }
 \arguments{
@@ -29,9 +29,10 @@ recalibrate(
 \item{space_cal}{Used in local recalibration. The covariates/features of the calibration/validation
 set or any representation of those covariates, such as an intermediate layer or an output layer of a neural network.}
 
-\item{space_new}{Used in local recalibration. A new set of covariates or other representation of those covariates, provided they are in the same space as the ones in space_cal.}
+\item{space_new}{Used in local recalibration. A new set of covariates or other representation of those covariates,
+provided they are in the same space as the ones in space_cal.}
 
-\item{pit_values}{Global Probability Integral Transform (PIT) values calculated on the calibration set..}
+\item{pit_values}{Global Probability Integral Transform (PIT) values calculated on the calibration set.}
 
 \item{mse}{Mean Squared Error of the calibration/validation set.}
 
@@ -42,13 +43,15 @@ which extremes corresponds to the usual extremes for a 95\% confidence interval 
 
 \item{type}{Choose between local or global calibration.}
 
-\item{p_neighbours}{Double between (0,1] that represents the proportion of the x_cal is to be used as the number of neighboors for the KNN. If p_neighbours=1 calibration but weighted by distance. Default is set to 0.1.}
+\item{p_neighbours}{Double between (0,1] that represents the proportion of the x_cal is to be used as the number of neighboors for the KNN.
+If p_neighbours=1 calibration but weighted by distance. Default is set to 0.1.}
 
-\item{epsilon}{Approximation for the K-nearest neighbors (KNN) method. Default is epsilon = 1, which returns the exact distance. This parameter is available when choosing local calibration.}
+\item{epsilon}{Approximation for the K-nearest neighbors (KNN) method. Default is epsilon = 0, which returns the exact distance. This parameter is available when choosing local calibration.}
 }
 \value{
 For the "torres" method, list containing the calibrated predicted mean/variance along with samples
-from the recalibrated predictive distribution with its respective weights.
+from the recalibrated predictive distribution with its respective weights. Weights are calculated with an Epanechnikov kernel
+over the distances obtained from KNN.
 In the case of the Kuleshov method, the confidence intervals and median are provided instead of the mean/variance.
 }
 \description{
