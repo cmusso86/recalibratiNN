@@ -9,7 +9,8 @@
 This package aims to provide post processing methods to recalibrate
 fited models.
 
-![](man/figures/recalibratiNN.png)
+<img src="man/figures/recalibratiNN.png" style="image-align: center;"
+width="200" />
 
 ## Installation
 
