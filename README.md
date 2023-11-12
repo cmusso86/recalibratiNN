@@ -118,8 +118,4 @@ gg_QQ_local(pit_local)
 gg_QQ_local(pit_local, facet=T)
 ```
 
-``` r
-knitr::include_graphics("plot1.png")
-```
-
-<img src="plot1.png" width="100%" />
+<img src="plot1.png" width="100%" /><img src="plot2.png" width="100%" />

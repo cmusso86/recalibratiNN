@@ -117,11 +117,12 @@ g1 <- gg_QQ_local(pit_local)
 g2 <- gg_QQ_local(pit_local, facet=T)
 
 ggsave(plot=g1, "plot1.png")
-ggsave(plot=g2, "plot3.png")
+ggsave(plot=g2, "plot2.png")
 ```
 
 ```{r echo=F}
 knitr::include_graphics("plot1.png")
+knitr::include_graphics("plot2.png")
 ```
 
 
