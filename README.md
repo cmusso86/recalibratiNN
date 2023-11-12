@@ -9,7 +9,7 @@
 This package aims to provide post processing methods to recalibrate
 fited models.
 
-<img src="man/figures/recalibratiNN.png" width="407" />library(devtools)
+![](man/figures/recalibratiNN.png)
 
 ## Installation
 
@@ -29,57 +29,59 @@ for a calibration set.
 
 ``` r
 library(recalibratiNN)
+#> Warning: replacing previous import 'dplyr::lag' by 'stats::lag' when loading
+#> 'recalibratiNN'
+#> Warning: replacing previous import 'dplyr::filter' by 'stats::filter' when
+#> loading 'recalibratiNN'
 ## basic example code
+set.seed(42)
+n <- 10000
+split <- 0.8
 
-n = 100000
-
+# generating heterocedastic data
 mu <- function(x1){
- 10 + 5*x1^2
- }
+10 + 5*x1^2
+}
 
- sigma_v <- function(x1){
- 30*x1
- }
- 
-x <- runif(n, 2, 20)
+sigma_v <- function(x1){
+30*x1
+}
+
+# slipting data 
+
+x <- runif(n, 1, 10)
 y <- rnorm(n, mu(x), sigma_v(x))
 
-x_test <- x[1:80000]
-y_test <- y[1:80000]
+x_train <- x[1:(n*split)]
+y_train <- y[1:(n*split)]
 
-x_cal <- x[80001:100000]
-y_cal <- y[80001:100000]
+x_cal <- x[(n*split+1):n]
+y_cal <- y[(n*split+1):n]
 
-mod <- lm(y_test ~ x_test)
+# fitting a simple linear model
+model <- lm(y_train ~ x_train)
 
-cdf <- CDF_model_lm(x_cal=x_cal, model=mod)
-pit <- PIT_values_lm( y_cal, cdf)
+y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
+
+MSE_cal <- mean((y_hat - y_cal)^2)
+
+pit <- PIT_global(ycal=y_cal, yhat=y_hat, mse=MSE_cal)
+
 head(pit)
-#> [1] 0.2153658 0.5336155 0.9960953 0.2692699 0.8388668 0.3277079
+#> [1] 0.04551257 0.42522358 0.81439164 0.69119416 0.44043239 0.99770918
 ```
 
-Then, one can proceed with visualizin this the histogram and testing if
+Then, one can proceed with visualizing this the histogram and testing if
 it fits a uniform distribution.
 
 ``` r
-hist(pit)
+gg_PIT_global(pit)
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
-In this case, since we are fiting an lm(0 to an heterocedastic model,
-the histogram seems shifted indication a misscalibration. You’ll still
-need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-`devtools::build_readme()` is handy for this.
-
-You can also test if these values fit a uniform distribution.
-
-    #> 
-    #>  Asymptotic two-sample Kolmogorov-Smirnov test
-    #> 
-    #> data:  pit and runif(10000, -1, 1)
-    #> D = 0.5023, p-value < 2.2e-16
-    #> alternative hypothesis: two-sided
-
-in this case we see the distribution doest seem to fit an uniform
-distribution.
+In this case, since we are fiting an lm() to an heterocedastic model,
+the histogram seems shifted indication a misscalibration. In the image
+we also present the p_value from the hispothesis testing of
+Kolmogorov-Smirnov test, performed with the `ks.test()` function from
+`stats` package.
