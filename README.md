@@ -20,28 +20,8 @@ You can install the development version of recalibratiNN from
 ``` r
 # install.packages("devtools")
 devtools::install_github("cmusso86/recalibratiNN")
-#> Using github PAT from envvar GITHUB_PAT
-#> Downloading GitHub repo cmusso86/recalibratiNN@HEAD
-#> stringi (1.7.12 -> 1.8.1) [CRAN]
-#> Installing 1 packages: stringi
-#> 
-#> The downloaded binary packages are in
-#>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmpuDoAXH/downloaded_packages
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpuDoAXH/remotes114c7299a285a/cmusso86-recalibratiNN-8e161a3/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpuDoAXH/remotes114c7299a285a/cmusso86-recalibratiNN-8e161a3/DESCRIPTION’
-#>   ─  preparing ‘recalibratiNN’:
-#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
-#>   ─  checking for LF line-endings in source and make files and shell scripts
-#>   ─  checking for empty or unneeded directories
-#>   ─  building ‘recalibratiNN_0.0.0.9000.tar.gz’
-#>      
-#> 
 
 library(recalibratiNN)
-#> Warning: replacing previous import 'dplyr::lag' by 'stats::lag' when loading
-#> 'recalibratiNN'
-#> Warning: replacing previous import 'dplyr::filter' by 'stats::filter' when
-#> loading 'recalibratiNN'
 ```
 
 Alternately, one can use the `pacman` package to both install and
@@ -49,7 +29,6 @@ download.
 
 ``` r
 if(!require(pacman)) install.packages("pacman")
-#> Loading required package: pacman
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
 ```
 

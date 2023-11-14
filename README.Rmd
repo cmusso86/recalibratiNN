@@ -29,7 +29,7 @@ This package aims to provide post processing methods to recalibrate fitted Gauss
 
 You can install the development version of recalibratiNN from [GitHub](https://github.com/) with:
 
-``` {r}
+``` {r, eval=F}
 # install.packages("devtools")
 devtools::install_github("cmusso86/recalibratiNN")
 
@@ -38,7 +38,7 @@ library(recalibratiNN)
 
 Alternately, one can use the `pacman` package to both install and download. 
 
-```{r}
+```{r, message=F, warning=FALSE}
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
 ```
