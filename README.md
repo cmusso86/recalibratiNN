@@ -21,8 +21,21 @@ You can install the development version of recalibratiNN from
 # install.packages("devtools")
 devtools::install_github("cmusso86/recalibratiNN")
 #> Using github PAT from envvar GITHUB_PAT
-#> Skipping install of 'recalibratiNN' from a github remote, the SHA1 (14be5faa) has not changed since last install.
-#>   Use `force = TRUE` to force installation
+#> Downloading GitHub repo cmusso86/recalibratiNN@HEAD
+#> stringi (1.7.12 -> 1.8.1) [CRAN]
+#> Installing 1 packages: stringi
+#> 
+#> The downloaded binary packages are in
+#>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmpuDoAXH/downloaded_packages
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpuDoAXH/remotes114c7299a285a/cmusso86-recalibratiNN-8e161a3/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpuDoAXH/remotes114c7299a285a/cmusso86-recalibratiNN-8e161a3/DESCRIPTION’
+#>   ─  preparing ‘recalibratiNN’:
+#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>   ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>   ─  building ‘recalibratiNN_0.0.0.9000.tar.gz’
+#>      
+#> 
 
 library(recalibratiNN)
 #> Warning: replacing previous import 'dplyr::lag' by 'stats::lag' when loading
@@ -110,7 +123,7 @@ it fits a uniform distribution.
 gg_PIT_global(pit)
 ```
 
-<img src="ggP.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/ggP.png" width="80%" style="display: block; margin: auto;" />
 
 In this case, since we are fiting an lm() to an heterocedastic model,
 the histogram seems shifted indication a misscalibration. In the image
