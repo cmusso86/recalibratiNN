@@ -12,11 +12,11 @@ recalibrate(
   space_new = NULL,
   pit_values,
   mse,
-  cum_prob = c(0.025, 0.5, 0.975),
   method = c("torres", "kuleshov1"),
   type = c("local", "global"),
   p_neighbours = 0.1,
-  epsilon = 0
+  epsilon = 0,
+  alpha = 0.05
 )
 }
 \arguments{
@@ -34,9 +34,7 @@ provided they are in the same space as the ones in space_cal.}
 
 \item{pit_values}{Global Probability Integral Transform (PIT) values calculated on the calibration set.}
 
-\item{mse}{Mean Squared Error of the calibration/validation set.}
-
-\item{cum_prob}{A numeric vector of length 3 containing the cumulative probabilities to obtain the respective quantiles. Default is set to c(0.025, 0.5, 0.975),
+\item{mse}{Mean Squared Error of the calibration/validation set.
 which extremes corresponds to the usual extremes for a 95\% confidence interval and the central value corresponds to the median.}
 
 \item{method}{Choose one of the two available recalibration methods.}
@@ -47,6 +45,8 @@ which extremes corresponds to the usual extremes for a 95\% confidence interval 
 If p_neighbours=1 calibration but weighted by distance. Default is set to 0.1.}
 
 \item{epsilon}{Approximation for the K-nearest neighbors (KNN) method. Default is epsilon = 0, which returns the exact distance. This parameter is available when choosing local calibration.}
+
+\item{alpha}{the values to calculate the lower and upper levels of the Confidence Interval. Default is set to 0.5.}
 }
 \value{
 For the "torres" method, list containing the calibrated predicted mean/variance along with samples

@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-This package aims to provide post processing methods to recalibrate fited models.
+This package aims to provide post processing methods to recalibrate fitted Gaussian models.
 
 ![](man/figures/recalibratiNN.png){style="image-align: center;" width="200"}
 
@@ -29,10 +29,20 @@ This package aims to provide post processing methods to recalibrate fited models
 
 You can install the development version of recalibratiNN from [GitHub](https://github.com/) with:
 
-``` r
+``` {r}
 # install.packages("devtools")
 devtools::install_github("cmusso86/recalibratiNN")
+
+library(recalibratiNN)
 ```
+
+Alternately, one can use the `pacman` package to both install and download. 
+
+```{r}
+if(!require(pacman)) install.packages("pacman")
+pacman::p_load_current_gh("cmusso86/recalibratiNN")
+```
+
 
 ## Example
 
@@ -40,16 +50,20 @@ devtools::install_github("cmusso86/recalibratiNN")
 
 #### Global Calibration
 
-This is a basic example which shows you how to solve a common problem using the fuction PIT_values() to obtain pit-values for the fitted model for a calibration set.
+This is a basic example which shows you how to solve a common problem of miscalibration. 
+To do so, we created an heterocedastic model and fitted with a simple linear regression.   
 
 ```{r example, warning=FALSE}
 library(recalibratiNN)
+
 ## basic example code
+
+
 set.seed(42)
 n <- 10000
 split <- 0.8
 
-# generating heterocedastic data
+# Auxiliary functions
 mu <- function(x1){
 10 + 5*x1^2
 }
@@ -58,11 +72,13 @@ sigma_v <- function(x1){
 30*x1
 }
 
-# slipting data 
+# generating heterocedastic data (true model)
 
 x <- runif(n, 1, 10)
 y <- rnorm(n, mu(x), sigma_v(x))
 
+
+# slipting data 
 x_train <- x[1:(n*split)]
 y_train <- y[1:(n*split)]
 
@@ -71,7 +87,14 @@ y_cal <- y[(n*split+1):n]
 
 # fitting a simple linear model
 model <- lm(y_train ~ x_train)
+```
 
+The points, the true mean and the regression can be observed in the graph below.
+
+
+
+using the fuction PIT_values() to obtain pit-values for the fitted model for a calibration set.
+```{r}
 y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
 
 MSE_cal <- mean((y_hat - y_cal)^2)
@@ -86,7 +109,7 @@ Then, one can proceed with visualizing this the histogram and testing if it fits
 ```{r echo=F, message=FALSE, warning=FALSE}
 library(ggplot2)
 ggP <- gg_PIT_global(pit)
-ggsave(plot=ggP, "ggP.png")
+ggsave(plot=ggP, "man/figures/ggP.png")
 ```
 
 
@@ -108,8 +131,8 @@ gg_QQ_global(pit, y_cal, y_hat, MSE_cal)
 
 ```{r, echo=F, message=FALSE, warning=FALSE}
 ggQ <- gg_QQ_global(pit, y_cal, y_hat, MSE_cal)
-ggsave(plot=ggQ, "ggQ.png")
-knitr::include_graphics("ggQ.png")
+ggsave(plot=ggQ, "man/figures/ggQ.png")
+knitr::include_graphics("man/figures/ggQ.png")
 ```
 
 #### Local Calibration
@@ -122,8 +145,8 @@ pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
 g1pl <- gg_PIT_local(pit_local)
 g2pl <- gg_PIT_local(pit_local, facet=T)
 
-ggsave(plot=g1pl, "plot1PL.png")
-ggsave(plot=g2pl, "plot2PL.png")
+ggsave(plot=g1pl, "man/figures/plot1PL.png")
+ggsave(plot=g2pl, "man/figures/plot2PL.png")
 
 
 ```
@@ -136,7 +159,7 @@ gg_PIT_local(pit_local)
 ```
 
 ```{r echo=F}
-knitr::include_graphics("plot1PL.png")
+knitr::include_graphics("man/figures/plot1PL.png")
 ```
 
 Or you can facet the graph:
@@ -146,7 +169,7 @@ gg_PIT_local(pit_local, facet=T)
 ```
 
 ```{r echo=F}
-knitr::include_graphics("plot2PL.png")
+knitr::include_graphics("man/figures/plot2PL.png")
 ```
 
 Alternatively you can observe the miscalibration in the QQ-graph.
@@ -162,13 +185,13 @@ gg_QQ_local(pit_local, facet=T)
 g1ql <- gg_QQ_local(pit_local)
 g2ql <- gg_QQ_local(pit_local, facet=T)
 
-ggsave(plot=g1ql, "plotQL1.png")
-ggsave(plot=g2ql, "plotQL2.png")
+ggsave(plot=g1ql, "man/figures/plotQL1.png")
+ggsave(plot=g2ql, "man/figures/plotQL2.png")
 ```
 
 ```{r echo=F}
-knitr::include_graphics("plotQL1.png")
-knitr::include_graphics("plotQL2.png")
+knitr::include_graphics("man/figures/plotQL1.png")
+knitr::include_graphics("man/figures/plotQL2.png")
 ```
 
 

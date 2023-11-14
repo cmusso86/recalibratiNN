@@ -13,14 +13,13 @@
 #'  provided they are in the same space as the ones in space_cal.
 #' @param pit_values Global Probability Integral Transform (PIT) values calculated on the calibration set.
 #' @param mse Mean Squared Error of the calibration/validation set.
-#' @param cum_prob A numeric vector of length 3 containing the cumulative probabilities to obtain the respective quantiles. Default is set to c(0.025, 0.5, 0.975),
 #'  which extremes corresponds to the usual extremes for a 95% confidence interval and the central value corresponds to the median.
 #' @param p_neighbours Double between (0,1] that represents the proportion of the x_cal is to be used as the number of neighboors for the KNN.
 #' If p_neighbours=1 calibration but weighted by distance. Default is set to 0.1.
 #' @param epsilon Approximation for the K-nearest neighbors (KNN) method. Default is epsilon = 0, which returns the exact distance. This parameter is available when choosing local calibration.
 #' @param method Choose one of the two available recalibration methods.
 #' @param type Choose between local or global calibration.
-#'
+#' @param alpha the values to calculate the lower and upper levels of the Confidence Interval. Default is set to 0.5.
 #' @return For the "torres" method, list containing the calibrated predicted mean/variance along with samples
 #' from the recalibrated predictive distribution with its respective weights. Weights are calculated with an Epanechnikov kernel
 #' over the distances obtained from KNN.
@@ -93,7 +92,7 @@
 #'   type="local")
 #'
 
-recalibrate <- function (
+recalibrate <- function(
     yhat_new,
     yhat_cal=NULL,
     ycal = NULL,
@@ -101,12 +100,14 @@ recalibrate <- function (
     space_new=NULL,
     pit_values,
     mse,
-    cum_prob = c(0.025, 0.5, 0.975),
     method=c("torres","kuleshov1"),
     type=c("local", "global"),
     p_neighbours=0.1,
-    epsilon = 0
+    epsilon = 0,
+    alpha=0.05
 ) {
+
+
 
 
   if(type=="local"&(is.null(space_cal)|is.null(space_new))){stop("Local calibration needs a space both in the calibration and test/new set to find the nearst neighbors.")}
@@ -144,14 +145,20 @@ recalibrate <- function (
       y_samples_wt <- do.call(rbind,
                               map(1:nrow(y_samples_raw), ~{
                                 sample(y_samples_raw[.,],
+                                       size=nrow(y_samples_raw),
                                        prob =wts[.,],
                                        replace=T)
       }))
 
+      y_hat_cal2 <-  purrr::map_dbl(1:m,~{
+        mean(
+          x = y_samples_wt[.,],
+          na.rm = T)})
 
       y_hat_cal <-  purrr::map_dbl(1:m,~{
-         mean(
-          x = y_samples_wt[.,],
+         weighted.mean(
+          x = y_samples_raw[.,],
+          w=wts[.,],
           na.rm = T)})
 
       y_var_cal <-  purrr::map_dbl(1:m,~{
@@ -214,29 +221,32 @@ recalibrate <- function (
 
     df <- do.call(rbind, map(1:length(pit_local), ~{
         emp <- mean(ycal <= qnorm(p=pit_local[.] ,
-                                   mean=yhat_cal,
+                                   mean=y_hat_cal_local,
                                    sd=sqrt(mse)))
         estim <- pit_local[.]
         c(estim, emp)
       } ))
 
-    ir_local <- stats::isoreg(df[,1], df[,2])
+    ir_local <-as.stepfun( stats::isoreg(df[,1], df[,2]))
+    lapply(c((alpha/2), .5, (1-(alpha/2))), ir_local) %>% unlist()
 
-    df_trat <- df %>%
-      as.data.frame()%>%
-      mutate(recal=as.stepfun(ir_local)(.[[1]])) %>%
-      dplyr::mutate(dif1=abs(.[[3]]-cum_prob[1]),
-                    dif2=abs(.[[3]]-cum_prob[2]),
-                    dif3=abs(.[[3]]-cum_prob[3])) %>%
-      dplyr::filter(.[[4]]==min(.[[4]])|
-                      .[[5]]==min(.[[5]])|
-                      .[[6]]==min(.[[6]])) %>%
-      dplyr::distinct(.[[4]], .keep_all = T) %>%
-      dplyr:: distinct(.[[5]], .keep_all = T) %>%
-      dplyr:: distinct(.[[6]], .keep_all = T) %>%
-      dplyr::select(1) %>%
-      dplyr::arrange(.[[1]]) %>%
-      dplyr::pull()
+
+
+    # df_trat <- df %>%
+    #   as.data.frame()%>%
+    #   mutate(recal=as.stepfun(ir_local)(.[[1]])) %>%
+    #   dplyr::mutate(dif1=abs(.[[3]]-cum_prob[1]),
+    #                 dif2=abs(.[[3]]-cum_prob[2]),
+    #                 dif3=abs(.[[3]]-cum_prob[3])) %>%
+    #   dplyr::filter(.[[4]]==min(.[[4]])|
+    #                   .[[5]]==min(.[[5]])|
+    #                   .[[6]]==min(.[[6]])) %>%
+    #   dplyr::distinct(.[[4]], .keep_all = T) %>%
+    #   dplyr:: distinct(.[[5]], .keep_all = T) %>%
+    #   dplyr:: distinct(.[[6]], .keep_all = T) %>%
+    #   dplyr::select(1) %>%
+    #   dplyr::arrange(.[[1]]) %>%
+    #   dplyr::pull()
 
 
 }))
@@ -265,26 +275,27 @@ recalibrate <- function (
 
       # train isotonic regression
 
-      ir <- stats::isoreg(df[,1], df[,2])
+      ir <- as.stepfun(stats::isoreg(df[,1], df[,2]))
 
 
      # find correct probability
 
-      y_quantis <- df %>%
-        as.data.frame()%>%
-        mutate(recal=as.stepfun(ir)(.[[1]])) %>%
-        dplyr::mutate(dif1=abs(.[[3]]-cum_prob[1]),
-                      dif2=abs(.[[3]]-cum_prob[2]),
-                      dif3=abs(.[[3]]-cum_prob[3])) %>%
-        dplyr::filter(.[[4]]==min(.[[4]])|
-                        .[[5]]==min(.[[5]])|
-                        .[[6]]==min(.[[6]])) %>%
-        dplyr::distinct(.[[4]], .keep_all = T) %>%
-        dplyr:: distinct(.[[5]], .keep_all = T) %>%
-        dplyr:: distinct(.[[6]], .keep_all = T) %>%
-        dplyr::select(1) %>%
-        dplyr::arrange(.[[1]]) %>%
-        dplyr::pull()
+      y_quantis <- lapply(c((alpha/2), 0.5, (1-(alpha/2))), ir) %>% unlist()
+      # y_quantis <- df %>%
+      #   as.data.frame()%>%
+      #   mutate(recal=as.stepfun(ir)(.[[1]])) %>%
+      #   dplyr::mutate(dif1=abs(.[[3]]-cum_prob[1]),
+      #                 dif2=abs(.[[3]]-cum_prob[2]),
+      #                 dif3=abs(.[[3]]-cum_prob[3])) %>%
+      #   dplyr::filter(.[[4]]==min(.[[4]])|
+      #                   .[[5]]==min(.[[5]])|
+      #                   .[[6]]==min(.[[6]])) %>%
+      #   dplyr::distinct(.[[4]], .keep_all = T) %>%
+      #   dplyr:: distinct(.[[5]], .keep_all = T) %>%
+      #   dplyr:: distinct(.[[6]], .keep_all = T) %>%
+      #   dplyr::select(1) %>%
+      #   dplyr::arrange(.[[1]]) %>%
+      #   dplyr::pull()
 
 
      quantiles <- do.call(rbind,
