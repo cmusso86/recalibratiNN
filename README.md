@@ -177,7 +177,8 @@ rec <- recalibrate(yhat_new=y_hat_new,
                    space_cal= x_cal,
                    pit_values=pit,
                    mse=MSE_cal,
-                   type="local")
+                   type="local",
+                   p_neighbours=0.2)
 ```
 
 Because in this artifitial example we know the true model/process that
@@ -187,7 +188,22 @@ exercice and in real life you probably wont be able to do so, unless you
 chose to look ate you test set.
 
 ``` r
+# what youd be the real observations in this example
 y_new_real <- rnorm(n/5, mu(x_new), sigma_v(x_new))
 
-pit_new <- PIT_global(y_new_real, y_hat_new, MSE_cal)
+# retrieving the weighted samples
+y_new_recalibrated <- rec$y_samples_calibrated_wt
+
+# empiric p-value distribution
+pit_new <- purrr::map_dbl(1:length(y_new_real), ~{
+                     mean(y_new_recalibrated[.,] <=y_new_real[.] )
+  })
+
+gg_PIT_global(pit_new)
+#> Warning in ks.test.default(pit, unif(length(pit))): p-value will be approximate
+#> in the presence of ties
 ```
+
+<img src="man/figures/README-unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" />
+
+We see now that the pit-values are aproximatedly uniform.

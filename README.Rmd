@@ -211,16 +211,28 @@ rec <- recalibrate(yhat_new=y_hat_new,
                    space_cal= x_cal,
                    pit_values=pit,
                    mse=MSE_cal,
-                   type="local")
+                   type="local",
+                   p_neighbours=0.2)
 ```
  
 Because in this artifitial example we know the true model/process that generated this data, so we can calucale the empirical pit-values and verify if the predictions are now better calibrated. Notice that is an exercice and in real life you probably wont be able to do so, unless you chose to look ate you test set. 
  
  
 ```{r}
+# what youd be the real observations in this example
 y_new_real <- rnorm(n/5, mu(x_new), sigma_v(x_new))
 
-pit_new <- PIT_global(y_new_real, y_hat_new, MSE_cal)
+# retrieving the weighted samples
+y_new_recalibrated <- rec$y_samples_calibrated_wt
+
+# empiric p-value distribution
+pit_new <- purrr::map_dbl(1:length(y_new_real), ~{
+                     mean(y_new_recalibrated[.,] <=y_new_real[.] )
+  })
+
+gg_PIT_global(pit_new)
 
 ```
+
+We see now that the pit-values are aproximatedly uniform. 
 
