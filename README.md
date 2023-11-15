@@ -6,7 +6,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-This package aims to provide post processing methods to recalibrate
+This package aims to provide a post processing method to recalibrate
 fitted Gaussian models.
 
 <img src="man/figures/recalibratiNN.png" style="image-align: center;"
@@ -14,7 +14,7 @@ width="200" />
 
 ## Installation
 
-You can install the development version of recalibratiNN from
+You can install the current version of recalibratiNN from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -64,7 +64,7 @@ sigma_v <- function(x1){
 # generating heterocedastic data (true model)
 
 x <- runif(n, 1, 10)
-y <- rnorm(n, mu(x), sigma_v(x))
+y <- rnorm(n,mu(x), sigma_v(x))
 
 
 # slipting data 
@@ -79,17 +79,52 @@ model <- lm(y_train ~ x_train)
 ```
 
 The points, the true mean and the regression can be observed in the
-graph below.
-
-using the fuction PIT_values() to obtain pit-values for the fitted model
-for a calibration set.
+graph below. We can see that the linear model (dashed black line)
+underestimates the mean for both small values of x or greater values of
+x.
 
 ``` r
-y_hat <- predict(model, newdata=data.frame(x_train=x_cal))
+pacman::p_load(tidyverse)
+pacman::p_load_gh("AllanCameron/geomtextpath")
 
+# use predict to get the confidence intervals
+data_predict <- predict(model, 
+                        newdata=data.frame(x_train=x_cal), 
+                        interval = "prediction") %>% 
+  as_tibble() %>% 
+  dplyr::mutate(x_cal=x_cal, 
+                y_cal=y_cal,
+          IC=ifelse(y_cal<=upr&y_cal>=lwr, "in", "out")) 
+
+data_predict %>% 
+  ggplot(aes(x_cal))+
+  geom_point(mapping=aes(x_cal, y_cal, color=IC), alpha=0.6)+
+  geom_labelline(aes( y=mu(x_cal), label="True Mean" ), 
+                 size=1.8, hjust=-0.01, linewidth=0.7, color="red" )+
+  geom_smooth(aes( y=y_cal ), color="black",se=F,
+                   method="lm", formula=y~x,linetype="dashed" )+
+  scale_color_manual("IC 95%", values=c("#00822e", "#2f1d86"))+
+  theme_classic()
+   
+```
+
+<img src="man/figures/disp.png" width="80%" style="display: block; margin: auto;" />
+
+Using the fuction `PIT_values()` function to obtain pit-values for the
+fitted model for a calibration set.
+
+``` r
+# predictions for the calibraion set
+y_hat <- predict(model, 
+                 data.frame(x_train=x_cal))
+
+# MSE from calibration set
 MSE_cal <- mean((y_hat - y_cal)^2)
 
-pit <- PIT_global(ycal=y_cal, yhat=y_hat, mse=MSE_cal)
+# pit-values for calibration set
+pit <- PIT_global(ycal=y_cal, 
+                  yhat=y_hat, 
+                  mse=MSE_cal)
 
 head(pit)
 #> [1] 0.04551257 0.42522358 0.81439164 0.69119416 0.44043239 0.99770918
@@ -115,7 +150,10 @@ showing the cumulative predictive distribution in the x-axis versus the
 empirical cumulative distribution.
 
 ``` r
-gg_QQ_global(pit, y_cal, y_hat, MSE_cal)
+gg_QQ_global(pit,
+             y_cal, 
+             y_hat, 
+             MSE_cal)
 ```
 
 <img src="man/figures/ggQ.png" width="80%" style="display: block; margin: auto;" />
@@ -123,11 +161,17 @@ gg_QQ_global(pit, y_cal, y_hat, MSE_cal)
 #### Local Calibration
 
 ``` r
-pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
+# calculating local PIT 
+pit_local <- PIT_local(xcal = x_cal, 
+                       ycal=y_cal, 
+                       yhat=y_hat, 
+                       mse=MSE_cal)
 
 gg_PIT_local(pit_local)
 ```
 
+We notice the model is uncalibrated in different ways thoughout the
+covariates space.
 <img src="man/figures/plot1PL.png" width="80%" style="display: block; margin: auto;" />
 
 Or you can facet the graph:
@@ -135,6 +179,12 @@ Or you can facet the graph:
 ``` r
 gg_PIT_local(pit_local, facet=T)
 ```
+
+In the first part, the model is overestimating the variance and
+underestimating the mean. In the middle reagion the model is more
+calibrated. By the end ir is under estimating the variance. This is a
+clear case that would benefit from local calibration, since each
+partition behaves differently.
 
 <img src="man/figures/plot2PL.png" width="80%" style="display: block; margin: auto;" />
 
@@ -168,10 +218,14 @@ of the calibration set, but you can custom it with the p_neighbours
 argument.
 
 ``` r
-
+# new data 
 x_new <- runif(n/5, 1, 10)
-y_hat_new <- predict(model, newdata=data.frame(x_train=x_new))
+y_hat_new <- predict(model,
+                     data.frame(
+                       x_train=x_new)
+                     )
 
+# recalibration
 rec <- recalibrate(yhat_new=y_hat_new,
                    space_new = x_new,
                    space_cal= x_cal,
@@ -189,21 +243,22 @@ chose to look ate you test set.
 
 ``` r
 # what youd be the real observations in this example
-y_new_real <- rnorm(n/5, mu(x_new), sigma_v(x_new))
+y_new_real <- rnorm(n/5, 
+                    mu(x_new), 
+                    sigma_v(x_new))
 
 # retrieving the weighted samples
-y_new_recalibrated <- rec$y_samples_calibrated_wt
+y_new_recalib <- rec$y_samples_calibrated_wt
 
 # empiric p-value distribution
-pit_new <- purrr::map_dbl(1:length(y_new_real), ~{
-                     mean(y_new_recalibrated[.,] <=y_new_real[.] )
+pit_new <- purrr::map_dbl(
+  1:length(y_new_real), ~{
+    mean(y_new_recalib[.,] <=y_new_real[.] )
   })
 
 gg_PIT_global(pit_new)
-#> Warning in ks.test.default(pit, unif(length(pit))): p-value will be approximate
-#> in the presence of ties
 ```
 
-<img src="man/figures/README-unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
 
 We see now that the pit-values are aproximatedly uniform.
