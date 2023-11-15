@@ -6,25 +6,17 @@
 \usage{
 recalibrate(
   yhat_new,
-  yhat_cal = NULL,
-  ycal = NULL,
   space_cal = NULL,
   space_new = NULL,
   pit_values,
   mse,
-  method = c("torres", "kuleshov1"),
   type = c("local", "global"),
   p_neighbours = 0.1,
-  epsilon = 0,
-  alpha = 0.05
+  epsilon = 0
 )
 }
 \arguments{
 \item{yhat_new}{Predicted values of the new (test) set.}
-
-\item{yhat_cal}{Predicted values of the calibration/validation set. It is only used in the "kuleshov" method.}
-
-\item{ycal}{True observations of the calibration set. This parameter will be required when used in the Kulheshov method.}
 
 \item{space_cal}{Used in local recalibration. The covariates/features of the calibration/validation
 set or any representation of those covariates, such as an intermediate layer or an output layer of a neural network.}
@@ -37,42 +29,37 @@ provided they are in the same space as the ones in space_cal.}
 \item{mse}{Mean Squared Error of the calibration/validation set.
 which extremes corresponds to the usual extremes for a 95\% confidence interval and the central value corresponds to the median.}
 
-\item{method}{Choose one of the two available recalibration methods.}
-
 \item{type}{Choose between local or global calibration.}
 
 \item{p_neighbours}{Double between (0,1] that represents the proportion of the x_cal is to be used as the number of neighboors for the KNN.
 If p_neighbours=1 calibration but weighted by distance. Default is set to 0.1.}
 
 \item{epsilon}{Approximation for the K-nearest neighbors (KNN) method. Default is epsilon = 0, which returns the exact distance. This parameter is available when choosing local calibration.}
-
-\item{alpha}{the values to calculate the lower and upper levels of the Confidence Interval. Default is set to 0.5.}
 }
 \value{
-For the "torres" method, list containing the calibrated predicted mean/variance along with samples
-from the recalibrated predictive distribution with its respective weights. Weights are calculated with an Epanechnikov kernel
+A list containing the calibrated predicted mean/variance along with samples
+from the recalibrated predictive distribution with its respective weights. Weights are calculated with an Epanechnikov kernel.
 over the distances obtained from KNN.
-In the case of the Kuleshov method, the confidence intervals and median are provided instead of the mean/variance.
 }
 \description{
 This function offers two approaches to obtain samples and the mean of a
 recalibrated predictive distribution for any regression model, using Mean Squared Error (MSE) as the loss function.
 }
 \details{
-The methods are designed to generate recalibrated samples from regression models that have been fitted using the least-squares method.
+The method is designed to generate recalibrated samples from regression models that have been fitted using the least-squares method.
 It's important to note that the least-squared method will only render a probabilistic interpretation if the output to be modeled follows
-a normal distribution, and that assumption was used to implement this methods.
-One of the available methods, "torres" (Torres et al. 2023), draws inspiration from Approximate Bayesian Computation
-and the Inverse Transform Theory. The other method, "kuleshov1," is based on recalibration techniques presented in (Kuleshov et al. 2018), which core concept
-involves training an auxiliary model such that the combination of this model with the uncalibrated predictive distribution results in a calibrated distribution.
-Both of these methods can be applied either globally or locally.
+a normal distribution, and that assumption was used to implement this method.
+The current available methods (Torres et al. 2023), draws inspiration from Approximate Bayesian Computation and the Inverse Transform Theory.
+The calibration methods can be applied either locally or globally. When tipe="global", the calibration will use a uniform kernel. Alternatevely,
+one can choose the "local" calibration with a p_neighbours=1. This way, the calibration will use the whole calibration set (that is, globally),
+but instead of an uniform kernel, it will use a Epanechnikov kernel.
 }
 \examples{
 
 n <- 10000
 split <- 0.8
 
-# generating heterocedastic data
+# Auxiliary functions
 mu <- function(x1){
 10 + 5*x1^2
 }
@@ -81,17 +68,22 @@ sigma_v <- function(x1){
 30*x1
 }
 
+# Generating heteroscedastic data.
 x <- runif(n, 1, 10)
 y <- rnorm(n, mu(x), sigma_v(x))
 
+# Train set
 x_train <- x[1:(n*split)]
 y_train <- y[1:(n*split)]
 
+# Calibration/Validation set.
 x_cal <- x[(n*split+1):n]
 y_cal <- y[(n*split+1):n]
 
+# New observations or the test set.
 x_new <- runif(n/5, 1, 10)
 
+# Fitting a simple linear regression, which will not capture the heteroscedasticity
 model <- lm(y_train ~ x_train)
 
 y_hat_cal <- predict(model, newdata=data.frame(x_train=x_cal))
@@ -107,18 +99,6 @@ recalibrate(
   yhat_new=y_hat_new,
   pit_values=pit,
   mse= MSE_cal,
-  method="torres",
-  type="local")
-
-recalibrate(
-  yhat_new=y_hat_new,
-  yhat_cal = y_hat_cal,
-  ycal = y_cal,
-  space_cal=x_cal,
-  space_new=x_new,
-  pit_values=pit,
-  mse= MSE_cal,
-  method="torres",
   type="local")
 
 }
