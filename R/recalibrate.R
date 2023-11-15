@@ -116,7 +116,7 @@ recalibrate <- function(
         k = n_neighbours,
         eps = epsilon)
 
-    wts <- do.call(rbind, map(1:m, ~{epk_kernel(knn$nn.dists[.,])}))
+    wts <- do.call(rbind, purrr::map(1:m, ~{epk_kernel(knn$nn.dists[.,])}))
 
 
     y_samples_raw <-  do.call(
@@ -129,17 +129,13 @@ recalibrate <- function(
           )}))
 
       y_samples_wt <- do.call(rbind,
-                              map(1:nrow(y_samples_raw), ~{
+                              purrr::map(1:nrow(y_samples_raw), ~{
                                 sample(y_samples_raw[.,],
                                        size=nrow(y_samples_raw),
                                        prob =wts[.,],
                                        replace=T)
       }))
 
-      y_hat_cal2 <-  purrr::map_dbl(1:m,~{
-        mean(
-          x = y_samples_wt[.,],
-          na.rm = T)})
 
       y_hat_cal <-  purrr::map_dbl(1:m,~{
          weighted.mean(
@@ -148,15 +144,18 @@ recalibrate <- function(
           na.rm = T)})
 
       y_var_cal <-  purrr::map_dbl(1:m,~{
-        var(
-          x = y_samples_wt[.,],
-          na.rm = T)})
+        Hmisc::wtd.var(
+          x = y_samples_raw[.,],
+          w=wts[.,],
+          na.rm = T)}
+      )
 
 
       return(
         list(
           y_hat_calibrated = y_hat_cal,
           y_var_calibrated = y_var_cal,
+          y_samples_calibrated_wt = y_samples_wt,
           y_samples_calibrated_raw = y_samples_raw,
           y_kernel = knn$nn.dists
         )
