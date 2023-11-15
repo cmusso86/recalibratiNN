@@ -146,3 +146,48 @@ gg_QQ_local(pit_local, facet=T)
 ```
 
 <img src="man/figures/plotQL1.png" width="80%" style="display: block; margin: auto;" /><img src="man/figures/plotQL2.png" width="80%" style="display: block; margin: auto;" />
+
+# Recalibration
+
+The recalibration is performed with the `recalibrate()` function. Tho
+this date, the function only provides one method (Torres et al. , 2023),
+which is inspired in the Aproximate Bayesian Computation. This method
+can be either applied globbaly or locally. In this heterocedastic
+example you will see the local calibration performs better. The local
+calibration uses a KNN algorithm to serach for neighbors from the
+calibration set that are the nearest to the new/test set provided.
+
+To perform recalibration you will need to provide the pit-values (always
+the global pit-values, regardless of the type of recalibration) and the
+Mean Squared Error of the calibration set. The search for new neighbors
+can be performed in the covariates level, of any intermediate layer (in
+case of a Neural network) or even the output layer. Than the method will
+calculate the pit-values and use the Inverse Transform Theorem to
+produce recalibrated samples. The size of the vicinity is set to be 10%
+of the calibration set, but you can custom it with the p_neighbours
+argument.
+
+``` r
+
+x_new <- runif(n/5, 1, 10)
+y_hat_new <- predict(model, newdata=data.frame(x_train=x_new))
+
+rec <- recalibrate(yhat_new=y_hat_new,
+                   space_new = x_new,
+                   space_cal= x_cal,
+                   pit_values=pit,
+                   mse=MSE_cal,
+                   type="local")
+```
+
+Because in this artifitial example we know the true model/process that
+generated this data, so we can calucale the empirical pit-values and
+verify if the predictions are now better calibrated. Notice that is an
+exercice and in real life you probably wont be able to do so, unless you
+chose to look ate you test set.
+
+``` r
+y_new_real <- rnorm(n/5, mu(x_new), sigma_v(x_new))
+
+pit_new <- PIT_global(y_new_real, y_hat_new, MSE_cal)
+```
