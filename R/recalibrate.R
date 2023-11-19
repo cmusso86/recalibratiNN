@@ -23,12 +23,9 @@
 #'
 #'
 #' @importFrom magrittr %>%
-#' @import cluster
-#' @import foreign
 #' @import purrr
-#' @import rpart
 #' @import Hmisc
-#' @import nnet
+#'
 #' @export
 #'
 #' @details
@@ -92,10 +89,10 @@
 
 recalibrate <- function(
     yhat_new,
-    space_cal=NULL,
-    space_new=NULL,
     pit_values,
     mse,
+    space_cal=NULL,
+    space_new=NULL,
     type=c("local", "global"),
     p_neighbours=0.1,
     epsilon = 0
@@ -103,8 +100,7 @@ recalibrate <- function(
 
 
 
-
-  if(type=="local"&(is.null(space_cal)|is.null(space_new))){stop("Local calibration needs a space both in the calibration and test/new set to find the nearst neighbors.")}
+  #if(type=="local"&(is.null(space_cal)|is.null(space_new))){stop("Local calibration needs a space both in the calibration and test/new set to find the nearst neighbors.")}
   if(!type %in% c("global","local")){stop("Invalid type of recalibration. Please choose between global/local.")}
   if(!is.matrix(space_cal)){space_cal<-as.matrix(space_cal)}
   if(!is.matrix(space_new)){space_new<-as.matrix(space_new)}

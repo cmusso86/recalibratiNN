@@ -39,10 +39,6 @@ Imports:
     tibble,
     glue,
     magrittr,
-    cluster,
-    foreign,
-    nnet,
-    rpart,
     Hmisc
 Suggests: 
     testthat (>= 3.0.0)

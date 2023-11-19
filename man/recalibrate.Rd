@@ -6,10 +6,10 @@
 \usage{
 recalibrate(
   yhat_new,
-  space_cal = NULL,
-  space_new = NULL,
   pit_values,
   mse,
+  space_cal = NULL,
+  space_new = NULL,
   type = c("local", "global"),
   p_neighbours = 0.1,
   epsilon = 0
@@ -18,16 +18,16 @@ recalibrate(
 \arguments{
 \item{yhat_new}{Predicted values of the new (test) set.}
 
+\item{pit_values}{Global Probability Integral Transform (PIT) values calculated on the calibration set.}
+
+\item{mse}{Mean Squared Error of the calibration/validation set.
+which extremes corresponds to the usual extremes for a 95\% confidence interval and the central value corresponds to the median.}
+
 \item{space_cal}{Used in local recalibration. The covariates/features of the calibration/validation
 set or any representation of those covariates, such as an intermediate layer or an output layer of a neural network.}
 
 \item{space_new}{Used in local recalibration. A new set of covariates or other representation of those covariates,
 provided they are in the same space as the ones in space_cal.}
-
-\item{pit_values}{Global Probability Integral Transform (PIT) values calculated on the calibration set.}
-
-\item{mse}{Mean Squared Error of the calibration/validation set.
-which extremes corresponds to the usual extremes for a 95\% confidence interval and the central value corresponds to the median.}
 
 \item{type}{Choose between local or global calibration.}
 
