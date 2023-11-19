@@ -100,10 +100,10 @@ recalibrate <- function(
 
 
 
-  #if(type=="local"&(is.null(space_cal)|is.null(space_new))){stop("Local calibration needs a space both in the calibration and test/new set to find the nearst neighbors.")}
+  if(type=="local"&(is.null(space_cal)|is.null(space_new))){stop("Local calibration needs a space both in the calibration and test/new set to find the nearst neighbors.")}
   if(!type %in% c("global","local")){stop("Invalid type of recalibration. Please choose between global/local.")}
-  if(!is.matrix(space_cal)){space_cal<-as.matrix(space_cal)}
-  if(!is.matrix(space_new)){space_new<-as.matrix(space_new)}
+  if(type=="local"&!is.matrix(space_cal)){space_cal<-as.matrix(space_cal)}
+  if(type=="local"&!is.matrix(space_new)){space_new<-as.matrix(space_new)}
   if(!is.numeric(yhat_new)){yhat_new<-as.numeric(yhat_new)}
 
   m <- length(yhat_new)
