@@ -4,12 +4,24 @@
 \alias{gg_PIT_global}
 \title{Plot to diagnose calibration bases on  p_values}
 \usage{
-gg_PIT_global(pit, ...)
+gg_PIT_global(
+  pit,
+  type = "density",
+  fill = "steelblue4",
+  alpha = 0.8,
+  print_p = TRUE
+)
 }
 \arguments{
 \item{pit}{vector of pit values}
 
-\item{...}{other static parameters passed to geom_density()}
+\item{type}{either "density" or "histogram" to change type of graph.}
+
+\item{alpha}{The opacity of the density plot filling. Default is set to 0.8.}
+
+\item{print_p}{Logical value indicating whether or not to print the p-value of ks.test()}
+
+\item{color}{The color to fill the density plot. The default is 'stealblue4.}
 }
 \value{
 a ggplot density graph

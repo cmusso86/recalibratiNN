@@ -138,7 +138,7 @@ recalibrate <- function(
 
 
       y_hat_cal <-  purrr::map_dbl(1:m,~{
-         weighted.mean(
+         stats::weighted.mean(
           x = y_samples_raw[.,],
           w=wts[.,],
           na.rm = T)})
