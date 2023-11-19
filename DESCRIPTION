@@ -38,7 +38,11 @@ Imports:
     tidyr,
     tibble,
     glue,
-    magrittr
+    magrittr,
+    cluster,
+    foreign,
+    nnet,
+    rpart
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

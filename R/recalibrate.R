@@ -23,6 +23,12 @@
 #'
 #'
 #' @importFrom magrittr %>%
+#' @import cluster
+#' @import foreign
+#' @import purrr
+#' @import rpart
+#' @import Hmisc
+#' @import nnet
 #' @export
 #'
 #' @details
