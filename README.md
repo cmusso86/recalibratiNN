@@ -30,22 +30,28 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
+#> 
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmplqcwDW/remotes1530f6b568a59/cmusso86-recalibratiNN-731320d/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmplqcwDW/remotes1530f6b568a59/cmusso86-recalibratiNN-731320d/DESCRIPTION’
+#>   ─  preparing ‘recalibratiNN’:
+#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>   ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>   ─  building ‘recalibratiNN_0.0.0.9000.tar.gz’
+#>      
+#> 
 ```
 
-## Example
+## Understanding calibration/miscalibration
 
-### Diagnosing miscalibration
-
-#### Generating data and understanding what miscalibration is
-
-This is a basic example which shows you a common problem of
-miscalibration. To do so, we created an heterocedastic model and fitted
-with a simple linear regression.
+This is a basic example which shows a common problem of miscalibration.
+To do so, we provide a visualization of what miscalibration is, we
+generated an heterocedastic model and fitted with a simple linear
+regression.
 
 ``` r
 
-
-## basica artificial model example
+## basic artificial model example
 
 
 set.seed(42)
@@ -81,8 +87,11 @@ model <- lm(y_train ~ x_train)
 The points, the true mean and the regression can be observed in the
 graph below. We can see that the linear model (dashed black line)
 underestimates the mean for both small values of x or greater values of
-x. Furthermore, the linear model overestimates de variance for lower values of x (all points fell within tha IC).
-On the other hand, for higher values, the model is under estimating the true variance. Thus, you cannot correctly quantify your uncertainty. This model is miscalibrated.
+x. Furthermore, the linear model overestimates de variance for lower
+values of x (all points fell within tha IC). On the other hand, for
+higher values, the model is under estimating the true variance. Thus,
+you cannot correctly quantify your uncertainty. This is an example of
+miscalibrated model.
 
 ``` r
 pacman::p_load(tidyverse)
@@ -111,10 +120,6 @@ data_predict %>%
 
 <img src="man/figures/disp.png" width="80%" style="display: block; margin: auto;" />
 
-## Using the package 
-
-### Checking for global miscalibration
-
 Using the fuction `PIT_values()` function to obtain pit-values for the
 fitted model for a calibration set.
 
@@ -125,10 +130,6 @@ y_hat <- predict(model,
 
 # MSE from calibration set
 MSE_cal <- mean((y_hat - y_cal)^2)
-
-
-library(recalibratiNN)
-# from now on we are using the package
 
 # pit-values for calibration set
 pit <- PIT_global(ycal=y_cal, 
@@ -149,7 +150,7 @@ gg_PIT_global(pit)
 <img src="man/figures/ggP.png" width="80%" style="display: block; margin: auto;" />
 
 In this case, since we are fiting an lm() to an heterocedastic model,
-so the histogram shows indications of misscalibration. In the image
+the histogram seems shifted indication a misscalibration. In the image
 we also present the p_value from the hispothesis testing of
 Kolmogorov-Smirnov test, performed with the `ks.test()` function from
 `stats` package.
@@ -167,7 +168,7 @@ gg_QQ_global(pit,
 
 <img src="man/figures/ggQ.png" width="80%" style="display: block; margin: auto;" />
 
-#### Checking for local Calibration
+#### Local Calibration
 
 ``` r
 # calculating local PIT 

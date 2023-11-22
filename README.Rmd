@@ -44,16 +44,14 @@ pacman::p_load_current_gh("cmusso86/recalibratiNN")
 ```
 
 
-## Example
-
-### Evaluating Global Calibration
+## Understanding calibration/miscalibration
 
 This is a basic example which shows a common problem of miscalibration. 
 To do so, we provide a visualization of what miscalibration is, we generated an heterocedastic model and fitted with a simple linear regression.   
 
 ```{r example, warning=FALSE}
 
-## basic example code
+## basic artificial model example
 
 
 set.seed(42)
@@ -86,8 +84,9 @@ y_cal <- y[(n*split+1):n]
 model <- lm(y_train ~ x_train)
 ```
 
-The points, the true mean and the regression can be observed in the graph below. 
-We can see that the linear model (dashed black line) underestimates the mean for both small values of x or greater values of x. 
+The points, the true mean and the regression can be observed in the graph below. We can see that the linear model (dashed black line) underestimates the mean for both small values of x or greater values of x. Furthermore, the linear model overestimates de variance for lower values of x (all points fell within tha IC).
+On the other hand, for higher values, the model is under estimating the true variance. Thus, you cannot correctly quantify your uncertainty. This is an example of miscalibrated model.
+
 ```{r, eval=F}
 pacman::p_load(tidyverse)
 pacman::p_load_gh("AllanCameron/geomtextpath")
