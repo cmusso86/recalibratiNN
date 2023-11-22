@@ -148,7 +148,7 @@ gg_PIT_global(pit)
 <img src="man/figures/ggP.png" width="80%" style="display: block; margin: auto;" />
 
 In this case, since we are fiting an lm() to an heterocedastic model,
-the histogram seems shifted indication a misscalibration. In the image
+so the histogram shows indications of misscalibration. In the image
 we also present the p_value from the hispothesis testing of
 Kolmogorov-Smirnov test, performed with the `ks.test()` function from
 `stats` package.
