@@ -46,15 +46,12 @@ pacman::p_load_current_gh("cmusso86/recalibratiNN")
 
 ## Example
 
-### Diagnosing miscalibration
+### Evaluating Global Calibration
 
-#### Global Calibration
-
-This is a basic example which shows you how to solve a common problem of miscalibration. 
-To do so, we created an heterocedastic model and fitted with a simple linear regression.   
+This is a basic example which shows a common problem of miscalibration. 
+To do so, we provide a visualization of what miscalibration is, we generated an heterocedastic model and fitted with a simple linear regression.   
 
 ```{r example, warning=FALSE}
-library(recalibratiNN)
 
 ## basic example code
 
