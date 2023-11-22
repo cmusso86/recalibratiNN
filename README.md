@@ -81,7 +81,8 @@ model <- lm(y_train ~ x_train)
 The points, the true mean and the regression can be observed in the
 graph below. We can see that the linear model (dashed black line)
 underestimates the mean for both small values of x or greater values of
-x.
+x. Furthermore, the linear model overestimates de variance for lower values of x (all points fell within tha IC).
+On the other hand, for higher values, the model is under estimating the true variance. Thus, you cannot correctly quantify your uncertainty. This model is miscalibrated.
 
 ``` r
 pacman::p_load(tidyverse)
