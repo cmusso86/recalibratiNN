@@ -36,16 +36,16 @@ pacman::p_load_current_gh("cmusso86/recalibratiNN")
 
 ### Diagnosing miscalibration
 
-#### Global Calibration
+#### Generating data and understanding what miscalibration is
 
 This is a basic example which shows you how to solve a common problem of
 miscalibration. To do so, we created an heterocedastic model and fitted
 with a simple linear regression.
 
 ``` r
-library(recalibratiNN)
 
-## basic example code
+
+## basica artificial model example
 
 
 set.seed(42)
@@ -110,6 +110,10 @@ data_predict %>%
 
 <img src="man/figures/disp.png" width="80%" style="display: block; margin: auto;" />
 
+## Using the package 
+
+### Checking for global miscalibration
+
 Using the fuction `PIT_values()` function to obtain pit-values for the
 fitted model for a calibration set.
 
@@ -120,6 +124,10 @@ y_hat <- predict(model,
 
 # MSE from calibration set
 MSE_cal <- mean((y_hat - y_cal)^2)
+
+
+library(recalibratiNN)
+# from now on we are using the package
 
 # pit-values for calibration set
 pit <- PIT_global(ycal=y_cal, 
@@ -158,7 +166,7 @@ gg_QQ_global(pit,
 
 <img src="man/figures/ggQ.png" width="80%" style="display: block; margin: auto;" />
 
-#### Local Calibration
+#### Checking for local Calibration
 
 ``` r
 # calculating local PIT 
