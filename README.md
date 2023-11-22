@@ -38,7 +38,7 @@ pacman::p_load_current_gh("cmusso86/recalibratiNN")
 
 #### Generating data and understanding what miscalibration is
 
-This is a basic example which shows you how to solve a common problem of
+This is a basic example which shows you a common problem of
 miscalibration. To do so, we created an heterocedastic model and fitted
 with a simple linear regression.
 
