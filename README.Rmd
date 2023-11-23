@@ -46,8 +46,7 @@ pacman::p_load_current_gh("cmusso86/recalibratiNN")
 
 ## Understanding calibration/miscalibration
 
-This is a basic example which shows a common problem of miscalibration. 
-To do so, we provide a visualization of what miscalibration is, we generated an heterocedastic model and fitted with a simple linear regression.   
+This example illustrates a common issue of miscalibration. To demonstrate this, we created a heteroscedastic model and fitted it using simple linear regression for visualization purposes.
 
 ```{r example, warning=FALSE}
 
@@ -84,8 +83,7 @@ y_cal <- y[(n*split+1):n]
 model <- lm(y_train ~ x_train)
 ```
 
-The points, the true mean and the regression can be observed in the graph below. We can see that the linear model (dashed black line) underestimates the mean for both small values of x or greater values of x. Furthermore, the linear model overestimates de variance for lower values of x (all points fell within tha IC).
-On the other hand, for higher values, the model is under estimating the true variance. Thus, you cannot correctly quantify your uncertainty. This is an example of a miscalibrated model.
+In the graph below, you can observe the true mean, the data points, and the regression line. The linear model, represented by a dashed black line, consistently underestimates the mean for both small and large values of \( x \). Additionally, it overestimates the variance at lower values of \( x \), as indicated by all points falling within the confidence interval (CI). Conversely, at higher values of \( x \), the model underestimates the true variance. These discrepancies highlight the model's inability to accurately quantify uncertainty, showcasing it as an example of a miscalibrated model.
 
 ```{r, eval=F}
 pacman::p_load(tidyverse)
@@ -98,11 +96,11 @@ data_predict <- predict(model,
   as_tibble() %>% 
   dplyr::mutate(x_cal=x_cal, 
                 y_cal=y_cal,
-          IC=ifelse(y_cal<=upr&y_cal>=lwr, "in", "out")) 
+          CI=ifelse(y_cal<=upr&y_cal>=lwr, "in", "out")) 
 
 data_predict %>% 
   ggplot(aes(x_cal))+
-  geom_point(mapping=aes(x_cal, y_cal, color=IC), alpha=0.6)+
+  geom_point(mapping=aes(x_cal, y_cal, color=CI), alpha=0.6)+
   geom_labelline(aes( y=mu(x_cal), label="True Mean" ), 
                  size=1.8, hjust=-0.01, linewidth=0.7, color="red" )+
   geom_smooth(aes( y=y_cal ), color="black",se=F,
@@ -123,37 +121,36 @@ data_predict <- predict(model,
   as_tibble() %>% 
   dplyr::mutate(x_cal=x_cal, 
                 y_cal=y_cal,
-          IC=ifelse(y_cal<=upr&y_cal>=lwr, "in", "out")) 
+          CI=ifelse(y_cal<=upr&y_cal>=lwr, "in", "out")) 
 
 graf <-data_predict %>% 
   ggplot(aes(x_cal))+
-  geom_point(mapping=aes(x_cal, y_cal, color=IC), alpha=0.6)+
+  geom_point(mapping=aes(x_cal, y_cal, color=CI), alpha=0.6)+
   geom_labelline(aes( y=mu(x_cal), label="True Mean" ), 
-                 size=1.8, hjust=-0.01, linewidth=0.7, color="red" )+
+                 size=4, hjust=-0.01, linewidth=0.9, color="red" )+
   geom_smooth(aes( y=y_cal ), color="black",se=F,
                    method="lm", formula=y~x,linetype="dashed" )+
-  scale_color_manual("IC 95%", values=c("#00822e", "#2f1d86"))+
+  scale_color_manual("CI 95%", values=c("#00822e", "#2f1d86"))+
   theme_classic()
 ggsave("man/figures/disp.png")
 ```
 
-```{r echo=F}
+```{r fig1,  echo=F, fig.cap="Model coverage, true mean (red) and estimated mean (black dashed line)."}
 knitr::include_graphics("man/figures/disp.png")
 ```
 
 ## Using the recalibratiNN package
  
-With real data, and specially with higher dimention models, we will not be able to evaluate miscalibration the way we described above. 
-In this sense, one commonly employed strategy for analyzing global calibration is the examination of the histogram of Probability Integral Transform (PIT) values. PIT values represent the estimated cumulative probability in the predicted distribution for each observed value. This technique involves constructing a histogram/density plot of the cumulative distribution functions estimated by the model applied to each corresponding observation. If the model is well specified, this distribution will approach the Uniform distribution. 
+In real-world scenarios, especially with higher-dimensional models, evaluating miscalibration as described above is not feasible . A widely used method for assessing global calibration in such cases is through the analysis of Probability Integral Transform (PIT) values. PIT values quantify the estimated cumulative probability of the observed values within the predicted distribution. This approach involves generating a histogram or density plot of the cumulative distribution functions predicted by the model for each observation. A well-specified model will yield a distribution that closely resembles a Uniform distribution.
 
 ### Observing global calibration/miscalibration
 
-Using the fuction  `PIT_values()` function to obtain pit-values for the fitted model for a calibration set. To do so, we first calcultae some values that the PIT_values() function will require, such as the predicted values, prof the fitted model, to new observations. Then the Meas Squared Erros of the calibration (or the validation set that we will call here "calibration set").
+To obtain PIT values for the fitted model using a calibration set, we first use the `PIT_values()` function. This requires some preliminary calculations that will be used as arguments: predicted values of the fitted model for new observations (using predict); the Mean Squared Errors for the validation set, which in this context is referred to as the 'calibration set'.
 
 ```{r}
 library(recalibratiNN)
 
-# predictions for the calibraion set
+# predictions for the calibration set
 y_hat <- predict(model, 
                  data.frame(x_train = x_cal))
 
@@ -169,7 +166,7 @@ pit <- PIT_global(ycal=y_cal,
 head(pit)
 ```
 
-Then, one can proceed with visualizing this the histogram and testing if it fits a uniform distribution using `gg_PIT_global()`. Refer to the documentation to learn other oarameters for customization.
+Following these steps, you can then visualize the histogram and assess its fit to a uniform distribution using the `gg_PIT_global()` function. For additional customization options, refer to the function's documentation.
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 library(ggplot2)
@@ -185,7 +182,7 @@ gg_PIT_global(pit)
 knitr::include_graphics("man/figures/ggP.png")
 ```
 
-In this case, since we are fiting an lm() to an heterocedastic model, the histogram show clear indication a misscalibration. In the image we also present the p_value from the hispothesis testing of Kolmogorov-Smirnov test, performed with the `ks.test()` function from `stats` package.
+In this instance, as we are fitting a linear model (`lm()`) to a heteroscedastic model it is expected that the histogram indicated miscalibration. Additionally, the image includes the p-value from the hypothesis testing using the Kolmogorov-Smirnov test, conducted with the `ks.test()` function from the stats package.
 
 It is also to use other visualization function of the package with the `gg_QQ_global`. This graph shows the cumulative predictive distribution in the x-axis versus the empirical cumulative distribution and require four parameters. 
 
@@ -202,11 +199,13 @@ ggsave(plot=ggQ, "man/figures/ggQ.png")
 knitr::include_graphics("man/figures/ggQ.png")
 ```
 
-#### Local Calibration
+### Local Calibration
 
-However, global calibration can be misleading. A model can look calibrated globally, but can show drastic problems locally. For instance, the presented model shows a coverage of nearly 95%, which is what was expected in a 95% confidence interval. However, locally we see that this spread of "errors" is not uniform, that is, there are regions the model systematically makes more mistake. 
+However, relying solely on global calibration can be deceptive. A model may appear well-calibrated on a global scale, yet exhibit significant issues on a local level. For example, the model in question demonstrates a coverage close to 95%, aligning with the expected 95% confidence interval. Nonetheless, a closer inspection reveals that the distribution of errors is not uniform. In certain regions, the model consistently exhibits greater inaccuracies, indicating systematic errors.
 
-This is observed in the graphs bellow. First, one needs to calculate local pit-values with `PIT_local()` function. This function partitions the covariate spaces in n clusters (the default is 6) with a k-means algorithm and then search for neighbours to the centroids of each cluster. 
+The observed disparities are evident in the graphs below. To analyze these, we first compute local PIT values using the `PIT_local()` function. This function divides the covariate space into 'n' clusters, with a default of 6, using a k-means algorithm. It then identifies neighbors around the centroids of each cluster.
+
+Observing this graph, we notice the model is uncalibrated in different ways thoughout the covariates space. 
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 
@@ -239,9 +238,6 @@ gg_PIT_local(pit_local)
 
 ```
 
-Observing this graph, we notice the model is uncalibrated in different ways thoughout the covariates space. 
-
-
 ```{r echo=F}
 knitr::include_graphics("man/figures/plot1PL.png")
 ```
@@ -255,11 +251,10 @@ gg_PIT_local(pit_local,
              facet=T)
 ```
 
-In the first part, the model is overestimating the variance and underestimating the mean. In the middle reagion the model is more calibrated. By the end ir is under estimating the variance. This is a clear case that would benefit from local calibration, since each partition behaves differently. 
-
 ```{r echo=F}
 knitr::include_graphics("man/figures/plot2PL.png")
 ```
+In the initial segment, the model overestimates the variance while underestimating the mean. In contrast, the middle region shows better calibration, with the model's predictions aligning more closely with observed values. Towards the end, however, it underestimates the variance. These distinct behaviors in different partitions of the data clearly suggest that the model would benefit from local calibration, as each section exhibits unique calibration needs.
 
 Alternatively you can observe the local miscalibration in the QQ-graph.
 
@@ -283,16 +278,15 @@ knitr::include_graphics("man/figures/plotQL1.png")
 knitr::include_graphics("man/figures/plotQL2.png")
 ```
 
-# Recalibration 
+### Recalibration 
 
- The quantile recalibration will generate Monte Carlo samples of an unknown (but more calibrated) predictive distribution. It will also provide recalibrated weighted mean and variance. 
+This Quantile recalibration method produces Monte Carlo samples from a predictive distribution, which is unknown yet expected to be more calibrated. This process also yields recalibrated estimates of the weighted mean and variance.
  
-The `recalibrate()` function is an implementation of  the method described by Torres et al. (2023), which is inspired in the Aproximate Bayesian Computation. This method can be either applied globally or locally. In this heterocedastic example you will see the local calibration performs better. The local calibration uses a KNN algorithm to search for neighbors from the calibration set that are the nearest to the new/test set provided. 
+The `recalibrate()` function implements the method described by Torres et al. (2023), drawing inspiration from Approximate Bayesian Computation. This method can be applied globally or locally. In our heteroscedastic example, local calibration shows superior performance. It employs a KNN algorithm to identify the nearest neighbors from the calibration set to the new or test set provided.
  
-To perform recalibration you will need to provide the pit-values (always the global pit-values, regardless of the type of recalibration) and the Mean Squared Error of the calibration set. The search for new neighbors can be performed in the covariates level, of any intermediate layer (in case of a Neural network) or even the output layer. 
+To execute recalibration, it's essential to supply the global PIT values, irrespective of the recalibration type, along with the Mean Squared Error of the calibration set. The neighbor search can be conducted at the covariate level, at any intermediate layer (as in a Neural Network), or even at the output layer.
 
-The function will then calculate the pit-values and use the Inverse Transform Theorem to produce recalibrated samples. The size of the vicinity is set to be 10% of the calibration set, but you can custom it with the p_neighbours argument. 
-
+The function calculates the PIT values and employs the Inverse Transform Theorem to generate recalibrated samples. By default, the size of the vicinity is set at 10% of the calibration set, but this can be customized using the p_neighbours argument.
 
 ```{r}
 # new data 
@@ -312,9 +306,21 @@ rec <- recalibrate(yhat_new=y_hat_new,
                    p_neighbours=0.2)
 ```
  
-Because in this artificial example we know the true model/process that generated this data, so we can calculate the empirical pit-values and verify if the predictions are now better calibrated. Notice that is an exercise and in real life you probably wont be able to do so, unless you chose to look ate you test set. 
+Now, we possess a list of new parameters and Monte Carlo samples from a predictive distribution that is expected to be calibrated. Although the exact form of this new distribution is unknown, we can estimate its parameters.
+
+```{r}
+new_yhat <- rec$y_hat_calibrated # calibrated means
+```
+
+
+# Bonus section: checking if it worked
+
+To look for more examples of successful application of this method in the calibration, please refer to Torres et. al (2023).
+
+For this exercise, we'll deviate slightly from standard practices and assess the calibration on our test set, referred to here as the 'new set.' This deviation is permissible in our artificial example because we know the true model/process that generated the data. Consequently, we can compute the empirical PIT values to determine if the predictions are now better calibrated. It's important to note that this is purely an educational exercise; in real-world scenarios, such an approach might not be feasible. Additionally, this specific evaluation method is not implemented in the package and is presented here solely to illustrate its effectiveness in this scenario.
  
- 
+Note that since we dont know the real distribution, we can only calculate the empirical PIT-values, and not the ones provided ny the Inverse Transform Theorem. 
+
 ```{r warning=F}
 # what youd be the real observations in this example
 y_new_real <- rnorm(n/5, 
@@ -322,23 +328,62 @@ y_new_real <- rnorm(n/5,
                     sigma_v(x_new))
 
 # retrieving the weighted samples
-y_new_recalib <- rec$y_samples_calibrated_wt
+y_hat_recalib <- rec$y_samples_calibrated_wt
 
-# empiric p-value distribution
+# empirical p-value distribution
 pit_new <- purrr::map_dbl(
   1:length(y_new_real), ~{
-    mean(y_new_recalib[.,] <=y_new_real[.] )
+    mean(y_hat_recalib[.,] <=y_new_real[.] )
   })
 
 gg_PIT_global(pit_new)
 
 ```
 
-We see now that the pit-values are aproximatedly uniform, at least globally. However, we will se the local calibration is also improved. 
-
+We see now that the pit-values are approximately uniform, at least globally. Bellow, we also see that the local calibration is improved. 
 ```{r}
-#gg_PIT_local(PIT_local()
+n_neighbours <- 800
+clusters <- 6
+
+# calculating centroids
+cluster_means_cal <- stats::kmeans(x_new, clusters)$centers
+  cluster_means_cal <- cluster_means_cal[order(cluster_means_cal[,1]),]
+
+  
+# finding neighbours
+knn_cal <- RANN::nn2(x_new, cluster_means_cal,  k=n_neighbours)$nn.idx
+
+
+# geting corresponding ys (real and estimated)
+y_new_local <- purrr::map(1:nrow(knn_cal),  ~y_new_real[knn_cal[.,]])
+y_hat_local <-purrr::map(1:nrow(knn_cal),  ~y_hat_recalib[knn_cal[.,],])
+
+
+# calculate pit_local
+
+pits <- matrix(NA, nrow=6, ncol=800)
+for (i in 1:clusters) {
+    pits[i,] <- purrr::map_dbl(1:length(y_new_local[[1]]), ~{
+      mean(y_hat_local[[i]][.,] <= y_new_local[[i]][.])
+    })
+}
+
+
+as.data.frame(t(pits)) %>%
+  pivot_longer(everything()) %>%
+  ggplot()+
+  geom_density(aes(value,
+                   color=name,
+                   fill=name),
+               alpha=0.5,
+               bounds = c(0, 1))+
+  geom_hline(yintercept=1, linetype="dashed")+
+  scale_color_brewer(palette="Set2")+
+   scale_fill_brewer(palette="Set2")+
+  theme_classic()+
+  theme(legend.position = "none")+
+  labs(title = "After Local Calibration",
+       subtitle= "It looks so much better!!",
+       x="PIT-values", y="Density")
 ```
-
-
 
