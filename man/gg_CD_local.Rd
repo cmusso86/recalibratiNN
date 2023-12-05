@@ -8,7 +8,7 @@ gg_CD_local(
   pit_local,
   psz = 0.01,
   abline = "black",
-  pal = "Set1",
+  pal = "Set2",
   facet = FALSE,
   ...
 )
