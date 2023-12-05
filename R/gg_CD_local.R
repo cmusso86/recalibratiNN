@@ -81,8 +81,8 @@ if(facet==F){
     ggplot2::geom_point(ggplot2::aes(x=df[,3], y=df[,2],
                                      color=df[,1]),
                         size=psz)+
-    ggplot2::labs(x="Predicted CDF",
-                  y="Empirical CDF")+
+    ggplot2::labs(x="Predicted",
+                  y="Empirical")+
     ggplot2::scale_color_brewer( "", palette =pal)+
     ggplot2::geom_abline(slope = 1, linetype="dashed", color=abline)+
     ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size=2))) +
