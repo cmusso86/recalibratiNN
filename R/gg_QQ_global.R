@@ -66,8 +66,8 @@ gg_QQ_global <- function(pit, ycal, yhat, mse){
   ggplot2:: ggplot()+
     ggplot2::geom_point(ggplot2::aes(x=df[,2], y=df[,1]),
                         color="#4B5D5D", size=0.01)+
-    ggplot2::labs(x="Predicted CDF",
-                  y="Empirical CDF")+
+    ggplot2::labs(x="Predicted",
+                  y="Empirical")+
     ggplot2::geom_abline(slope = 1, linetype="dashed", color="red")+
     ggplot2::theme_bw(base_size = 14)
 }
