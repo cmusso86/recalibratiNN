@@ -44,12 +44,12 @@
 #'
 #' pit <- PIT_global( y_cal, y_hat,  MSE_cal)
 #'
-#' gg_QQ_global(pit,y_cal, y_hat, MSE_cal)
+#' gg_CD_global(pit,y_cal, y_hat, MSE_cal)
 #'
 #'
 
 
-gg_QQ_global <- function(pit, ycal, yhat, mse){
+gg_CD_global <- function(pit, ycal, yhat, mse){
 
 
   df <- do.call(rbind, purrr::map(1:length(pit), ~{

@@ -46,10 +46,10 @@
 #'
 #' pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
 #'
-#' gg_QQ_local(pit_local)
-#' gg_QQ_local(pit_local, facet=TRUE)
+#' gg_CD_local(pit_local)
+#' gg_CD_local(pit_local, facet=TRUE)
 #'
-gg_QQ_local <- function(pit_local,
+gg_CD_local <- function(pit_local,
                         psz=0.01,
                         abline="black",
                         pal="Set1",

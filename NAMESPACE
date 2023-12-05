@@ -2,10 +2,10 @@
 
 export(PIT_global)
 export(PIT_local)
+export(gg_CD_global)
+export(gg_CD_local)
 export(gg_PIT_global)
 export(gg_PIT_local)
-export(gg_QQ_global)
-export(gg_QQ_local)
 export(recalibrate)
 import(Hmisc)
 import(RANN)
