@@ -86,8 +86,7 @@ if(facet==F){
     ggplot2::scale_color_brewer( "", palette =pal)+
     ggplot2::geom_abline(slope = 1, linetype="dashed", color=abline)+
     ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size=2))) +
-    ggplot2::theme_classic(base_size = 14)+
-    ggplot2:: theme(panel.background = ggplot2::element_rect(fill = "#E0E0E0"))
+    ggplot2::theme_classic(base_size = 14)
 }else{
   ggplot2:: ggplot(df)+
     ggplot2::geom_point(ggplot2::aes(x=df[,3], y=df[,2],
@@ -99,8 +98,7 @@ if(facet==F){
     ggplot2::geom_abline(slope = 1, linetype="dashed", color=abline)+
     ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size=2))) +
     ggplot2::facet_wrap(~part)+
-    ggplot2::theme_classic(base_size = 12)+
-    ggplot2:: theme(panel.background = ggplot2::element_rect(fill = "#E0E0E0"))
+    ggplot2::theme_classic(base_size = 12)
 
 
 }}

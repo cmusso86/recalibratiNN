@@ -69,5 +69,5 @@ gg_CD_global <- function(pit, ycal, yhat, mse){
     ggplot2::labs(x="Predicted",
                   y="Empirical")+
     ggplot2::geom_abline(slope = 1, linetype="dashed", color="red")+
-    ggplot2::theme_bw(base_size = 14)
+    ggplot2::theme_classic(base_size = 14)
 }
