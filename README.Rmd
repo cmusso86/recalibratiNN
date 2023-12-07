@@ -184,17 +184,17 @@ knitr::include_graphics("man/figures/ggP.png")
 
 In this instance, as we are fitting a linear model (`lm()`) to a heteroscedastic model it is expected that the histogram indicated miscalibration. Additionally, the image includes the p-value from the hypothesis testing using the Kolmogorov-Smirnov test, conducted with the `ks.test()` function from the stats package.
 
-It is also to use other visualization function of the package with the `gg_QQ_global`. This graph shows the cumulative predictive distribution in the x-axis versus the empirical cumulative distribution and require four parameters. 
+It is also to use other visualization function of the package with the `gg_CD_global`. This graph shows the cumulative predictive distribution in the x-axis versus the empirical cumulative distribution and require four parameters. 
 
 ```{r eval=F}
-gg_QQ_global(pit,
+gg_CD_global(pit,
              y_cal, 
              y_hat, 
              MSE_cal)
 ```
 
 ```{r, echo=F, message=FALSE, warning=FALSE}
-ggQ <- gg_QQ_global(pit, y_cal, y_hat, MSE_cal)
+ggQ <- gg_CD_global(pit, y_cal, y_hat, MSE_cal)
 ggsave(plot=ggQ, "man/figures/ggQ.png")
 knitr::include_graphics("man/figures/ggQ.png")
 ```
@@ -246,9 +246,9 @@ Or you can facet the graph, and include ther customizations. Please refer to doc
 
 ```{r eval=F}
 gg_PIT_local(pit_local, 
-             pal="Purples",
-             alpha=0.9,
-             facet=T)
+             pal = "Purples",
+             alpha = 0.9,
+             facet = T)
 ```
 
 ```{r echo=F}
@@ -259,15 +259,15 @@ In the initial segment, the model overestimates the variance while underestimati
 Alternatively you can observe the local miscalibration in the QQ-graph.
 
 ```{r eval=F}
-gg_QQ_local(pit_local)
-gg_QQ_local(pit_local, facet=T)
+gg_CD_local(pit_local)
+gg_CD_local(pit_local, facet=T)
 
 ```
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 
-g1ql <- gg_QQ_local(pit_local)
-g2ql <- gg_QQ_local(pit_local, facet=T)
+g1ql <- gg_CD_local(pit_local)
+g2ql <- gg_CD_local(pit_local, facet=T)
 
 ggsave(plot=g1ql, "man/figures/plotQL1.png")
 ggsave(plot=g2ql, "man/figures/plotQL2.png")

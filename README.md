@@ -176,12 +176,12 @@ hypothesis testing using the Kolmogorov-Smirnov test, conducted with the
 `ks.test()` function from the stats package.
 
 It is also to use other visualization function of the package with the
-`gg_QQ_global`. This graph shows the cumulative predictive distribution
+`gg_CD_global`. This graph shows the cumulative predictive distribution
 in the x-axis versus the empirical cumulative distribution and require
 four parameters.
 
 ``` r
-gg_QQ_global(pit,
+gg_CD_global(pit,
              y_cal, 
              y_hat, 
              MSE_cal)
@@ -225,9 +225,9 @@ refer to documentation to learn more.
 
 ``` r
 gg_PIT_local(pit_local, 
-             pal="Purples",
-             alpha=0.9,
-             facet=T)
+             pal = "Purples",
+             alpha = 0.9,
+             facet = T)
 ```
 
 <img src="man/figures/plot2PL.png" width="80%" style="display: block; margin: auto;" />
@@ -242,8 +242,8 @@ each section exhibits unique calibration needs.
 Alternatively you can observe the local miscalibration in the QQ-graph.
 
 ``` r
-gg_QQ_local(pit_local)
-gg_QQ_local(pit_local, facet=T)
+gg_CD_local(pit_local)
+gg_CD_local(pit_local, facet=T)
 ```
 
 <img src="man/figures/plotQL1.png" width="80%" style="display: block; margin: auto;" /><img src="man/figures/plotQL2.png" width="80%" style="display: block; margin: auto;" />
