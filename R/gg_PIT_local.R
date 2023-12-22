@@ -1,4 +1,4 @@
-#' Density graph for local PIT-values
+#' Plots Density Distributions of PIT-values for global calibration diagnose.
 #' @description
 #'
 #' A function based on ggplot2 to observe the local the density of PIT-values.

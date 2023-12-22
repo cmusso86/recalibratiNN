@@ -2,7 +2,7 @@
 % Please edit documentation in R/gg_PIT_global.R
 \name{gg_PIT_global}
 \alias{gg_PIT_global}
-\title{Plot to diagnose calibration bases on  p_values}
+\title{Plots Density Distributions of PIT-values for global calibration diagnose.}
 \usage{
 gg_PIT_global(
   pit,

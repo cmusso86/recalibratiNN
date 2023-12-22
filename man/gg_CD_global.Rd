@@ -2,7 +2,7 @@
 % Please edit documentation in R/gg_CD_global.R
 \name{gg_CD_global}
 \alias{gg_CD_global}
-\title{QQPlot diagnose calibration globally}
+\title{Plots Cumulative Distributions of PIT-values for global calibration diagnose.}
 \usage{
 gg_CD_global(pit, ycal, yhat, mse)
 }
@@ -19,7 +19,7 @@ gg_CD_global(pit, ycal, yhat, mse)
 a ggplot point graph
 }
 \description{
-ggplot to visualize predicted vs empirical cumulative distributions
+ggplot to visualize predicted vs empirical cumulative distributions of PIT-values.
 }
 \examples{
 

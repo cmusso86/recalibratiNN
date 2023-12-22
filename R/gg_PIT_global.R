@@ -1,4 +1,4 @@
-#' Plot to diagnose calibration bases on  p_values
+#' Plots Density Distributions of PIT-values for global calibration diagnose.
 #'
 #' @description
 #' A function based on ggplot2 to observe the global the density of PIT-values.

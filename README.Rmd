@@ -260,14 +260,14 @@ Alternatively you can observe the local miscalibration in the QQ-graph.
 
 ```{r eval=F}
 gg_CD_local(pit_local)
-gg_CD_local(pit_local, facet=T)
+gg_CD_local(pit_local, facet = T)
 
 ```
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 
 g1ql <- gg_CD_local(pit_local)
-g2ql <- gg_CD_local(pit_local, facet=T)
+g2ql <- gg_CD_local(pit_local, facet = T)
 
 ggsave(plot=g1ql, "man/figures/plotQL1.png")
 ggsave(plot=g2ql, "man/figures/plotQL2.png")

@@ -1,7 +1,7 @@
-#' QQPlot diagnose calibration globally
+#' Plots Cumulative Distributions of PIT-values for global calibration diagnose.
 #'
 #' @description
-#' ggplot to visualize predicted vs empirical cumulative distributions
+#' ggplot to visualize predicted vs empirical cumulative distributions of PIT-values.
 #'
 #'
 #' @param pit vector of global PIT-values

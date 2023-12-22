@@ -2,7 +2,7 @@
 % Please edit documentation in R/gg_CD_local.R
 \name{gg_CD_local}
 \alias{gg_CD_local}
-\title{QQPlot diagnose calibration locally}
+\title{Plots Cumulative Distributions of PIT-values for local calibration diagnose.}
 \usage{
 gg_CD_local(
   pit_local,
@@ -14,16 +14,16 @@ gg_CD_local(
 )
 }
 \arguments{
-\item{pit_local}{A dataframe obtained from PIT_local_lm}
+\item{pit_local}{A data frame obtained from PIT_local_lm}
 
 \item{psz}{double that indicates size of the points that compose the lines.
 Default is 0.001}
 
-\item{abline}{Color of hotizontal line that indicates density 1. Default is"red"}
+\item{abline}{Color of horizontal line that indicates density 1. Default is"red"}
 
-\item{pal}{Palette name from RColor Brewer. Default is "Set2'}
+\item{pal}{Palette name from RColorBrewer. Default is "Set2'}
 
-\item{facet}{logical value in case separate visualization is prefered. Default is F}
+\item{facet}{logical value in case separate visualization is preferred. Default is F}
 
 \item{...}{Other parameters to pass ggplot}
 }
@@ -31,7 +31,7 @@ Default is 0.001}
 a ggplot graph
 }
 \description{
-ggplot to visualize predicted vs empirical cumulative distributions locally
+ggplot to visualize predicted vs empirical cumulative distributions of PIT-values locally
 }
 \examples{
 

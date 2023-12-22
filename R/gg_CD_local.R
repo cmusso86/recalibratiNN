@@ -1,14 +1,14 @@
-#' QQPlot diagnose calibration locally
+#' Plots Cumulative Distributions of PIT-values for local calibration diagnose.
 #'
 #' @description
-#' ggplot to visualize predicted vs empirical cumulative distributions locally
+#' ggplot to visualize predicted vs empirical cumulative distributions of PIT-values locally
 #'
-#' @param pit_local A dataframe obtained from PIT_local_lm
+#' @param pit_local A data frame obtained from PIT_local_lm
 #' @param psz double that indicates size of the points that compose the lines.
 #' Default is 0.001
-#' @param pal Palette name from RColor Brewer. Default is "Set2'
-#' @param abline Color of hotizontal line that indicates density 1. Default is"red"
-#' @param facet logical value in case separate visualization is prefered. Default is F
+#' @param pal Palette name from RColorBrewer. Default is "Set2'
+#' @param abline Color of horizontal line that indicates density 1. Default is"red"
+#' @param facet logical value in case separate visualization is preferred. Default is F
 #' @param ... Other parameters to pass ggplot
 #'
 #' @return a ggplot graph

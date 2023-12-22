@@ -2,7 +2,7 @@
 % Please edit documentation in R/gg_PIT_local.R
 \name{gg_PIT_local}
 \alias{gg_PIT_local}
-\title{Density graph for local PIT-values}
+\title{Plots Density Distributions of PIT-values for global calibration diagnose.}
 \usage{
 gg_PIT_local(
   pit_local,

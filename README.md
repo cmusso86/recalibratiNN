@@ -30,6 +30,20 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
+#> sass        (0.4.7 -> 0.4.8) [CRAN]
+#> htmlwidgets (1.6.3 -> 1.6.4) [CRAN]
+#> 
+#> The downloaded binary packages are in
+#>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmpnYO6yZ/downloaded_packages
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpnYO6yZ/remotes11f7569cd87d/cmusso86-recalibratiNN-06b89df/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpnYO6yZ/remotes11f7569cd87d/cmusso86-recalibratiNN-06b89df/DESCRIPTION’
+#>   ─  preparing ‘recalibratiNN’:
+#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>   ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>   ─  building ‘recalibratiNN_0.0.0.9000.tar.gz’
+#>      
+#> 
 ```
 
 ## Understanding calibration/miscalibration
@@ -243,7 +257,7 @@ Alternatively you can observe the local miscalibration in the QQ-graph.
 
 ``` r
 gg_CD_local(pit_local)
-gg_CD_local(pit_local, facet=T)
+gg_CD_local(pit_local, facet = T)
 ```
 
 <img src="man/figures/plotQL1.png" width="80%" style="display: block; margin: auto;" /><img src="man/figures/plotQL2.png" width="80%" style="display: block; margin: auto;" />
