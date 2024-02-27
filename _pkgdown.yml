@@ -1,4 +1,9 @@
 url: https://cmusso86.github.io/recalibratiNN/
-template:
-  bootstrap: 5
+home:
+  title: An R package for pool-noodle discovery
+  description: Discover and add pool-noodles to your growing collection.
 
+template:
+  opengraph:
+    image:
+      src: man/figures/card.png
