@@ -1,9 +1,10 @@
 url: https://cmusso86.github.io/recalibratiNN/
 home:
-  title: An R package for pool-noodle discovery
-  description: Discover and add pool-noodles to your growing collection.
-
+  title: Quantile Recalibration for Regression Models
+  description: An R package for post processing method to recalibrate fitted Gaussian
+    models.
 template:
   opengraph:
     image:
-      src: man/figures/card.png
+      src: man/figures/recalibratiNN.png
+
