@@ -12,7 +12,7 @@
 #' @param linewidth integer linewidth of density line. Default set to 1.
 #' @param pal a chosen RBrewer color pallete. Default is "Set2"
 #' @param facet Logical iforming if the plot should use face_wrap() to separate the different localities.
-#'
+#' @importFrom stats density
 #' @return A ggplot
 #' @export
 #'

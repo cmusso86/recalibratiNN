@@ -10,7 +10,7 @@
 #' @param fill The color to fill the density plot. The default is 'stealblue4.
 #' @param alpha The opacity of the density plot filling. Default is set to 0.8.
 #' @param print_p Logical value indicating whether or not to print the p-value of ks.test()
-#'
+#' @importFrom stats density
 #' @return a ggplot density graph
 #' @export
 #'
