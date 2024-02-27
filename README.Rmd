@@ -16,10 +16,7 @@ knitr::opts_chunk$set(
 ```
 
 
-
-<!-- badges: start -->
-# recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" />
-<!-- badges: end -->
+# <img src="man/figures/recalibratiNN.png" align="right" height="200" style="float:right; height:200px;">
 
 This package provides a post processing method to recalibrate fitted Gaussian models.
 

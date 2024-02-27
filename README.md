@@ -1,10 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<!-- badges: start -->
 
-# recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" />
-
-<!-- badges: end -->
+# <img src="man/figures/recalibratiNN.png" align="right" height="200" style="float:right; height:200px;">
 
 This package provides a post processing method to recalibrate fitted
 Gaussian models.
