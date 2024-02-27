@@ -10,7 +10,7 @@ Gaussian models.
 
 You can install the current version of recalibratiNN with:
 
-### When on CRAN
+### From CRAN
 
 ``` r
 
@@ -36,14 +36,15 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
-#> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpD5zBEa/remotes1aeeeb61038/cmusso86-recalibratiNN-3ae563a/DESCRIPTION’ ... OK
+#> * checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpAIDiVC/remotes2faa3e8a034b/cmusso86-recalibratiNN-57ef756/DESCRIPTION’ ... OK
 #> * preparing ‘recalibratiNN’:
 #> * checking DESCRIPTION meta-information ... OK
+#> Warning in .write_description(db, ldpath) :
+#>   Unknown encoding with non-ASCII data: converting to ASCII
 #> * checking for LF line-endings in source and make files and shell scripts
 #> * checking for empty or unneeded directories
-#> * building ‘recalibratiNN_0.2.1.tar.gz’
+#> * building ‘recalibratiNN_0.1.3.tar.gz’
 ```
 
 ## Understanding calibration/miscalibration
