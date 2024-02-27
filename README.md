@@ -43,16 +43,6 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
-#> 
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmp56wZIY/remotes16967481d0326/cmusso86-recalibratiNN-611f41f/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmp56wZIY/remotes16967481d0326/cmusso86-recalibratiNN-611f41f/DESCRIPTION’
-#>   ─  preparing ‘recalibratiNN’:
-#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
-#>   ─  checking for LF line-endings in source and make files and shell scripts
-#>   ─  checking for empty or unneeded directories
-#>   ─  building ‘recalibratiNN_0.1.0.tar.gz’
-#>      
-#> 
 ```
 
 ## Understanding calibration/miscalibration
@@ -234,26 +224,15 @@ ways thoughout the covariates space.
 ``` r
 # calculating local PIT 
 pit_local <- PIT_local(xcal = x_cal, 
-                       ycal=y_cal, 
-                       yhat=y_hat, 
-                       mse=MSE_cal)
+                       ycal= y_cal, 
+                       yhat = y_hat, 
+                       mse = MSE_cal)
 
 gg_PIT_local(pit_local)
 ```
 
 <img src="man/figures/plot1PL.png" width="80%" style="display: block; margin: auto;" />
 
-Or you can facet the graph, and include ther customizations. Please
-refer to documentation to learn more.
-
-``` r
-gg_PIT_local(pit_local, 
-             pal = "Purples",
-             alpha = 0.9,
-             facet = T)
-```
-
-<img src="man/figures/plot2PL.png" width="80%" style="display: block; margin: auto;" />
 In the initial segment, the model overestimates the variance while
 underestimating the mean. In contrast, the middle region shows better
 calibration, with the model’s predictions aligning more closely with
@@ -305,12 +284,12 @@ y_hat_new <- predict(model,
                      )
 
 # recalibration
-rec <- recalibrate(yhat_new=y_hat_new,
+rec <- recalibrate(yhat_new = y_hat_new,
                    space_new = x_new,
-                   space_cal= x_cal,
-                   pit_values=pit,
-                   mse=MSE_cal,
-                   type="local",
+                   space_cal = x_cal,
+                   pit_values = pit,
+                   mse = MSE_cal,
+                   type = "local",
                    p_neighbours=0.2)
 ```
 
@@ -361,7 +340,7 @@ pit_new <- purrr::map_dbl(
 gg_PIT_global(pit_new)
 ```
 
-<img src="man/figures/README-unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" />
 
 We see now that the pit-values are approximately uniform, at least
 globally. Bellow, we also see that the local calibration is improved.
@@ -412,4 +391,4 @@ as.data.frame(t(pits)) %>%
        x="PIT-values", y="Density")
 ```
 
-<img src="man/figures/README-unnamed-chunk-24-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />

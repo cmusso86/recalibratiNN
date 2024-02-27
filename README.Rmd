@@ -221,10 +221,15 @@ Observing this graph, we notice the model is uncalibrated in different ways thou
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 
+y_hat <- predict(model, 
+                 data.frame(x_train = x_cal))
+
+# MSE from calibration set
+MSE_cal <- mean((y_hat - y_cal)^2) # a little different from MSE from training set
 pit_local <- PIT_local(xcal = x_cal, 
-                       ycal=y_cal, 
-                       yhat=y_hat, 
-                       mse=MSE_cal)
+                       ycal = y_cal, 
+                       yhat = y_hat, 
+                       mse = MSE_cal)
 
 
 g1pl <- gg_PIT_local(pit_local)
@@ -242,9 +247,9 @@ ggsave(plot=g2pl, "man/figures/plot2PL.png")
 ```{r  eval=F}
 # calculating local PIT 
 pit_local <- PIT_local(xcal = x_cal, 
-                       ycal=y_cal, 
-                       yhat=y_hat, 
-                       mse=MSE_cal)
+                       ycal= y_cal, 
+                       yhat = y_hat, 
+                       mse = MSE_cal)
 
 gg_PIT_local(pit_local)
 
@@ -254,30 +259,22 @@ gg_PIT_local(pit_local)
 knitr::include_graphics("man/figures/plot1PL.png")
 ```
 
-Or you can facet the graph, and include ther customizations. Please refer to documentation to learn more. 
 
-```{r eval=F}
-gg_PIT_local(pit_local, 
-             pal = "Purples",
-             alpha = 0.9,
-             facet = T)
-```
-
-```{r echo=F}
-knitr::include_graphics("man/figures/plot2PL.png")
-```
 In the initial segment, the model overestimates the variance while underestimating the mean. In contrast, the middle region shows better calibration, with the model's predictions aligning more closely with observed values. Towards the end, however, it underestimates the variance. These distinct behaviors in different partitions of the data clearly suggest that the model would benefit from local calibration, as each section exhibits unique calibration needs.
 
 Alternatively you can observe the local miscalibration in the QQ-graph.
 
-```{r eval=F}
+```{r, eval=F}
 gg_CD_local(pit_local)
 gg_CD_local(pit_local, facet = T)
 
 ```
 
-```{r echo=F, message=FALSE, warning=FALSE}
-
+```{r, echo=F, message=FALSE, warning=FALSE}
+pit_local <- PIT_local(xcal = x_cal, 
+                       ycal= y_cal, 
+                       yhat = y_hat, 
+                       mse = MSE_cal)
 g1ql <- gg_CD_local(pit_local)
 g2ql <- gg_CD_local(pit_local, facet = T)
 
@@ -309,12 +306,12 @@ y_hat_new <- predict(model,
                      )
 
 # recalibration
-rec <- recalibrate(yhat_new=y_hat_new,
+rec <- recalibrate(yhat_new = y_hat_new,
                    space_new = x_new,
-                   space_cal= x_cal,
-                   pit_values=pit,
-                   mse=MSE_cal,
-                   type="local",
+                   space_cal = x_cal,
+                   pit_values = pit,
+                   mse = MSE_cal,
+                   type = "local",
                    p_neighbours=0.2)
 ```
  

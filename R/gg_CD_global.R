@@ -53,10 +53,11 @@ gg_CD_global <- function(pit, ycal, yhat, mse){
 
   df <- do.call(rbind, purrr::map(1:length(pit), ~{
 
-    c(pit_emp = mean(ycal <= qnorm(p=pit[.] ,
-                                   mean=yhat,
-                                   sd=sqrt(mse))),
+    c(pit_emp = mean(ycal <= qnorm(p = pit[.] ,
+                                   mean = yhat,
+                                   sd = sqrt(mse))),
                    pit_hat=pit[.])
+
 
   } ))
 
