@@ -56,7 +56,7 @@ but instead of an uniform kernel, it will use a Epanechnikov kernel.
 }
 \examples{
 
-n <- 10000
+n <- 1000
 split <- 0.8
 
 # Auxiliary functions

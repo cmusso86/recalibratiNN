@@ -39,7 +39,7 @@
 #'
 #' @examples
 #'
-#' n <- 10000
+#' n <- 1000
 #' split <- 0.8
 #'
 #' # Auxiliary functions

@@ -17,7 +17,18 @@ width="200" />
 You can install the current version of recalibratiNN from
 [GitHub](https://github.com/) with:
 
+### When on CRAN
+
 ``` r
+
+install.packages("recalibratiNN")
+
+library(recalibratiNN)
+```
+
+``` r
+
+
 # install.packages("devtools")
 devtools::install_github("cmusso86/recalibratiNN")
 
@@ -30,20 +41,6 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
-#> sass        (0.4.7 -> 0.4.8) [CRAN]
-#> htmlwidgets (1.6.3 -> 1.6.4) [CRAN]
-#> 
-#> The downloaded binary packages are in
-#>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmpnYO6yZ/downloaded_packages
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpnYO6yZ/remotes11f7569cd87d/cmusso86-recalibratiNN-06b89df/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpnYO6yZ/remotes11f7569cd87d/cmusso86-recalibratiNN-06b89df/DESCRIPTION’
-#>   ─  preparing ‘recalibratiNN’:
-#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
-#>   ─  checking for LF line-endings in source and make files and shell scripts
-#>   ─  checking for empty or unneeded directories
-#>   ─  building ‘recalibratiNN_0.0.0.9000.tar.gz’
-#>      
-#> 
 ```
 
 ## Understanding calibration/miscalibration
@@ -352,7 +349,7 @@ pit_new <- purrr::map_dbl(
 gg_PIT_global(pit_new)
 ```
 
-<img src="man/figures/README-unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
 
 We see now that the pit-values are approximately uniform, at least
 globally. Bellow, we also see that the local calibration is improved.
@@ -403,4 +400,4 @@ as.data.frame(t(pits)) %>%
        x="PIT-values", y="Density")
 ```
 
-<img src="man/figures/README-unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-24-1.png" width="80%" style="display: block; margin: auto;" />

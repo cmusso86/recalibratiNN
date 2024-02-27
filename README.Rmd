@@ -29,7 +29,19 @@ This package aims to provide a post processing method to recalibrate fitted Gaus
 
 You can install the current version of recalibratiNN from [GitHub](https://github.com/) with:
 
+### When on CRAN
 ``` {r, eval=F}
+
+install.packages("recalibratiNN")
+
+library(recalibratiNN)
+```
+
+
+
+``` {r, eval=F}
+
+
 # install.packages("devtools")
 devtools::install_github("cmusso86/recalibratiNN")
 

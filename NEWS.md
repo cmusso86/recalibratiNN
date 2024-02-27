@@ -1,3 +1,4 @@
-# recalibratiNN (development version)
+# recalibratiNN 0.1.0
 
 * Initial CRAN submission.
+
