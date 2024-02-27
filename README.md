@@ -8,8 +8,7 @@ Gaussian models.
 
 ## Installation
 
-You can install the current version of recalibratiNN from
-[GitHub](https://github.com/) with:
+You can install the current version of recalibratiNN with:
 
 ### When on CRAN
 
@@ -37,6 +36,14 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
+#> 
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#> * checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmp3Pusj8/remotes13ef157bff60/cmusso86-recalibratiNN-d82d836/DESCRIPTION’ ... OK
+#> * preparing ‘recalibratiNN’:
+#> * checking DESCRIPTION meta-information ... OK
+#> * checking for LF line-endings in source and make files and shell scripts
+#> * checking for empty or unneeded directories
+#> * building ‘recalibratiNN_0.2.0.tar.gz’
 ```
 
 ## Understanding calibration/miscalibration
