@@ -3,3 +3,5 @@ template:
     image:
       src: man/figures/recalibratiNN.png
       alt: "Gaussian Neural Networks"
+development:
+  mode: auto
