@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" height="200" style="float:right; height:200px;">
+# recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;">
 
 This package provides a post processing method to recalibrate fitted
 Gaussian models.
@@ -38,7 +38,7 @@ if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpuXx5aH/remotes196d18e01849/cmusso86-recalibratiNN-6cc5d2e/DESCRIPTION’ ... OK
+#> * checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpD5zBEa/remotes1aeeeb61038/cmusso86-recalibratiNN-3ae563a/DESCRIPTION’ ... OK
 #> * preparing ‘recalibratiNN’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
