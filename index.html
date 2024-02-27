@@ -83,7 +83,7 @@
 </h2>
 <p>You can install the current version of recalibratiNN with:</p>
 <div class="section level3">
-<h3 id="when-on-cran">When on CRAN<a class="anchor" aria-label="anchor" href="#when-on-cran"></a>
+<h3 id="from-cran">From CRAN<a class="anchor" aria-label="anchor" href="#from-cran"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -105,14 +105,15 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman" class="external-link">pacman</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pacman"</span><span class="op">)</span></span>
 <span><span class="fu">pacman</span><span class="fu">::</span><span class="fu">p_load_current_gh</span><span class="op">(</span><span class="st">"cmusso86/recalibratiNN"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── R CMD build ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; * checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpD5zBEa/remotes1aeeeb61038/cmusso86-recalibratiNN-3ae563a/DESCRIPTION’ ... OK</span></span>
+<span><span class="co">#&gt; * checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpAIDiVC/remotes2faa3e8a034b/cmusso86-recalibratiNN-57ef756/DESCRIPTION’ ... OK</span></span>
 <span><span class="co">#&gt; * preparing ‘recalibratiNN’:</span></span>
 <span><span class="co">#&gt; * checking DESCRIPTION meta-information ... OK</span></span>
+<span><span class="co">#&gt; Warning in .write_description(db, ldpath) :</span></span>
+<span><span class="co">#&gt;   Unknown encoding with non-ASCII data: converting to ASCII</span></span>
 <span><span class="co">#&gt; * checking for LF line-endings in source and make files and shell scripts</span></span>
 <span><span class="co">#&gt; * checking for empty or unneeded directories</span></span>
-<span><span class="co">#&gt; * building ‘recalibratiNN_0.2.1.tar.gz’</span></span></code></pre></div>
+<span><span class="co">#&gt; * building ‘recalibratiNN_0.1.3.tar.gz’</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -373,10 +374,10 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Carolina Musso <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-8107-6458" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Guilherme Rodrigues <br><small class="roles"> Author, thesis advisor </small> <a href="https://orcid.org/0000-0003-2009-4844" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>João Reis <br><small class="roles"> Author </small>  </li>
-<li>Ricardo Torres <br><small class="roles"> Contributor, author </small> <a href="https://orcid.org/0009-0000-9100-7125" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Carolina Musso <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-8107-6458" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Ricardo Torres <br><small class="roles"> Author, copyright holder </small> <a href="https://orcid.org/0009-0000-9100-7125" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>João Reis <br><small class="roles"> Author, copyright holder </small>  </li>
+<li>Guilherme Rodrigues <br><small class="roles"> Author, thesis advisor, copyright holder </small> <a href="https://orcid.org/0000-0003-2009-4844" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
@@ -388,7 +389,7 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Carolina Musso, Guilherme Rodrigues, João Reis, Ricardo Torres.</p>
+<p>Developed by Carolina Musso, Ricardo Torres, João Reis, Guilherme Rodrigues.</p>
 </div>
 
 <div class="pkgdown">
