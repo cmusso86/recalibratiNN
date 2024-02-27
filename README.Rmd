@@ -270,18 +270,6 @@ gg_CD_local(pit_local, facet = T)
 
 ```
 
-```{r, echo=F, message=FALSE, warning=FALSE}
-pit_local <- PIT_local(xcal = x_cal, 
-                       ycal= y_cal, 
-                       yhat = y_hat, 
-                       mse = MSE_cal)
-g1ql <- gg_CD_local(pit_local)
-g2ql <- gg_CD_local(pit_local, facet = T)
-
-ggsave(plot=g1ql, "man/figures/plotQL1.png")
-ggsave(plot=g2ql, "man/figures/plotQL2.png")
-```
-
 ```{r echo=F}
 knitr::include_graphics("man/figures/plotQL1.png")
 knitr::include_graphics("man/figures/plotQL2.png")

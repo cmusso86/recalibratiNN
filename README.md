@@ -43,6 +43,14 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
+#> 
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#> * checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmparBkAx/remotes173b2627aef6f/cmusso86-recalibratiNN-e6c1edf/DESCRIPTION’ ... OK
+#> * preparing ‘recalibratiNN’:
+#> * checking DESCRIPTION meta-information ... OK
+#> * checking for LF line-endings in source and make files and shell scripts
+#> * checking for empty or unneeded directories
+#> * building ‘recalibratiNN_0.1.0.tar.gz’
 ```
 
 ## Understanding calibration/miscalibration
@@ -340,7 +348,7 @@ pit_new <- purrr::map_dbl(
 gg_PIT_global(pit_new)
 ```
 
-<img src="man/figures/README-unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto;" />
 
 We see now that the pit-values are approximately uniform, at least
 globally. Bellow, we also see that the local calibration is improved.
@@ -391,4 +399,4 @@ as.data.frame(t(pits)) %>%
        x="PIT-values", y="Density")
 ```
 
-<img src="man/figures/README-unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" />
