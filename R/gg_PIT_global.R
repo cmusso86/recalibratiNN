@@ -12,8 +12,6 @@
 #' @param print_p Logical value indicating whether or not to print the p-value of ks.test()
 #'
 #' @return a ggplot density graph
-#' @import stats
-#' @import ggplot2
 #' @export
 #'
 #' @examples
@@ -65,9 +63,9 @@ gg_PIT_global <- function(pit,
   if( print_p == TRUE) {
     unif <- function(n){
       set.seed(1234)
-      runif(n, 0,1)
+      stats::runif(n, 0,1)
     }
-    ks <-  round(ks.test(pit,unif(length(pit)))$p.value,4)
+    ks <-  round(stats::ks.test(pit,unif(length(pit)))$p.value,4)
     ks <- ifelse(ks<0.0001,"<0.0001", ks )
     ks <- paste0("p-value ",ks)
   }

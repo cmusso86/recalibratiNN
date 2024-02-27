@@ -38,7 +38,7 @@ library(recalibratiNN)
 ```
 
 
-
+### From GitHub
 ``` {r, eval=F}
 
 

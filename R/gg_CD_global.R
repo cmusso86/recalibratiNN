@@ -11,7 +11,6 @@
 #' @return a ggplot point graph
 #'
 #' @export
-#' @import ggplot2
 #'
 #' @examples
 #'

@@ -16,13 +16,6 @@
 #' @return A tibble with five containing in the first column containing unique names for the partition, "y_cal",
 #' the second column containing the yhat the third the pit-values  and the last the number of neighbors in each partition.
 #'
-#' @import stats
-#' @import RANN
-#' @import purrr
-#' @import tibble
-#' @import dplyr
-#' @import glue
-#'
 #' @export
 #'
 #' @examples

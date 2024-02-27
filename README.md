@@ -26,6 +26,8 @@ install.packages("recalibratiNN")
 library(recalibratiNN)
 ```
 
+### From GitHub
+
 ``` r
 
 
@@ -41,6 +43,16 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
+#> 
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmp56wZIY/remotes16967481d0326/cmusso86-recalibratiNN-611f41f/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmp56wZIY/remotes16967481d0326/cmusso86-recalibratiNN-611f41f/DESCRIPTION’
+#>   ─  preparing ‘recalibratiNN’:
+#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>   ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>   ─  building ‘recalibratiNN_0.1.0.tar.gz’
+#>      
+#> 
 ```
 
 ## Understanding calibration/miscalibration

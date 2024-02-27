@@ -8,7 +8,6 @@
 #' @param ycal observations of the recalibration set
 #' @param yhat predictions of the recalibration set from the uncalibrated model
 #' @param mse Mean Squared Error of validation set.
-#'
 #' @return Vector of PIT-values
 #' @export
 #'

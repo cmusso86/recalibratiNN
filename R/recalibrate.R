@@ -21,10 +21,7 @@
 #' from the recalibrated predictive distribution with its respective weights. Weights are calculated with an Epanechnikov kernel.
 #' over the distances obtained from KNN.
 #'
-#'
 #' @importFrom magrittr %>%
-#' @import purrr
-#' @import Hmisc
 #'
 #' @export
 #'

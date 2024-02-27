@@ -12,7 +12,6 @@
 #' @param ... Other parameters to pass ggplot
 #'
 #' @return a ggplot graph
-#' @import ggplot2
 #' @export
 #'
 #' @examples
