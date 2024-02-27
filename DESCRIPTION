@@ -7,20 +7,21 @@ Authors@R:
            role = c("aut", "cre"),
            email = "cmusso86@gmail.com",
            comment = c(ORCID = "0000-0002-8107-6458")),
-     person(given = "Guilherme",
-           family = "Rodrigues",
-           role = c("aut","ths"),
-           email = "guilhermerodrigues@unb.br",
-           comment = c(ORCID = "0000-0003-2009-4844")),
+    person(given = "Ricardo",
+           family = "Torres",
+           role = c("aut"),
+           email = "ricardotbreis@gmail.com",
+           comment = c(ORCID = "0009-0000-9100-7125")),
     person(given = "João",
            family = "Reis",
            role = c("aut"),
            email = "j.rodriguesreis@gmail.com"),
-     person(given = "Ricardo",
-           family = "Torres",
-           role = c("ctb", "aut"),
-           email = "ricardotbreis@gmail.com",
-           comment = c(ORCID = "0009-0000-9100-7125")))
+    person(given = "Guilherme",
+           family = "Rodrigues",
+           role = c("aut","ths"),
+           email = "guilhermerodrigues@unb.br",
+           comment = c(ORCID = "0000-0003-2009-4844")))
+    
 Description: The recalibratiNN R package enables users to enhance the calibration of regression models. It offers both global and local visualization tools to diagnose calibration. It also provides a recalibration method inspired by Approximate Bayesian Computation (ABC). This methods enable users to adjust model predictions, improving alignment with observed data. By allowing for global and local recalibration, the package ensures precise adjustments tailored to specific data subsets or regions of interest.
 License: MIT + file LICENSE
 Encoding: UTF-8
