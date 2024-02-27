@@ -1,7 +1,4 @@
 url: https://cmusso86.github.io/recalibratiNN/
 template:
-  opengraph:
-    image:
-      src: man/figures/recalibratiNN.png
   bootstrap: 5
 
