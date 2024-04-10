@@ -2,7 +2,7 @@
 % Please edit documentation in R/recalibrate.R
 \name{recalibrate}
 \alias{recalibrate}
-\title{Obtain recalibrated samples of the predictive distribution using Torres et al. (2024) method.}
+\title{Obtain recalibrated samples of the predictive distribution.}
 \usage{
 recalibrate(
   yhat_new,
@@ -42,8 +42,9 @@ from the recalibrated predictive distribution with its respective weights. Weigh
 over the distances obtained from KNN.
 }
 \description{
-This function offers two approaches to obtain samples and the mean of a
-recalibrated predictive distribution for any regression model, using Mean Squared Error (MSE) as the loss function.
+This function implements the method by Torres R, Nott DJ, Sisson SA, et al (2024). "Model-Free Local Recalibration of Neural Networks", 	arXiv:2403.05756
+\url{https://doi.org/10.48550/arXiv.2403.05756}. It offers two approaches (local and global) to obtain samples and the mean of a
+recalibrated predictive distribution for any regression Gaussian model, using Mean Squared Error (MSE) as the loss function.
 }
 \details{
 The method is designed to generate recalibrated samples from regression models that have been fitted using the least-squares method.
