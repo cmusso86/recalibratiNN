@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 # recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;">
 
-This package provides a post processing method to recalibrate fitted Gaussian models.
+This package provides a post processing method to recalibrate fitted Gaussian models. The method is based on the work of Torres R, Nott DJ, Sisson SA, et al. (2024). "Model-Free Local Recalibration of Neural Networks", [arXiv:2403.05756](<https://doi.org/10.48550/arXiv.2403.05756>).
 
 
 
