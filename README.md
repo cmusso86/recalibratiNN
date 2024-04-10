@@ -39,6 +39,19 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
+#> knitr (1.45 -> 1.46) [CRAN]
+#> 
+#> The downloaded binary packages are in
+#>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//Rtmpj3qYtn/downloaded_packages
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmpj3qYtn/remotes15a8e45bef644/cmusso86-recalibratiNN-10d9951/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmpj3qYtn/remotes15a8e45bef644/cmusso86-recalibratiNN-10d9951/DESCRIPTION’
+#>   ─  preparing ‘recalibratiNN’:
+#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>   ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>   ─  building ‘recalibratiNN_0.1.4.tar.gz’
+#>      
+#> 
 ```
 
 ## Understanding calibration/miscalibration
