@@ -77,7 +77,7 @@
 <div class="section level1">
 <div class="page-header"><h1 id="recalibratinn-">recalibratiNN <img src="reference/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;"><a class="anchor" aria-label="anchor" href="#recalibratinn-"></a>
 </h1></div>
-<p>This package provides a post processing method to recalibrate fitted Gaussian models. The method is based on the work of Torres R, Nott DJ, Sisson SA, et al. (2024). “Model-Free Local Recalibration of Neural Networks” <a href="https://doi.org/10.48550/arXiv.2403.05756" class="external-link">arXiv:2403.05756</a>.</p>
+<p>This package provides a post processing method to recalibrate fitted Gaussian models. The method is based on the work of Torres R, Nott DJ, Sisson SA, et al. (2024). <a href="https://doi.org/10.48550/arXiv.2403.05756" class="external-link">“Model-Free Local Recalibration of Neural Networks”</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -101,20 +101,7 @@
 <p>Alternately, one can use the <code>pacman</code> package to both install and download.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman" class="external-link">pacman</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pacman"</span><span class="op">)</span></span>
-<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu">p_load_current_gh</span><span class="op">(</span><span class="st">"cmusso86/recalibratiNN"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; knitr (1.45 -&gt; 1.46) [CRAN]</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The downloaded binary packages are in</span></span>
-<span><span class="co">#&gt;  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmphEwuvP/downloaded_packages</span></span>
-<span><span class="co">#&gt; ── R CMD build ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt;      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmphEwuvP/remotes1689f1ef31e42/cmusso86-recalibratiNN-80dadb9/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmphEwuvP/remotes1689f1ef31e42/cmusso86-recalibratiNN-80dadb9/DESCRIPTION’</span></span>
-<span><span class="co">#&gt;   ─  preparing ‘recalibratiNN’:</span></span>
-<span><span class="co">#&gt;    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information</span></span>
-<span><span class="co">#&gt;   ─  checking for LF line-endings in source and make files and shell scripts</span></span>
-<span><span class="co">#&gt;   ─  checking for empty or unneeded directories</span></span>
-<span><span class="co">#&gt;   ─  building ‘recalibratiNN_0.1.5.tar.gz’</span></span>
-<span><span class="co">#&gt;      </span></span>
-<span><span class="co">#&gt; </span></span></code></pre></div>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu">p_load_current_gh</span><span class="op">(</span><span class="st">"cmusso86/recalibratiNN"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -127,7 +114,7 @@
 <span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">100000</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">20000</span></span>
 <span><span class="va">split</span> <span class="op">&lt;-</span> <span class="fl">0.8</span></span>
 <span></span>
 <span><span class="co"># Auxiliary functions</span></span>
@@ -209,7 +196,7 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <span>                  mse<span class="op">=</span><span class="va">MSE_cal</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.9580022 0.1096494 0.4468991 0.2088261 0.6272115 0.6541295</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.5284901 0.1767495 0.4218520 0.8826091 0.6104500 0.4926595</span></span></code></pre></div>
 <p>Following these steps, you can then visualize the histogram and assess its fit to a uniform distribution using the <code><a href="reference/gg_PIT_global.html">gg_PIT_global()</a></code> function. For additional customization options, refer to the function’s documentation.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/gg_PIT_global.html">gg_PIT_global</a></span><span class="op">(</span><span class="va">pit</span><span class="op">)</span></span></code></pre></div>
