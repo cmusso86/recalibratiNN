@@ -5,8 +5,8 @@
 
 This package provides a post processing method to recalibrate fitted
 Gaussian models. The method is based on the work of Torres R, Nott DJ,
-Sisson SA, et al. (2024). “Model-Free Local Recalibration of Neural
-Networks” [arXiv:2403.05756](https://doi.org/10.48550/arXiv.2403.05756).
+Sisson SA, et al. (2024). [“Model-Free Local Recalibration of Neural
+Networks”](https://doi.org/10.48550/arXiv.2403.05756).
 
 ## Installation
 
@@ -35,19 +35,6 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
-#> knitr (1.45 -> 1.46) [CRAN]
-#> 
-#> The downloaded binary packages are in
-#>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmphEwuvP/downloaded_packages
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmphEwuvP/remotes1689f1ef31e42/cmusso86-recalibratiNN-80dadb9/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmphEwuvP/remotes1689f1ef31e42/cmusso86-recalibratiNN-80dadb9/DESCRIPTION’
-#>   ─  preparing ‘recalibratiNN’:
-#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
-#>   ─  checking for LF line-endings in source and make files and shell scripts
-#>   ─  checking for empty or unneeded directories
-#>   ─  building ‘recalibratiNN_0.1.5.tar.gz’
-#>      
-#> 
 ```
 
 ## Understanding calibration/miscalibration
@@ -62,7 +49,7 @@ simple linear regression for visualization purposes.
 
 
 set.seed(42)
-n <- 100000
+n <- 20000
 split <- 0.8
 
 # Auxiliary functions
@@ -173,7 +160,7 @@ pit <- PIT_global(ycal=y_cal,
                   mse=MSE_cal)
 
 head(pit)
-#> [1] 0.9580022 0.1096494 0.4468991 0.2088261 0.6272115 0.6541295
+#> [1] 0.5284901 0.1767495 0.4218520 0.8826091 0.6104500 0.4926595
 ```
 
 Following these steps, you can then visualize the histogram and assess
