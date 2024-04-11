@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Quantile Recalibration for Regression Models">
-<meta property="og:description" content='Enables the diagnostics and enhancement of calibration of regression models. It offers both global and local visualization tools to calibration diagnostics and provides one recalibration method : Torres R, Nott DJ, Sisson SA, et al. (2024). "Model-Free Local Recalibration of Neural Networks", arXiv &lt;doi:10.48550/arXiv.2403.05756&gt;.'>
+<meta property="og:description" content="Enables the diagnostics and enhancement of calibration of regression models. It offers both global and local visualization tools to calibration diagnostics and provides one recalibration method : Torres R, Nott DJ, Sisson SA, Rodrigues T, Reis JG, Rodrigues GS (2024) &lt;arXiv:2403.05756&gt;.">
 <meta property="og:image" content="/reference/figures/recalibratiNN.png">
 <meta property="og:image:alt" content="Gaussian Neural Networks">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -77,7 +77,7 @@
 <div class="section level1">
 <div class="page-header"><h1 id="recalibratinn-">recalibratiNN <img src="reference/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;"><a class="anchor" aria-label="anchor" href="#recalibratinn-"></a>
 </h1></div>
-<p>This package provides a post processing method to recalibrate fitted Gaussian models. The method is based on the work of Torres R, Nott DJ, Sisson SA, et al. (2024). “Model-Free Local Recalibration of Neural Networks”, <a href="https://doi.org/10.48550/arXiv.2403.05756" class="external-link">arXiv:2403.05756</a>.</p>
+<p>This package provides a post processing method to recalibrate fitted Gaussian models. The method is based on the work of Torres R, Nott DJ, Sisson SA, et al. (2024). “Model-Free Local Recalibration of Neural Networks” <a href="https://doi.org/10.48550/arXiv.2403.05756" class="external-link">arXiv:2403.05756</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -86,8 +86,7 @@
 <h3 id="from-cran">From CRAN<a class="anchor" aria-label="anchor" href="#from-cran"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"recalibratiNN"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"recalibratiNN"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/cmusso86/recalibratiNN" class="external-link">recalibratiNN</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -95,9 +94,7 @@
 <h3 id="from-github">From GitHub<a class="anchor" aria-label="anchor" href="#from-github"></a>
 </h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span></span>
-<span><span class="co"># install.packages("devtools")</span></span>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"cmusso86/recalibratiNN"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/cmusso86/recalibratiNN" class="external-link">recalibratiNN</a></span><span class="op">)</span></span></code></pre></div>
@@ -108,14 +105,14 @@
 <span><span class="co">#&gt; knitr (1.45 -&gt; 1.46) [CRAN]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The downloaded binary packages are in</span></span>
-<span><span class="co">#&gt;  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//Rtmpj3qYtn/downloaded_packages</span></span>
+<span><span class="co">#&gt;  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmphEwuvP/downloaded_packages</span></span>
 <span><span class="co">#&gt; ── R CMD build ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt;      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmpj3qYtn/remotes15a8e45bef644/cmusso86-recalibratiNN-10d9951/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmpj3qYtn/remotes15a8e45bef644/cmusso86-recalibratiNN-10d9951/DESCRIPTION’</span></span>
+<span><span class="co">#&gt;      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmphEwuvP/remotes1689f1ef31e42/cmusso86-recalibratiNN-80dadb9/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmphEwuvP/remotes1689f1ef31e42/cmusso86-recalibratiNN-80dadb9/DESCRIPTION’</span></span>
 <span><span class="co">#&gt;   ─  preparing ‘recalibratiNN’:</span></span>
 <span><span class="co">#&gt;    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information</span></span>
 <span><span class="co">#&gt;   ─  checking for LF line-endings in source and make files and shell scripts</span></span>
 <span><span class="co">#&gt;   ─  checking for empty or unneeded directories</span></span>
-<span><span class="co">#&gt;   ─  building ‘recalibratiNN_0.1.4.tar.gz’</span></span>
+<span><span class="co">#&gt;   ─  building ‘recalibratiNN_0.1.5.tar.gz’</span></span>
 <span><span class="co">#&gt;      </span></span>
 <span><span class="co">#&gt; </span></span></code></pre></div>
 </div>
@@ -130,7 +127,7 @@
 <span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10000</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">100000</span></span>
 <span><span class="va">split</span> <span class="op">&lt;-</span> <span class="fl">0.8</span></span>
 <span></span>
 <span><span class="co"># Auxiliary functions</span></span>
@@ -212,7 +209,7 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <span>                  mse<span class="op">=</span><span class="va">MSE_cal</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.04551257 0.42522358 0.81439164 0.69119416 0.44043239 0.99770918</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.9580022 0.1096494 0.4468991 0.2088261 0.6272115 0.6541295</span></span></code></pre></div>
 <p>Following these steps, you can then visualize the histogram and assess its fit to a uniform distribution using the <code><a href="reference/gg_PIT_global.html">gg_PIT_global()</a></code> function. For additional customization options, refer to the function’s documentation.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/gg_PIT_global.html">gg_PIT_global</a></span><span class="op">(</span><span class="va">pit</span><span class="op">)</span></span></code></pre></div>
