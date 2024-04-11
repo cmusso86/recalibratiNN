@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 # recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;">
 
-This package provides a post processing method to recalibrate fitted Gaussian models. The method is based on the work of Torres R, Nott DJ, Sisson SA, et al. (2024). "Model-Free Local Recalibration of Neural Networks", [arXiv:2403.05756](<https://doi.org/10.48550/arXiv.2403.05756>).
+This package provides a post processing method to recalibrate fitted Gaussian models. The method is based on the work of Torres R, Nott DJ, Sisson SA, et al. (2024). "Model-Free Local Recalibration of Neural Networks" [arXiv:2403.05756](<https://doi.org/10.48550/arXiv.2403.05756>).
 
 
 
@@ -28,7 +28,6 @@ You can install the current version of recalibratiNN with:
 
 ### From CRAN
 ``` {r, eval=F}
-
 install.packages("recalibratiNN")
 
 library(recalibratiNN)
@@ -37,8 +36,6 @@ library(recalibratiNN)
 
 ### From GitHub
 ``` {r, eval=F}
-
-
 # install.packages("devtools")
 devtools::install_github("cmusso86/recalibratiNN")
 
@@ -63,7 +60,7 @@ This example illustrates a common issue of miscalibration. To demonstrate this, 
 
 
 set.seed(42)
-n <- 10000
+n <- 100000
 split <- 0.8
 
 # Auxiliary functions

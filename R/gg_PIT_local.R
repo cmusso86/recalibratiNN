@@ -73,15 +73,12 @@ gg_PIT_local <- function(pit_local,
       ggplot2::theme_classic(base_size = 12)
   }else{
 
-    unif <- function(n){
-      set.seed(1234)
-      stats::runif(n, 0,1)
-    }
+
     parts <- dplyr::pull(unique(pit_local[,1]))
     ks <-  do.call(cbind, purrr::map(parts, ~{
       times <- dplyr::pull(pit_local[1,5])
       ksn <- round(stats::ks.test(dplyr::pull(pit_local[(pit_local[,1])==.,4]),
-                           unif(times))$p.value ,3)
+                           "punif")$p.value ,3)
       ksn <- paste0("p-value ",ifelse(ksn<=0.0001,"<0.0001", ksn ))
       rep(ksn, times)
     }))

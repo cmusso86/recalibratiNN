@@ -61,11 +61,9 @@ gg_PIT_global <- function(pit,
     stop("Invalid type of graph. Please choose between density/histogram.")}
 
   if( print_p == TRUE) {
-    unif <- function(n){
-      set.seed(1234)
-      stats::runif(n, 0,1)
-    }
-    ks <-  round(stats::ks.test(pit,unif(length(pit)))$p.value,4)
+
+
+    ks <-  round(stats::ks.test(pit, "punif")$p.value,4)
     ks <- ifelse(ks<0.0001,"<0.0001", ks )
     ks <- paste0("p-value ",ks)
   }
