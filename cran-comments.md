@@ -7,3 +7,5 @@
 Including the following changes:
 Correction of references in DESCRIPTION file
 Removal of seed within functions
+
+Correcting the DOI in the DESCRIPTION file (hope it is right now... hehehe)

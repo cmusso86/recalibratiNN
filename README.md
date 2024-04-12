@@ -35,6 +35,19 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
+#> knitr (1.45 -> 1.46) [CRAN]
+#> 
+#> The downloaded binary packages are in
+#>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//Rtmpe8V57y/downloaded_packages
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmpe8V57y/remotes17255eb14c54/cmusso86-recalibratiNN-6dabb43/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmpe8V57y/remotes17255eb14c54/cmusso86-recalibratiNN-6dabb43/DESCRIPTION’
+#>   ─  preparing ‘recalibratiNN’:
+#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>   ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>   ─  building ‘recalibratiNN_0.2.0.tar.gz’
+#>      
+#> 
 ```
 
 ## Understanding calibration/miscalibration
@@ -49,7 +62,7 @@ simple linear regression for visualization purposes.
 
 
 set.seed(42)
-n <- 20000
+n <- 42000
 split <- 0.8
 
 # Auxiliary functions
@@ -160,7 +173,7 @@ pit <- PIT_global(ycal=y_cal,
                   mse=MSE_cal)
 
 head(pit)
-#> [1] 0.5284901 0.1767495 0.4218520 0.8826091 0.6104500 0.4926595
+#> [1] 0.04664277 0.32280556 0.58780953 0.94944249 0.67383645 0.15426510
 ```
 
 Following these steps, you can then visualize the histogram and assess
