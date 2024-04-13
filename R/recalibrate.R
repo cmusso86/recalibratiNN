@@ -1,9 +1,8 @@
 #' Obtain recalibrated samples of the predictive distribution.
 #'
 #' @description
-#' This function implements the method by Torres R, Nott DJ, Sisson SA, et al (2024) "Model-Free Local Recalibration of Neural Networks"
-#' It offers two approaches (local and global) to obtain samples and the mean of a
-#' recalibrated predictive distribution for any regression Gaussian model, using Mean Squared Error (MSE) as the loss function. <https://doi.org/10.48550/arXiv.2403.05756>
+#' This function currently offers one recalibration technique, based on the method by Torres R. et al. (2024).
+#' It offers two approaches (local and global) to obtain samples and the mean of a recalibrated predictive distribution for any regression Gaussian model that used Mean Squared Error (MSE) as the loss function.
 #'
 #' @param yhat_new Predicted values of the new (test) set.
 #' @param space_cal Used in local recalibration. The covariates/features of the calibration/validation
@@ -23,17 +22,23 @@
 #' over the distances obtained from KNN.
 #'
 #' @importFrom magrittr %>%
+#' @importFrom Rdpack reprompt
 #'
 #' @export
 #'
 #' @details
-#' The method is designed to generate recalibrated samples from regression models that have been fitted using the least-squares method.
+#' The method implemented here is designed to generate recalibrated samples from regression models that have been fitted using the least-squares method.
 #' It's important to note that the least-squared method will only render a probabilistic interpretation if the output to be modeled follows
 #' a normal distribution, and that assumption was used to implement this method.
-#' The current available methods (Torres et al. 2023), draws inspiration from Approximate Bayesian Computation and the Inverse Transform Theory.
-#' The calibration methods can be applied either locally or globally. When tipe="global", the calibration will use a uniform kernel. Alternatevely,
-#' one can choose the "local" calibration with a p_neighbours=1. This way, the calibration will use the whole calibration set (that is, globally),
+#'
+#' The current available methods, draws inspiration from Approximate Bayesian Computation and the Inverse Transform Theory.
+#' The calibration methods can be applied either locally or globally. When tipe="global", the calibration will use a uniform kernel.
+#'
+#' Alternatively, one can choose the "local" calibration with a p_neighbours=1. This way, the calibration will use the whole calibration set (that is, globally),
 #' but instead of an uniform kernel, it will use a Epanechnikov kernel.
+#'
+#' @references
+#' \insertRef{torres2024}{recalibratiNN}
 #'
 #' @examples
 #'
