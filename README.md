@@ -8,8 +8,6 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/recalibratiNN)](https://CRAN.R-project.org/package=recalibratiNN)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/recalibratiNN?color=brightgreen)](https://www.r-pkg.org/pkg/recalibratiNN)
-[![MIT
-license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/cmusso86/recalibratiNN/blob/main/LICENSE.md)
 <!-- badges: end -->
 
 This package provides a post processing method to recalibrate fitted
@@ -44,6 +42,22 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
+#> knitr (1.45 -> 1.46) [CRAN]
+#> 
+#> The downloaded binary packages are in
+#>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//Rtmp3EfpuU/downloaded_packages
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmp3EfpuU/remotesc7684ac35ccc/cmusso86-recalibratiNN-baf7162/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmp3EfpuU/remotesc7684ac35ccc/cmusso86-recalibratiNN-baf7162/DESCRIPTION’
+#>   ─  preparing ‘recalibratiNN’:
+#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>   ─  installing the package to process help pages
+#>      Loading required namespace: recalibratiNN
+#>   ─  saving partial Rd database
+#>   ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>   ─  building ‘recalibratiNN_0.2.0.tar.gz’
+#>      
+#> 
 ```
 
 ## Understanding calibration/miscalibration

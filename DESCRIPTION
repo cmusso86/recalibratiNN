@@ -1,6 +1,6 @@
 Package: recalibratiNN
 Title: Quantile Recalibration for Regression Models
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
   c(person(given = "Carolina",
            family = "Musso",
@@ -21,7 +21,7 @@ Authors@R:
            role = c("aut","ths", 'cph'),
            email = "guilhermerodrigues@unb.br",
            comment = c(ORCID = "0000-0003-2009-4844")))
-Description: Enables the diagnostics and enhancement of regression model calibration.It offers both global and local visualization tools for calibration diagnostics and provides one recalibration method: Torres R, Nott DJ, Sisson SA, Rodrigues T, Reis JG, Rodrigues GS (2024) <doi:10.48550/arXiv.2403.05756>. It leverages on Probabilistic Integral Transform (PIT) values to evaluate and perform the calibration of statistical models.  
+Description: Enables the diagnostics and enhancement of regression model calibration.It offers both global and local visualization tools for calibration diagnostics and provides one recalibration method: Torres R, Nott DJ, Sisson SA, Rodrigues T, Reis JG, Rodrigues GS (2024) <doi:10.48550/arXiv.2403.05756>. The method leverages on Probabilistic Integral Transform (PIT) values to both evaluate and perform the calibration of statistical models.  
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

@@ -2,10 +2,8 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a new release.
+As soon as it was available on CRAN other authors noticed many typos in the documentation that needed correction. Also, the description filed of each function was improved. Nothing was changed in the code. 
 
-Including the following changes:
-Correction of references in DESCRIPTION file
-Removal of seed within functions
+I also included a sentence in the main DESCRIPTION file to emphasize the theoretical background.
 
-Correcting the DOI in the DESCRIPTION file (hope it is right now... hehehe)
+I hope it is alright. Thanks for the patience.
