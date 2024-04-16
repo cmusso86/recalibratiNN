@@ -2,24 +2,29 @@
 % Please edit documentation in R/gg_CD_global.R
 \name{gg_CD_global}
 \alias{gg_CD_global}
-\title{Plots Cumulative Distributions of PIT-values for global calibration diagnose.}
+\title{Visualize Global Calibration Quality with PIT-values}
 \usage{
 gg_CD_global(pit, ycal, yhat, mse)
 }
 \arguments{
-\item{pit}{vector of global PIT-values}
+\item{pit}{Numeric vector of global PIT-values. It is recommended to calculate these using the \code{PIT_global()} function.}
 
-\item{ycal}{vector of y calibration set}
+\item{ycal}{Numeric vector representing the true observations (y-values) of the response variable from the calibration dataset.}
 
-\item{yhat}{vector of predicted y on calibration set}
+\item{yhat}{Numeric vector of predicted y-values on the calibration dataset.}
 
-\item{mse}{Mean Squared Error from calibration set}
+\item{mse}{Mean Squared Error calculated from the calibration dataset.}
 }
 \value{
-a ggplot point graph
+A \code{ggplot} object displaying a point graph of the empirical versus predicted cumulative distributions of PIT-values.
 }
 \description{
-ggplot to visualize predicted vs empirical cumulative distributions of PIT-values.
+Visualizes the predicted vs. empirical cumulative distributions of PIT-values using ggplot.
+
+This function creates a ggplot graph that compares the cumulative distributions of
+predicted and empirical Probability Integral Transform (PIT) values. It is particularly
+useful for assessing the calibration quality of a regression model by examining how well
+the predicted values conform to the observed values.
 }
 \examples{
 

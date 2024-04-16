@@ -1,20 +1,21 @@
 #' Obtain local PIT-values from a model
 #'
 #' @description
-#' Return local PIT-values. Centroids for localization is obtained by k-means method from stats package.
-#' The vicinity of such centroids are selected though a aproximate k-nearst neighboors method from RANN package.
+#' This function calculates local Probability Integral Transform (PIT) values using centroids derived
+#' from a k-means clustering method (from the `stats` package). The local areas around these centroids
+#' are defined through an approximate k-nearest neighbors method from the `RANN` package. This approach
+#' allows for a more localized assessment of model calibration.
 #'
-#' @param xcal features/covariates from calibration set
-#' @param ycal observations of calibration set
-#' @param yhat predicted outputs from the calibrations et
-#' @param clusters Number of partitions to create for local calibration. Centroids calculated by k-means method.
-#' Default set to 6.
-#' @param p_neighbours Proportion of xcal to localize neighboors in the KNN method. Default is 0.2.
-#' @param mse Mean Squared Error of the model
-#' @param PIT function to return the PIT-values. Default set to PIT_global() from this package.
+#' @param xcal Numeric matrix or data frame of features/covariates (x-values) from the calibration dataset.
+#' @param ycal Numeric vector representing the true observations (y-values) of the response variable from the calibration dataset.
+#' @param yhat Numeric vector of predicted y-values from the calibration dataset.
+#' @param clusters Integer specifying the number of partitions to create for local calibration using the k-means method. Default is set to 6.
+#' @param p_neighbours Proportion of xcal used to localize neighbors in the KNN method. Default is 0.2.
+#' @param mse Mean Squared Error calculated from the calibration dataset.
+#' @param PIT Function used to calculate the PIT-values. Default is set to `PIT_global()` from this package, that assumes a Gaussian distribution.
 #'
-#' @return A tibble with five containing in the first column containing unique names for the partition, "y_cal",
-#' the second column containing the yhat the third the pit-values  and the last the number of neighbors in each partition.
+#' @return A tibble with five columns containing unique names for each partition ("part"), "y_cal" (true observations),
+#'         "y_hat" (predicted values), "pit" (PIT-values), and "n" (number of neighbors) for each partition.
 #'
 #' @export
 #'

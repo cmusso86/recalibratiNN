@@ -16,7 +16,15 @@ knitr::opts_chunk$set(
 ```
 
 
+
 # recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;">
+
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/recalibratiNN)](https://CRAN.R-project.org/package=recalibratiNN)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/recalibratiNN?color=brightgreen)](https://www.r-pkg.org/pkg/recalibratiNN)
+[![MIT license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/cmusso86/recalibratiNN/blob/main/LICENSE.md)
+<!-- badges: end -->
+
 
 This package provides a post processing method to recalibrate fitted Gaussian models. The method is based on the work of Torres R, Nott DJ, Sisson SA, et al. (2024). ["Model-Free Local Recalibration of Neural Networks"](https://doi.org/10.48550/arXiv.2403.05756).
 
@@ -207,7 +215,7 @@ knitr::include_graphics("man/figures/ggQ.png")
 
 ### Local Calibration
 
-However, relying solely on global calibration can be deceptive. A model may appear well-calibrated on a global scale, yet exhibit significant issues on a local level. For example, the model in question demonstrates a coverage close to 95%, aligning with the expected 95% confidence interval. Nonetheless, a closer inspection reveals that the distribution of errors is not uniform. In certain regions, the model consistently exhibits greater inaccuracies, indicating systematic errors.
+However, relying solely on global calibration can be deceptive. A model may appear well-calibrated on a global scale, yet exhibit significant issues on a local level. For example, the model in question demonstrates a coverage close to 95%, aligning with the expected 95% confidence interval. Nonetheless, a closer inspection reveals that the distribution of erros is not consistent. In certain regions, the model consistently exhibits greater inaccuracies, indicating systematic errors.
 
 The observed disparities are evident in the graphs below. To analyze these, we first compute local PIT values using the `PIT_local()` function. This function divides the covariate space into 'n' clusters, with a default of 6, using a k-means algorithm. It then identifies neighbors around the centroids of each cluster.
 
@@ -256,7 +264,7 @@ knitr::include_graphics("man/figures/plot1PL.png")
 
 In the initial segment, the model overestimates the variance while underestimating the mean. In contrast, the middle region shows better calibration, with the model's predictions aligning more closely with observed values. Towards the end, however, it underestimates the variance. These distinct behaviors in different partitions of the data clearly suggest that the model would benefit from local calibration, as each section exhibits unique calibration needs.
 
-Alternatively you can observe the local miscalibration in the QQ-graph.
+Alternatively you can observe the local miscalibration in the CD-graph.
 
 ```{r, eval=F}
 gg_CD_local(pit_local)
@@ -277,7 +285,7 @@ The `recalibrate()` function implements the method described by Torres et al. (2
  
 To execute recalibration, it's essential to supply the global PIT values, irrespective of the recalibration type, along with the Mean Squared Error of the calibration set. The neighbor search can be conducted at the covariate level, at any intermediate layer (as in a Neural Network), or even at the output layer.
 
-The function calculates the PIT values and employs the Inverse Transform Theorem to generate recalibrated samples. By default, the size of the vicinity is set at 10% of the calibration set, but this can be customized using the p_neighbours argument.
+The function calculates the PIT values and employs the Inverse Transform Theorem to generate recalibrated samples. By default, the size of the vicinity is set at 20% of the calibration set, but this can be customized using the p_neighbours argument.
 
 ```{r}
 # new data 

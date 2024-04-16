@@ -1,19 +1,24 @@
-#' Plots Density Distributions of PIT-values for global calibration diagnose.
+#' Plots Density Distributions of PIT-values for Global Calibration Diagnostics
+#'
 #' @description
+#' A function based on ggplot2 to observe the density of PIT-values locally. It is recommended
+#' to use PIT-values obtained via the `PIT_local` function from this package or an object of
+#' equivalent format. For advanced customization of the plot layers, refer to the ggplot2 User Guide.This function also tests the PIT-values
+#' for uniformity using the Kolmogorov-Smirnov test (`ks.test`). The p-value from the test is printed on the plot if `facet` is set to `TRUE`.
 #'
-#' A function based on ggplot2 to observe the local the density of PIT-values.
-#' To use this function we recommend providing the PIT-values returned by the PIT_local function from this package or an object of equivalent format.
-#' Layers can be edited like in http://cran.nexr.com/web/packages/ggpmisc/vignettes/user-guide-4.html.
-#'
-#'
-#' @param pit_local A tibble with five column names "part", "y_cal",
-#' "y_hat", "pit" and "n".
-#' @param alpha double 0-1 to indicate transparency of fill. Default is 0.4.
-#' @param linewidth integer linewidth of density line. Default set to 1.
-#' @param pal a chosen RBrewer color pallete. Default is "Set2"
-#' @param facet Logical iforming if the plot should use face_wrap() to separate the different localities.
+#' @param pit_local A tibble with five columns: "part", "y_cal", "y_hat", "pit", and "n",
+#'                  representing the partitions, calibration data, predicted values, PIT-values,
+#'                  and the count of observations, respectively.
+#' @param alpha Numeric value between 0 and 1 indicating the transparency of the plot fill.
+#'              Default is set to 0.4.
+#' @param linewidth Integer specifying the linewidth of the density line. Default is set to 1.
+#' @param pal A character string specifying the RColorBrewer palette to be used for coloring
+#'            the plot. Default is "Set2".
+#' @param facet Logical indicating whether to use `facet_wrap()` to separate different covariate regions
+#'              in the visualization. If TRUE, the p-value from the Kolmogorov-Smirnov test is printed on the plot.
 #' @importFrom stats density
-#' @return A ggplot
+#' @return A `ggplot` object representing the local density distributions of PIT-values,
+#'         which can be further customized through ggplot2 functions.
 #' @export
 #'
 #' @examples

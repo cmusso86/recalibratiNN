@@ -1,17 +1,20 @@
-#' Plots Density Distributions of PIT-values for global calibration diagnose.
+#' Plots Density Distributions of PIT-values for Global Calibration Diagnostics
 #'
 #' @description
-#' A function based on ggplot2 to observe the global the density of PIT-values.
-#' For more detailed edition of layers a posteriori, please refer to ggplot2 User Guide.
+#' This function generates a ggplot visual representation of the density of Probability Integral Transform (PIT) values globally.
+#' For advanced customization of the plot layers, refer to the ggplot2 User Guide. This function also tests the PIT-values
+#' for uniformity using the Kolmogorov-Smirnov test (`ks.test`). The p-value from the test is printed on the plot if `print_p` is set to `TRUE`.
 #'
-#'
-#' @param pit vector of pit values
-#' @param type either "density" or "histogram" to change type of graph.
-#' @param fill The color to fill the density plot. The default is 'stealblue4.
-#' @param alpha The opacity of the density plot filling. Default is set to 0.8.
-#' @param print_p Logical value indicating whether or not to print the p-value of ks.test()
+#' @param pit Vector of PIT values to be plotted.
+#' @param type Character string specifying the type of plot: either "density" or "histogram".
+#'             This determines the representation style of the PIT values.
+#' @param fill Character string defining the fill color of the plot. Default is 'steelblue4'.
+#' @param alpha Numeric value for the opacity of the plot fill, with 0 being fully transparent
+#'              and 1 being fully opaque. Default is 0.8.
+#' @param print_p Logical value indicating whether to print the p-value from the Kolmogorov-Smirnov test.
+#'                Useful for statistical diagnostics.
 #' @importFrom stats density
-#' @return a ggplot density graph
+#' @return A `ggplot` object depicting a density graph of PIT-values, which can be further customized.
 #' @export
 #'
 #' @examples

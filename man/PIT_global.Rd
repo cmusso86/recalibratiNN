@@ -2,24 +2,24 @@
 % Please edit documentation in R/PIT_global.R
 \name{PIT_global}
 \alias{PIT_global}
-\title{Obtain the PIT-values of a model.}
+\title{Obtain the PIT-values of a Model}
 \usage{
 PIT_global(ycal, yhat, mse)
 }
 \arguments{
-\item{ycal}{observations of the recalibration set}
+\item{ycal}{Numeric vector representing the true observations (y-values) of the response variable from the calibration dataset.}
 
-\item{yhat}{predictions of the recalibration set from the uncalibrated model}
+\item{yhat}{Numeric vector of predicted y-values on the calibration dataset.}
 
-\item{mse}{Mean Squared Error of validation set.}
+\item{mse}{Mean Squared Error calculated from the calibration dataset.}
 }
 \value{
-Vector of PIT-values
+Returns a numeric vector of PIT-values.
 }
 \description{
-A function to obtain the (possibly uncalibrated) PIT-values of any fitted model that
-assumes a normal distribution for the output, such as (but not limited to), a lm() or a neural network
-that used the Mean Squared Error as the loss function.
+A function to calculate the Probability Integral Transform (PIT) values for any fitted model
+that assumes a normal distribution of the output. This includes models such as linear models created
+using \code{lm()} or neural networks utilizing Mean Squared Error as the loss function. This function assumes a Gaussian distribution of the response variable.
 }
 \examples{
 n <- 10000

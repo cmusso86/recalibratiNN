@@ -2,7 +2,7 @@
 % Please edit documentation in R/gg_PIT_local.R
 \name{gg_PIT_local}
 \alias{gg_PIT_local}
-\title{Plots Density Distributions of PIT-values for global calibration diagnose.}
+\title{Plots Density Distributions of PIT-values for Global Calibration Diagnostics}
 \usage{
 gg_PIT_local(
   pit_local,
@@ -13,24 +13,30 @@ gg_PIT_local(
 )
 }
 \arguments{
-\item{pit_local}{A tibble with five column names "part", "y_cal",
-"y_hat", "pit" and "n".}
+\item{pit_local}{A tibble with five columns: "part", "y_cal", "y_hat", "pit", and "n",
+representing the partitions, calibration data, predicted values, PIT-values,
+and the count of observations, respectively.}
 
-\item{alpha}{double 0-1 to indicate transparency of fill. Default is 0.4.}
+\item{alpha}{Numeric value between 0 and 1 indicating the transparency of the plot fill.
+Default is set to 0.4.}
 
-\item{linewidth}{integer linewidth of density line. Default set to 1.}
+\item{linewidth}{Integer specifying the linewidth of the density line. Default is set to 1.}
 
-\item{pal}{a chosen RBrewer color pallete. Default is "Set2"}
+\item{pal}{A character string specifying the RColorBrewer palette to be used for coloring
+the plot. Default is "Set2".}
 
-\item{facet}{Logical iforming if the plot should use face_wrap() to separate the different localities.}
+\item{facet}{Logical indicating whether to use \code{facet_wrap()} to separate different covariate regions
+in the visualization. If TRUE, the p-value from the Kolmogorov-Smirnov test is printed on the plot.}
 }
 \value{
-A ggplot
+A \code{ggplot} object representing the local density distributions of PIT-values,
+which can be further customized through ggplot2 functions.
 }
 \description{
-A function based on ggplot2 to observe the local the density of PIT-values.
-To use this function we recommend providing the PIT-values returned by the PIT_local function from this package or an object of equivalent format.
-Layers can be edited like in http://cran.nexr.com/web/packages/ggpmisc/vignettes/user-guide-4.html.
+A function based on ggplot2 to observe the density of PIT-values locally. It is recommended
+to use PIT-values obtained via the \code{PIT_local} function from this package or an object of
+equivalent format. For advanced customization of the plot layers, refer to the ggplot2 User Guide.This function also tests the PIT-values
+for uniformity using the Kolmogorov-Smirnov test (\code{ks.test}). The p-value from the test is printed on the plot if \code{facet} is set to \code{TRUE}.
 }
 \examples{
  n <- 10000

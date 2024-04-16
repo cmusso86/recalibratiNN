@@ -1,14 +1,14 @@
 
-#' Obtain the PIT-values of a model.
+#' Obtain the PIT-values of a Model
 #' @description
-#' A function to obtain the (possibly uncalibrated) PIT-values of any fitted model that
-#'assumes a normal distribution for the output, such as (but not limited to), a lm() or a neural network
-#'that used the Mean Squared Error as the loss function.
+#' A function to calculate the Probability Integral Transform (PIT) values for any fitted model
+#' that assumes a normal distribution of the output. This includes models such as linear models created
+#' using `lm()` or neural networks utilizing Mean Squared Error as the loss function. This function assumes a Gaussian distribution of the response variable.
 #'
-#' @param ycal observations of the recalibration set
-#' @param yhat predictions of the recalibration set from the uncalibrated model
-#' @param mse Mean Squared Error of validation set.
-#' @return Vector of PIT-values
+#' @param ycal Numeric vector representing the true observations (y-values) of the response variable from the calibration dataset.
+#' @param yhat Numeric vector of predicted y-values on the calibration dataset.
+#' @param mse Mean Squared Error calculated from the calibration dataset.
+#' @return Returns a numeric vector of PIT-values.
 #' @export
 #'
 #' @examples

@@ -2,7 +2,7 @@
 % Please edit documentation in R/gg_CD_local.R
 \name{gg_CD_local}
 \alias{gg_CD_local}
-\title{Plots Cumulative Distributions of PIT-values for local calibration diagnose.}
+\title{Visualize Local Calibration Quality with PIT-values}
 \usage{
 gg_CD_local(
   pit_local,
@@ -14,24 +14,28 @@ gg_CD_local(
 )
 }
 \arguments{
-\item{pit_local}{A data frame obtained from PIT_local_lm}
+\item{pit_local}{A data frame of local PIT-values, typically obtained from \code{PIT_local()}.}
 
-\item{psz}{double that indicates size of the points that compose the lines.
-Default is 0.001}
+\item{psz}{Double indicating the size of the points on the plot. Default is 0.001.}
 
-\item{abline}{Color of horizontal line that indicates density 1. Default is"red"}
+\item{abline}{Color of the diagonal line. Default color is "red".}
 
-\item{pal}{Palette name from RColorBrewer. Default is "Set2'}
+\item{pal}{Palette name from RColorBrewer for coloring the plot. Default is "Set2".}
 
-\item{facet}{logical value in case separate visualization is preferred. Default is F}
+\item{facet}{Logical value indicating if a separate visualization for each subgroup is preferred. Default is FALSE.}
 
-\item{...}{Other parameters to pass ggplot}
+\item{...}{Additional parameters to customize the ggplot.}
 }
 \value{
-a ggplot graph
+A \code{ggplot} object displaying the cumulative distributions of PIT-values that that can be customized as needed.
 }
 \description{
-ggplot to visualize predicted vs empirical cumulative distributions of PIT-values locally
+Plots the cumulative distributions of PIT-values for local calibration diagnostics using ggplot.
+
+This function generates a ggplot visual representation to compare the predicted versus empirical
+cumulative distributions of Probability Integral Transform (PIT) values at a local level. It is
+useful for diagnosing the calibration of subsections within the dataset.
+For advanced customization of the plot layers, refer to the ggplot2 User Guide.
 }
 \examples{
 

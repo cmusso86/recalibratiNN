@@ -2,7 +2,7 @@
 % Please edit documentation in R/recalibrate.R
 \name{recalibrate}
 \alias{recalibrate}
-\title{Obtain recalibrated samples of the predictive distribution.}
+\title{Generates Recalibrated Samples of the Predictive Distribution}
 \usage{
 recalibrate(
   yhat_new,
@@ -16,45 +16,41 @@ recalibrate(
 )
 }
 \arguments{
-\item{yhat_new}{Predicted values of the new (test) set.}
+\item{yhat_new}{Numeric vector with predicted values for the new (or test) set.}
 
-\item{pit_values}{Global Probability Integral Transform (PIT) values calculated on the calibration set.}
+\item{pit_values}{Numeric vector of Global Probability Integral Transform (PIT) values calculated on the calibration set. We recommend using the PIT_global function.}
 
-\item{mse}{Mean Squared Error of the calibration/validation set.
-which extremes corresponds to the usual extremes for a 95\% confidence interval and the central value corresponds to the median.}
+\item{mse}{Mean Squared Error calculated from the calibration/validation set.}
 
-\item{space_cal}{Used in local recalibration. The covariates/features of the calibration/validation
-set or any representation of those covariates, such as an intermediate layer or an output layer of a neural network.}
+\item{space_cal}{Numeric matrix or data frame representing the covariates/features of the calibration/validation set,
+or any intermediate representation (like an intermediate layer of a neural network).}
 
-\item{space_new}{Used in local recalibration. A new set of covariates or other representation of those covariates,
-provided they are in the same space as the ones in space_cal.}
+\item{space_new}{Similar to space_cal, but for a new set of covariates/features, ensuring they are in the same
+space as those in space_cal for effective local recalibration.}
 
-\item{type}{Choose between local or global calibration.}
+\item{type}{Character string to choose between 'local' or 'global' calibration.}
 
-\item{p_neighbours}{Double between (0,1] that represents the proportion of the x_cal is to be used as the number of neighboors for the KNN.
-If p_neighbours=1 calibration but weighted by distance. Default is set to 0.1.}
+\item{p_neighbours}{Proportion (0,1] of the calibration dataset to be considered for determining the number of neighbors
+in the KNN method. Default is set to 0.1. With p_neighbours=1, calibration is global but weighted by distance.}
 
-\item{epsilon}{Approximation for the K-nearest neighbors (KNN) method. Default is epsilon = 0, which returns the exact distance. This parameter is available when choosing local calibration.}
+\item{epsilon}{Numeric value for approximation in the K-nearest neighbors (KNN) method. Default is 0, indicating exact distances.}
 }
 \value{
-A list containing the calibrated predicted mean/variance along with samples
-from the recalibrated predictive distribution with its respective weights. Weights are calculated with an Epanechnikov kernel.
-over the distances obtained from KNN.
+A list containing the calibrated predicted mean and variance, along with samples from the recalibrated predictive distribution
+and their respective weights calculated using an Epanechnikov kernel over the distances obtained from KNN.
 }
 \description{
-This function currently offers one recalibration technique, based on the method by Torres R. et al. (2024).
-It offers two approaches (local and global) to obtain samples and the mean of a recalibrated predictive distribution for any regression Gaussian model that used Mean Squared Error (MSE) as the loss function.
+This function offers recalibration techniques for regression models that utilize Gaussian distributions and
+Mean Squared Error (MSE) as the loss function. Based on the work by Torres R. et al. (2024), it supports
+both local and global recalibration approaches to provide samples from a recalibrated predictive distribution.
 }
 \details{
-The method implemented here is designed to generate recalibrated samples from regression models that have been fitted using the least-squares method.
-It's important to note that the least-squared method will only render a probabilistic interpretation if the output to be modeled follows
-a normal distribution, and that assumption was used to implement this method.
+The calibration technique implemented here draws inspiration from Approximate Bayesian Computation and Inverse Transform Theory,
+allowing for recalibration either locally or globally. The global method employs a uniform kernel, while the local method, even
+when p_neighbours=1, utilizes an Epanechnikov kernel. When p_neighbours=1, recalibration is performed using the entire calibration dataset but with distance-weighted contributions.
 
-The current available methods, draws inspiration from Approximate Bayesian Computation and the Inverse Transform Theory.
-The calibration methods can be applied either locally or globally. When tipe="global", the calibration will use a uniform kernel.
-
-Alternatively, one can choose the "local" calibration with a p_neighbours=1. This way, the calibration will use the whole calibration set (that is, globally),
-but instead of an uniform kernel, it will use a Epanechnikov kernel.
+It's important to note that the least squares method will only yield a probabilistic interpretation if the output to be modeled
+follows a normal distribution, and this assumption was used to implement this function.
 }
 \examples{
 

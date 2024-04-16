@@ -2,7 +2,7 @@
 % Please edit documentation in R/gg_PIT_global.R
 \name{gg_PIT_global}
 \alias{gg_PIT_global}
-\title{Plots Density Distributions of PIT-values for global calibration diagnose.}
+\title{Plots Density Distributions of PIT-values for Global Calibration Diagnostics}
 \usage{
 gg_PIT_global(
   pit,
@@ -13,22 +13,26 @@ gg_PIT_global(
 )
 }
 \arguments{
-\item{pit}{vector of pit values}
+\item{pit}{Vector of PIT values to be plotted.}
 
-\item{type}{either "density" or "histogram" to change type of graph.}
+\item{type}{Character string specifying the type of plot: either "density" or "histogram".
+This determines the representation style of the PIT values.}
 
-\item{fill}{The color to fill the density plot. The default is 'stealblue4.}
+\item{fill}{Character string defining the fill color of the plot. Default is 'steelblue4'.}
 
-\item{alpha}{The opacity of the density plot filling. Default is set to 0.8.}
+\item{alpha}{Numeric value for the opacity of the plot fill, with 0 being fully transparent
+and 1 being fully opaque. Default is 0.8.}
 
-\item{print_p}{Logical value indicating whether or not to print the p-value of ks.test()}
+\item{print_p}{Logical value indicating whether to print the p-value from the Kolmogorov-Smirnov test.
+Useful for statistical diagnostics.}
 }
 \value{
-a ggplot density graph
+A \code{ggplot} object depicting a density graph of PIT-values, which can be further customized.
 }
 \description{
-A function based on ggplot2 to observe the global the density of PIT-values.
-For more detailed edition of layers a posteriori, please refer to ggplot2 User Guide.
+This function generates a ggplot visual representation of the density of Probability Integral Transform (PIT) values globally.
+For advanced customization of the plot layers, refer to the ggplot2 User Guide. This function also tests the PIT-values
+for uniformity using the Kolmogorov-Smirnov test (\code{ks.test}). The p-value from the test is printed on the plot if \code{print_p} is set to \code{TRUE}.
 }
 \examples{
 
