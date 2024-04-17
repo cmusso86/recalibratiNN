@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Quantile Recalibration for Regression Models">
-<meta property="og:description" content="Enables the diagnostics and enhancement of calibration of regression models. It offers both global and local visualization tools to calibration diagnostics and provides one recalibration method : Torres R, Nott DJ, Sisson SA, Rodrigues T, Reis JG, Rodrigues GS (2024) &lt;doi:10.48550/arXiv.2403.05756&gt;.">
+<meta property="og:description" content="Enables the diagnostics and enhancement of regression model calibration.It offers both global and local visualization tools for calibration diagnostics and provides one recalibration method: Torres R, Nott DJ, Sisson SA, Rodrigues T, Reis JG, Rodrigues GS (2024) &lt;doi:10.48550/arXiv.2403.05756&gt;. The method leverages on Probabilistic Integral Transform (PIT) values to both evaluate and perform the calibration of statistical models.">
 <meta property="og:image" content="/reference/figures/recalibratiNN.png">
 <meta property="og:image:alt" content="Gaussian Neural Networks">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">recalibratiNN</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -77,6 +77,8 @@
 <div class="section level1">
 <div class="page-header"><h1 id="recalibratinn-">recalibratiNN <img src="reference/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;"><a class="anchor" aria-label="anchor" href="#recalibratinn-"></a>
 </h1></div>
+<!-- badges: start -->
+
 <p>This package provides a post processing method to recalibrate fitted Gaussian models. The method is based on the work of Torres R, Nott DJ, Sisson SA, et al. (2024). <a href="https://doi.org/10.48550/arXiv.2403.05756" class="external-link">“Model-Free Local Recalibration of Neural Networks”</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -105,11 +107,14 @@
 <span><span class="co">#&gt; knitr (1.45 -&gt; 1.46) [CRAN]</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The downloaded binary packages are in</span></span>
-<span><span class="co">#&gt;  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//Rtmpe8V57y/downloaded_packages</span></span>
+<span><span class="co">#&gt;  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//Rtmp3EfpuU/downloaded_packages</span></span>
 <span><span class="co">#&gt; ── R CMD build ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt;      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmpe8V57y/remotes17255eb14c54/cmusso86-recalibratiNN-6dabb43/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmpe8V57y/remotes17255eb14c54/cmusso86-recalibratiNN-6dabb43/DESCRIPTION’</span></span>
+<span><span class="co">#&gt;      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmp3EfpuU/remotesc7684ac35ccc/cmusso86-recalibratiNN-baf7162/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmp3EfpuU/remotesc7684ac35ccc/cmusso86-recalibratiNN-baf7162/DESCRIPTION’</span></span>
 <span><span class="co">#&gt;   ─  preparing ‘recalibratiNN’:</span></span>
 <span><span class="co">#&gt;    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information</span></span>
+<span><span class="co">#&gt;   ─  installing the package to process help pages</span></span>
+<span><span class="co">#&gt;      Loading required namespace: recalibratiNN</span></span>
+<span><span class="co">#&gt;   ─  saving partial Rd database</span></span>
 <span><span class="co">#&gt;   ─  checking for LF line-endings in source and make files and shell scripts</span></span>
 <span><span class="co">#&gt;   ─  checking for empty or unneeded directories</span></span>
 <span><span class="co">#&gt;   ─  building ‘recalibratiNN_0.2.0.tar.gz’</span></span>
@@ -226,7 +231,7 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <div class="section level3">
 <h3 id="local-calibration">Local Calibration<a class="anchor" aria-label="anchor" href="#local-calibration"></a>
 </h3>
-<p>However, relying solely on global calibration can be deceptive. A model may appear well-calibrated on a global scale, yet exhibit significant issues on a local level. For example, the model in question demonstrates a coverage close to 95%, aligning with the expected 95% confidence interval. Nonetheless, a closer inspection reveals that the distribution of errors is not uniform. In certain regions, the model consistently exhibits greater inaccuracies, indicating systematic errors.</p>
+<p>However, relying solely on global calibration can be deceptive. A model may appear well-calibrated on a global scale, yet exhibit significant issues on a local level. For example, the model in question demonstrates a coverage close to 95%, aligning with the expected 95% confidence interval. Nonetheless, a closer inspection reveals that the distribution of erros is not consistent. In certain regions, the model consistently exhibits greater inaccuracies, indicating systematic errors.</p>
 <p>The observed disparities are evident in the graphs below. To analyze these, we first compute local PIT values using the <code><a href="reference/PIT_local.html">PIT_local()</a></code> function. This function divides the covariate space into ‘n’ clusters, with a default of 6, using a k-means algorithm. It then identifies neighbors around the centroids of each cluster.</p>
 <p>Observing this graph, we notice the model is uncalibrated in different ways thoughout the covariates space.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -239,7 +244,7 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <span><span class="fu"><a href="reference/gg_PIT_local.html">gg_PIT_local</a></span><span class="op">(</span><span class="va">pit_local</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/plot1PL.png" width="80%" style="display: block; margin: auto;"></p>
 <p>In the initial segment, the model overestimates the variance while underestimating the mean. In contrast, the middle region shows better calibration, with the model’s predictions aligning more closely with observed values. Towards the end, however, it underestimates the variance. These distinct behaviors in different partitions of the data clearly suggest that the model would benefit from local calibration, as each section exhibits unique calibration needs.</p>
-<p>Alternatively you can observe the local miscalibration in the QQ-graph.</p>
+<p>Alternatively you can observe the local miscalibration in the CD-graph.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/gg_CD_local.html">gg_CD_local</a></span><span class="op">(</span><span class="va">pit_local</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/gg_CD_local.html">gg_CD_local</a></span><span class="op">(</span><span class="va">pit_local</span>, facet <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
@@ -251,7 +256,7 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <p>This Quantile recalibration method produces Monte Carlo samples from a predictive distribution, which is unknown yet expected to be more calibrated. This process also yields recalibrated estimates of the weighted mean and variance.</p>
 <p>The <code><a href="reference/recalibrate.html">recalibrate()</a></code> function implements the method described by Torres et al. (2023), drawing inspiration from Approximate Bayesian Computation. This method can be applied globally or locally. In our heteroscedastic example, local calibration shows superior performance. It employs a KNN algorithm to identify the nearest neighbors from the calibration set to the new or test set provided.</p>
 <p>To execute recalibration, it’s essential to supply the global PIT values, irrespective of the recalibration type, along with the Mean Squared Error of the calibration set. The neighbor search can be conducted at the covariate level, at any intermediate layer (as in a Neural Network), or even at the output layer.</p>
-<p>The function calculates the PIT values and employs the Inverse Transform Theorem to generate recalibrated samples. By default, the size of the vicinity is set at 10% of the calibration set, but this can be customized using the p_neighbours argument.</p>
+<p>The function calculates the PIT values and employs the Inverse Transform Theorem to generate recalibrated samples. By default, the size of the vicinity is set at 20% of the calibration set, but this can be customized using the p_neighbours argument.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># new data </span></span>
 <span><span class="va">x_new</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">/</span><span class="fl">5</span>, <span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span></span>
