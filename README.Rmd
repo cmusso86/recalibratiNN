@@ -31,7 +31,7 @@ This package provides a post processing method to recalibrate fitted Gaussian mo
 
 ## Installation
 
-You can install the current version of recalibratiNN with:
+You can install the current stable version of recalibratiNN with:
 
 ### From CRAN
 ``` {r, eval=F}
@@ -42,6 +42,9 @@ library(recalibratiNN)
 
 
 ### From GitHub
+
+Otherwise, you can install the development version from GitHub with. Presently, the version in GitHub is the most updated, particularly regarding the documentation.
+
 ``` {r, eval=F}
 # install.packages("devtools")
 devtools::install_github("cmusso86/recalibratiNN")
