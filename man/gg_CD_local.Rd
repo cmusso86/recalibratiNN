@@ -2,7 +2,7 @@
 % Please edit documentation in R/gg_CD_local.R
 \name{gg_CD_local}
 \alias{gg_CD_local}
-\title{Visualize Local Calibration Quality with PIT-values}
+\title{Plots the cumulative distributions of PIT-values for local calibration diagnostics.}
 \usage{
 gg_CD_local(
   pit_local,
@@ -30,12 +30,14 @@ gg_CD_local(
 A \code{ggplot} object displaying the cumulative distributions of PIT-values that that can be customized as needed.
 }
 \description{
-Plots the cumulative distributions of PIT-values for local calibration diagnostics using ggplot.
-
 This function generates a ggplot visual representation to compare the predicted versus empirical
 cumulative distributions of Probability Integral Transform (PIT) values at a local level. It is
-useful for diagnosing the calibration of subsections within the dataset.
+useful for diagnosing the calibration in different regions within the dataset, since miscalibration patterns may
+differ across the covariate space. The function allows for customization of the plot layers to suit specific needs.
 For advanced customization of the plot layers, refer to the ggplot2 User Guide.
+}
+\details{
+This funcion will work with the output of the \code{PIT_local()} function, which provides the PIT-values for each subgroup pf the covariate space in the appropriate format.
 }
 \examples{
 

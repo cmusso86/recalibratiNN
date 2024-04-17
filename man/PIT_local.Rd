@@ -19,7 +19,7 @@ PIT_local(
 
 \item{ycal}{Numeric vector representing the true observations (y-values) of the response variable from the calibration dataset.}
 
-\item{yhat}{Numeric vector of predicted y-values from the calibration dataset.}
+\item{yhat}{Numeric vector of predicted response (y-hat-values) from the calibration dataset.}
 
 \item{mse}{Mean Squared Error calculated from the calibration dataset.}
 
@@ -34,10 +34,15 @@ A tibble with five columns containing unique names for each partition ("part"), 
 "y_hat" (predicted values), "pit" (PIT-values), and "n" (number of neighbors) for each partition.
 }
 \description{
-This function calculates local Probability Integral Transform (PIT) values using centroids derived
-from a k-means clustering method (from the \code{stats} package). The local areas around these centroids
-are defined through an approximate k-nearest neighbors method from the \code{RANN} package. This approach
-allows for a more localized assessment of model calibration.
+This function calculates local Probability Integral Transform (PIT) values using localized subregions of the covariate space from the calibration set.
+The output will be used for visualization of calibration quality using the \code{gg_CD_local()} and \code{gg_PIT_local()}function.
+}
+\details{
+It calculates local Probability Integral Transform (PIT) values using localized subregions of the covariate space from the calibration set.
+The centroids of such regions are derived from a k-means clustering method (from the \code{stats} package). The local areas around these centroids
+are defined through an approximate k-nearest neighbors method from the \code{RANN} package.
+Then, for this subregion, the PIT-values are calculated using the \code{PIT} function provided by the user. At the moment this function is tested to
+work with the \code{PIT_global()} function from this package, which assumes a Gaussian distribution. Eventually, it can be used with other distributions.
 }
 \examples{
 

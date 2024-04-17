@@ -1,16 +1,15 @@
-#' Visualize Global Calibration Quality with PIT-values
+#' Plots the cumulative distributions of PIT-values for global calibration diagnostics.
 #'
 #'@description
 #' Visualizes the predicted vs. empirical cumulative distributions of PIT-values using ggplot.
 #'
 #' This function creates a ggplot graph that compares the cumulative distributions of
-#' predicted and empirical Probability Integral Transform (PIT) values. It is particularly
-#' useful for assessing the calibration quality of a regression model by examining how well
+#' predicted and empirical Probability Integral Transform (PIT) values. It shows the calibration quality of a regression model by examining how well
 #' the predicted values conform to the observed values.
 
 #'@param pit Numeric vector of global PIT-values. It is recommended to calculate these using the `PIT_global()` function.
 #'@param ycal Numeric vector representing the true observations (y-values) of the response variable from the calibration dataset.
-#'@param yhat Numeric vector of predicted y-values on the calibration dataset.
+#'@param yhat Numeric vector of predicted response (y-hat-values) on the calibration dataset.
 #'@param mse Mean Squared Error calculated from the calibration dataset.
 #'@return A `ggplot` object displaying a point graph of the empirical versus predicted cumulative distributions of PIT-values.
 

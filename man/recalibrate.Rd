@@ -16,7 +16,7 @@ recalibrate(
 )
 }
 \arguments{
-\item{yhat_new}{Numeric vector with predicted values for the new (or test) set.}
+\item{yhat_new}{Numeric vector with predicted response values for the new (or test) set.}
 
 \item{pit_values}{Numeric vector of Global Probability Integral Transform (PIT) values calculated on the calibration set. We recommend using the PIT_global function.}
 
@@ -45,12 +45,13 @@ Mean Squared Error (MSE) as the loss function. Based on the work by Torres R. et
 both local and global recalibration approaches to provide samples from a recalibrated predictive distribution.
 }
 \details{
-The calibration technique implemented here draws inspiration from Approximate Bayesian Computation and Inverse Transform Theory,
-allowing for recalibration either locally or globally. The global method employs a uniform kernel, while the local method, even
-when p_neighbours=1, utilizes an Epanechnikov kernel. When p_neighbours=1, recalibration is performed using the entire calibration dataset but with distance-weighted contributions.
+The calibration technique implemented here draws inspiration from Approximate Bayesian Computation and Inverse Transform Theorem,
+allowing for recalibration either locally or globally. The global method employs a uniform kernel, while the local method employs an Epanechnikov kernel.
 
 It's important to note that the least squares method will only yield a probabilistic interpretation if the output to be modeled
 follows a normal distribution, and this assumption was used to implement this function.
+
+When p_neighbours=1, recalibration is performed using the entire calibration dataset but with distance-weighted contributions.
 }
 \examples{
 

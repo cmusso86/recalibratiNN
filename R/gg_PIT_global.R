@@ -2,8 +2,8 @@
 #'
 #' @description
 #' This function generates a ggplot visual representation of the density of Probability Integral Transform (PIT) values globally.
-#' For advanced customization of the plot layers, refer to the ggplot2 User Guide. This function also tests the PIT-values
-#' for uniformity using the Kolmogorov-Smirnov test (`ks.test`). The p-value from the test is printed on the plot if `print_p` is set to `TRUE`.
+#' For advanced customization of the plot layers, refer to the ggplot2 User Guide.
+#'
 #'
 #' @param pit Vector of PIT values to be plotted.
 #' @param type Character string specifying the type of plot: either "density" or "histogram".
@@ -16,6 +16,11 @@
 #' @importFrom stats density
 #' @return A `ggplot` object depicting a density graph of PIT-values, which can be further customized.
 #' @export
+#'
+#' @details
+#' This function also tests the PIT-values for uniformity using the Kolmogorov-Smirnov test (`ks.test`).
+#' The p-value from the test is printed on the plot if `print_p` is set to `TRUE`.
+#'
 #'
 #' @examples
 #'

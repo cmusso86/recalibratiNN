@@ -1,14 +1,12 @@
 #' Obtain local PIT-values from a model
 #'
 #' @description
-#' This function calculates local Probability Integral Transform (PIT) values using centroids derived
-#' from a k-means clustering method (from the `stats` package). The local areas around these centroids
-#' are defined through an approximate k-nearest neighbors method from the `RANN` package. This approach
-#' allows for a more localized assessment of model calibration.
+#' This function calculates local Probability Integral Transform (PIT) values using localized subregions of the covariate space from the calibration set.
+#' The output will be used for visualization of calibration quality using the `gg_CD_local()` and `gg_PIT_local()`function.
 #'
 #' @param xcal Numeric matrix or data frame of features/covariates (x-values) from the calibration dataset.
 #' @param ycal Numeric vector representing the true observations (y-values) of the response variable from the calibration dataset.
-#' @param yhat Numeric vector of predicted y-values from the calibration dataset.
+#' @param yhat Numeric vector of predicted response (y-hat-values) from the calibration dataset.
 #' @param clusters Integer specifying the number of partitions to create for local calibration using the k-means method. Default is set to 6.
 #' @param p_neighbours Proportion of xcal used to localize neighbors in the KNN method. Default is 0.2.
 #' @param mse Mean Squared Error calculated from the calibration dataset.
@@ -16,6 +14,14 @@
 #'
 #' @return A tibble with five columns containing unique names for each partition ("part"), "y_cal" (true observations),
 #'         "y_hat" (predicted values), "pit" (PIT-values), and "n" (number of neighbors) for each partition.
+#'
+#' @details
+#'
+#' It calculates local Probability Integral Transform (PIT) values using localized subregions of the covariate space from the calibration set.
+#' The centroids of such regions are derived from a k-means clustering method (from the `stats` package). The local areas around these centroids
+#' are defined through an approximate k-nearest neighbors method from the `RANN` package.
+#' Then, for this subregion, the PIT-values are calculated using the `PIT` function provided by the user. At the moment this function is tested to
+#' work with the `PIT_global()` function from this package, which assumes a Gaussian distribution. Eventually, it can be used with other distributions.
 #'
 #' @export
 #'

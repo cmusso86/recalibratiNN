@@ -5,7 +5,7 @@
 #' Mean Squared Error (MSE) as the loss function. Based on the work by Torres R. et al. (2024), it supports
 #' both local and global recalibration approaches to provide samples from a recalibrated predictive distribution.
 #'
-#' @param yhat_new Numeric vector with predicted values for the new (or test) set.
+#' @param yhat_new Numeric vector with predicted response values for the new (or test) set.
 #' @param space_cal Numeric matrix or data frame representing the covariates/features of the calibration/validation set,
 #'                  or any intermediate representation (like an intermediate layer of a neural network).
 #' @param space_new Similar to space_cal, but for a new set of covariates/features, ensuring they are in the same
@@ -26,12 +26,17 @@
 #' @export
 #'
 #' @details
-#' The calibration technique implemented here draws inspiration from Approximate Bayesian Computation and Inverse Transform Theory,
-#' allowing for recalibration either locally or globally. The global method employs a uniform kernel, while the local method, even
-#' when p_neighbours=1, utilizes an Epanechnikov kernel. When p_neighbours=1, recalibration is performed using the entire calibration dataset but with distance-weighted contributions.
+#'
+#' The calibration technique implemented here draws inspiration from Approximate Bayesian Computation and Inverse Transform Theorem,
+#' allowing for recalibration either locally or globally. The global method employs a uniform kernel, while the local method employs an Epanechnikov kernel.
 #'
 #' It's important to note that the least squares method will only yield a probabilistic interpretation if the output to be modeled
 #' follows a normal distribution, and this assumption was used to implement this function.
+#'
+#'
+#' @details
+#' When p_neighbours=1, recalibration is performed using the entire calibration dataset but with distance-weighted contributions.
+#'
 #'
 #' @references
 #' \insertRef{torres2024}{recalibratiNN}

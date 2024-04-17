@@ -31,8 +31,11 @@ A \code{ggplot} object depicting a density graph of PIT-values, which can be fur
 }
 \description{
 This function generates a ggplot visual representation of the density of Probability Integral Transform (PIT) values globally.
-For advanced customization of the plot layers, refer to the ggplot2 User Guide. This function also tests the PIT-values
-for uniformity using the Kolmogorov-Smirnov test (\code{ks.test}). The p-value from the test is printed on the plot if \code{print_p} is set to \code{TRUE}.
+For advanced customization of the plot layers, refer to the ggplot2 User Guide.
+}
+\details{
+This function also tests the PIT-values for uniformity using the Kolmogorov-Smirnov test (\code{ks.test}).
+The p-value from the test is printed on the plot if \code{print_p} is set to \code{TRUE}.
 }
 \examples{
 

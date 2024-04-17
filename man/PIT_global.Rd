@@ -18,8 +18,14 @@ Returns a numeric vector of PIT-values.
 }
 \description{
 A function to calculate the Probability Integral Transform (PIT) values for any fitted model
-that assumes a normal distribution of the output. This includes models such as linear models created
-using \code{lm()} or neural networks utilizing Mean Squared Error as the loss function. This function assumes a Gaussian distribution of the response variable.
+that assumes a normal distribution of the output.
+}
+\details{
+This function is designed to work with models that is, even implicitly, assuming normal distribution of the response variable.
+This includes, but is not limited to, linear models created using \code{lm()} or neural networks utilizing Mean Squared Error as the loss function.
+The OLS method is used to minimized residuals in these models. This mathematical optimization will also yield a probabilistic optimization
+when normal distribution of the response variable is assumed, since OLS and maximum likelihood estimation are equivalent under normality.
+Therefore, in order to render a probabilistic interpretation of the predictions, the model is intrinsically assuming a normal distribution of the response variable.
 }
 \examples{
 n <- 10000
