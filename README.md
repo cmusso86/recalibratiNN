@@ -17,9 +17,9 @@ Networks”](https://doi.org/10.48550/arXiv.2403.05756).
 
 ## Installation
 
-You can install the current stable version of recalibratiNN with:
-
 ### From CRAN
+
+You can install the current stable version of recalibratiNN with:
 
 ``` r
 install.packages("recalibratiNN")
@@ -46,6 +46,22 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
+#> knitr (1.45 -> 1.46) [CRAN]
+#> 
+#> The downloaded binary packages are in
+#>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmpwxzCrf/downloaded_packages
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpwxzCrf/remotese8df3c12dd6b/cmusso86-recalibratiNN-7e5a5f5/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpwxzCrf/remotese8df3c12dd6b/cmusso86-recalibratiNN-7e5a5f5/DESCRIPTION’
+#>   ─  preparing ‘recalibratiNN’:
+#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>   ─  installing the package to process help pages
+#>      Loading required namespace: recalibratiNN
+#>   ─  saving partial Rd database
+#>   ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>   ─  building ‘recalibratiNN_0.2.1.tar.gz’
+#>      
+#> 
 ```
 
 ## Understanding calibration/miscalibration

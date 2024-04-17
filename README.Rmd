@@ -31,9 +31,9 @@ This package provides a post processing method to recalibrate fitted Gaussian mo
 
 ## Installation
 
-You can install the current stable version of recalibratiNN with:
-
 ### From CRAN
+
+You can install the current stable version of recalibratiNN with:
 ``` {r, eval=F}
 install.packages("recalibratiNN")
 
