@@ -51,6 +51,10 @@ allowing for recalibration either locally or globally. The global method employs
 It's important to note that the least squares method will only yield a probabilistic interpretation if the output to be modeled
 follows a normal distribution, and this assumption was used to implement this function.
 
+The local recalibration method is expected to improve the predictive performance of the model, especially when the model is not able to capture the heteroscedasticity of the data.
+However, there is a trade off between refinement of localization and the Monte Carlo error, which can be controlled by the number of neighbors.
+That is, when more localized, the recalibration will grasp local changes better, but the Monte Carlo error will increase, because of the reduced number of neighbors.
+
 When p_neighbours=1, recalibration is performed using the entire calibration dataset but with distance-weighted contributions.
 }
 \examples{
