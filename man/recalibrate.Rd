@@ -40,7 +40,7 @@ A list containing the calibrated predicted mean and variance, along with samples
 and their respective weights calculated using an Epanechnikov kernel over the distances obtained from KNN.
 }
 \description{
-This function offers recalibration techniques for regression models that utilize Gaussian distributions and
+This function offers recalibration techniques for regression models that assume Gaussian distributions by using the
 Mean Squared Error (MSE) as the loss function. Based on the work by Torres R. et al. (2024), it supports
 both local and global recalibration approaches to provide samples from a recalibrated predictive distribution.
 }
