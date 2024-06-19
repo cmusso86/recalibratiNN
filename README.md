@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<!-- # recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;"> -->
+
+# recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;">
+
 <!-- badges: start -->
 
 [![CRAN
@@ -46,7 +48,7 @@ if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153672a5ed65e/cmusso86-recalibratiNN-eefdd97/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153672a5ed65e/cmusso86-recalibratiNN-eefdd97/DESCRIPTION’
+#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpCPgUPL/remotes159257e41e1ea/cmusso86-recalibratiNN-c947b5d/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpCPgUPL/remotes159257e41e1ea/cmusso86-recalibratiNN-c947b5d/DESCRIPTION’
 #>   ─  preparing ‘recalibratiNN’:
 #>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
 #>   ─  installing the package to process help pages
@@ -141,30 +143,6 @@ data_predict %>%
   theme_classic()
    
 ```
-
-    #> wk       (NA -> 0.9.1 ) [CRAN]
-    #> proxy    (NA -> 0.4-27) [CRAN]
-    #> e1071    (NA -> 1.7-14) [CRAN]
-    #> lazyeval (NA -> 0.2.2 ) [CRAN]
-    #> units    (NA -> 0.8-5 ) [CRAN]
-    #> s2       (NA -> 1.1.6 ) [CRAN]
-    #> classInt (NA -> 0.4-10) [CRAN]
-    #> rex      (NA -> 1.2.1 ) [CRAN]
-    #> markdown (NA -> 1.13  ) [CRAN]
-    #> sf       (NA -> 1.0-16) [CRAN]
-    #> covr     (NA -> 3.6.4 ) [CRAN]
-    #> 
-    #> The downloaded binary packages are in
-    #>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmpQ2Sh3N/downloaded_packages
-    #> ── R CMD build ─────────────────────────────────────────────────────────────────
-    #>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153673e00997/AllanCameron-geomtextpath-e1efb3f/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153673e00997/AllanCameron-geomtextpath-e1efb3f/DESCRIPTION’
-    #>   ─  preparing ‘geomtextpath’:
-    #>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
-    #>   ─  checking for LF line-endings in source and make files and shell scripts
-    #>   ─  checking for empty or unneeded directories
-    #>   ─  building ‘geomtextpath_0.1.4.9000.tar.gz’
-    #>      
-    #> 
 
 <div class="figure" style="text-align: center">
 
