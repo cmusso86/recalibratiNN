@@ -48,7 +48,7 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="articles/simple_mlp.html">simple_mlp</a>
+    <a class="dropdown-item" href="articles/simple_mlp.html">ANN ajusted to bidimensional data</a>
   </div>
 </li>
 <li class="nav-item">
@@ -73,13 +73,7 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="recalibratinn-">recalibratiNN <img src="reference/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;"><a class="anchor" aria-label="anchor" href="#recalibratinn-"></a>
-</h1>
-</div>
-<!-- badges: start -->
-
+  <main id="main" class="col-md-9">
 <p>This package provides a post processing method to recalibrate fitted Gaussian models. The method is based on the work of Torres R, Nott DJ, Sisson SA, et al. (2024). <a href="https://doi.org/10.48550/arXiv.2403.05756" class="external-link">“Model-Free Local Recalibration of Neural Networks”</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -108,15 +102,24 @@
 <span><span class="fu">pacman</span><span class="fu">::</span><span class="fu">p_load_current_gh</span><span class="op">(</span><span class="st">"cmusso86/recalibratiNN"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── R CMD build ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; * checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmplCTcu9/remotes1252e55c731ee/cmusso86-recalibratiNN-7d923e1/DESCRIPTION’ ... OK</span></span>
-<span><span class="co">#&gt; * preparing ‘recalibratiNN’:</span></span>
-<span><span class="co">#&gt; * checking DESCRIPTION meta-information ... OK</span></span>
-<span><span class="co">#&gt; * installing the package to process help pages</span></span>
-<span><span class="co">#&gt; Loading required namespace: recalibratiNN</span></span>
-<span><span class="co">#&gt; * saving partial Rd database</span></span>
-<span><span class="co">#&gt; * checking for LF line-endings in source and make files and shell scripts</span></span>
-<span><span class="co">#&gt; * checking for empty or unneeded directories</span></span>
-<span><span class="co">#&gt; * building ‘recalibratiNN_0.2.1.tar.gz’</span></span></code></pre></div>
+<span><span class="co">#&gt;      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153672a5ed65e/cmusso86-recalibratiNN-eefdd97/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153672a5ed65e/cmusso86-recalibratiNN-eefdd97/DESCRIPTION’</span></span>
+<span><span class="co">#&gt;   ─  preparing ‘recalibratiNN’:</span></span>
+<span><span class="co">#&gt;    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information</span></span>
+<span><span class="co">#&gt;   ─  installing the package to process help pages</span></span>
+<span><span class="co">#&gt;      Loading required namespace: recalibratiNN</span></span>
+<span><span class="co">#&gt;   ─  saving partial Rd database</span></span>
+<span><span class="co">#&gt;   ─  checking for LF line-endings in source and make files and shell scripts</span></span>
+<span><span class="co">#&gt;   ─  checking for empty or unneeded directories</span></span>
+<span><span class="co">#&gt;        NB: this package now depends on R (&gt;= 3.5.0)</span></span>
+<span><span class="co">#&gt;        WARNING: Added dependency on R &gt;= 3.5.0 because serialized objects in</span></span>
+<span><span class="co">#&gt;      serialize/load version 3 cannot be read in older versions of R.</span></span>
+<span><span class="co">#&gt;      File(s) containing such objects:</span></span>
+<span><span class="co">#&gt;        ‘recalibratiNN/vignettes/mse_cal.rds’</span></span>
+<span><span class="co">#&gt;        ‘recalibratiNN/vignettes/y_hat_cal.rds’</span></span>
+<span><span class="co">#&gt;        ‘recalibratiNN/vignettes/y_hat_test.rds’</span></span>
+<span><span class="co">#&gt;   ─  building ‘recalibratiNN_0.2.1.tar.gz’</span></span>
+<span><span class="co">#&gt;      </span></span>
+<span><span class="co">#&gt; </span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -193,14 +196,16 @@
 <span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; covr     (NA -&gt; 3.6.4 ) [CRAN]</span></span>
 <span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; The downloaded binary packages are in</span></span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt;  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmplCTcu9/downloaded_packages</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt;  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmpQ2Sh3N/downloaded_packages</span></span>
 <span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; ── R CMD build ─────────────────────────────────────────────────────────────────</span></span>
-<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt; * checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmplCTcu9/remotes1252e8fec536/AllanCameron-geomtextpath-e1efb3f/DESCRIPTION’ ... OK</span></span>
-<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt; * preparing ‘geomtextpath’:</span></span>
-<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co">#&gt; * checking DESCRIPTION meta-information ... OK</span></span>
-<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt; * checking for LF line-endings in source and make files and shell scripts</span></span>
-<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; * checking for empty or unneeded directories</span></span>
-<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt; * building ‘geomtextpath_0.1.4.9000.tar.gz’</span></span></code></pre></div>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt;      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153673e00997/AllanCameron-geomtextpath-e1efb3f/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153673e00997/AllanCameron-geomtextpath-e1efb3f/DESCRIPTION’</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt;   ─  preparing ‘geomtextpath’:</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co">#&gt;    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt;   ─  checking for LF line-endings in source and make files and shell scripts</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt;   ─  checking for empty or unneeded directories</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt;   ─  building ‘geomtextpath_0.1.4.9000.tar.gz’</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co">#&gt;      </span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="reference/figures/disp.png" alt="Model coverage, true mean (red) and estimated mean (black dashed line)." width="80%"><p class="caption">
 Model coverage, true mean (red) and estimated mean (black dashed line).
@@ -296,10 +301,11 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <code class="sourceCode R"><span><span class="va">new_yhat</span> <span class="op">&lt;-</span> <span class="va">rec</span><span class="op">$</span><span class="va">y_hat_calibrated</span> <span class="co"># calibrated means</span></span></code></pre></div>
 </div>
 </div>
-</div>
 <div class="section level1">
-<h1 id="bonus-section-checking-if-it-worked">Bonus section: checking if it worked<a class="anchor" aria-label="anchor" href="#bonus-section-checking-if-it-worked"></a>
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="bonus-section-checking-if-it-worked">Bonus section: checking if it worked<a class="anchor" aria-label="anchor" href="#bonus-section-checking-if-it-worked"></a>
 </h1>
+</div>
 <p>To look for more examples of successful application of this method in the calibration, please refer to Torres et. al (2023).</p>
 <p>For this exercise, we’ll deviate slightly from standard practices and assess the calibration on our test set, referred to here as the ‘new set.’ This deviation is permissible in our artificial example because we know the true model/process that generated the data. Consequently, we can compute the empirical PIT values to determine if the predictions are now better calibrated. It’s important to note that this is purely an educational exercise; in real-world scenarios, such an approach might not be feasible. Additionally, this specific evaluation method is not implemented in the package and is presented here solely to illustrate its effectiveness in this scenario.</p>
 <p>Note that since we dont know the real distribution, we can only calculate the empirical PIT-values, and not the ones provided ny the Inverse Transform Theorem.</p>
