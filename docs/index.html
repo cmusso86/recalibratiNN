@@ -73,7 +73,13 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9">
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="recalibratinn-">recalibratiNN <img src="reference/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;"><a class="anchor" aria-label="anchor" href="#recalibratinn-"></a>
+</h1>
+</div>
+<!-- badges: start -->
+
 <p>This package provides a post processing method to recalibrate fitted Gaussian models. The method is based on the work of Torres R, Nott DJ, Sisson SA, et al. (2024). <a href="https://doi.org/10.48550/arXiv.2403.05756" class="external-link">“Model-Free Local Recalibration of Neural Networks”</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -102,7 +108,7 @@
 <span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load_current_gh.html" class="external-link">p_load_current_gh</a></span><span class="op">(</span><span class="st">"cmusso86/recalibratiNN"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── R CMD build ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt;      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153672a5ed65e/cmusso86-recalibratiNN-eefdd97/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153672a5ed65e/cmusso86-recalibratiNN-eefdd97/DESCRIPTION’</span></span>
+<span><span class="co">#&gt;      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpCPgUPL/remotes159257e41e1ea/cmusso86-recalibratiNN-c947b5d/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpCPgUPL/remotes159257e41e1ea/cmusso86-recalibratiNN-c947b5d/DESCRIPTION’</span></span>
 <span><span class="co">#&gt;   ─  preparing ‘recalibratiNN’:</span></span>
 <span><span class="co">#&gt;    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information</span></span>
 <span><span class="co">#&gt;   ─  installing the package to process help pages</span></span>
@@ -183,29 +189,6 @@
 <span>  <span class="fu">scale_color_manual</span><span class="op">(</span><span class="st">"IC 95%"</span>, values<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#00822e"</span>, <span class="st">"#2f1d86"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span>
 <span>   </span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#&gt; wk       (NA -&gt; 0.9.1 ) [CRAN]</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; proxy    (NA -&gt; 0.4-27) [CRAN]</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; e1071    (NA -&gt; 1.7-14) [CRAN]</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; lazyeval (NA -&gt; 0.2.2 ) [CRAN]</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; units    (NA -&gt; 0.8-5 ) [CRAN]</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; s2       (NA -&gt; 1.1.6 ) [CRAN]</span></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; classInt (NA -&gt; 0.4-10) [CRAN]</span></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; rex      (NA -&gt; 1.2.1 ) [CRAN]</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; markdown (NA -&gt; 1.13  ) [CRAN]</span></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; sf       (NA -&gt; 1.0-16) [CRAN]</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; covr     (NA -&gt; 3.6.4 ) [CRAN]</span></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; The downloaded binary packages are in</span></span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt;  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmpQ2Sh3N/downloaded_packages</span></span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; ── R CMD build ─────────────────────────────────────────────────────────────────</span></span>
-<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt;      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153673e00997/AllanCameron-geomtextpath-e1efb3f/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153673e00997/AllanCameron-geomtextpath-e1efb3f/DESCRIPTION’</span></span>
-<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt;   ─  preparing ‘geomtextpath’:</span></span>
-<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co">#&gt;    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information</span></span>
-<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt;   ─  checking for LF line-endings in source and make files and shell scripts</span></span>
-<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt;   ─  checking for empty or unneeded directories</span></span>
-<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt;   ─  building ‘geomtextpath_0.1.4.9000.tar.gz’</span></span>
-<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co">#&gt;      </span></span>
-<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="reference/figures/disp.png" alt="Model coverage, true mean (red) and estimated mean (black dashed line)." width="80%"><p class="caption">
 Model coverage, true mean (red) and estimated mean (black dashed line).
@@ -220,7 +203,7 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <h3 id="observing-global-calibrationmiscalibration">Observing global calibration/miscalibration<a class="anchor" aria-label="anchor" href="#observing-global-calibrationmiscalibration"></a>
 </h3>
 <p>To obtain PIT values for the fitted model using a calibration set, we first use the <code>PIT_values()</code> function. This requires some preliminary calculations that will be used as arguments: predicted values of the fitted model for new observations (using predict); the Mean Squared Errors for the validation set, which in this context is referred to as the ‘calibration set’.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/cmusso86/recalibratiNN" class="external-link">recalibratiNN</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># predictions for the calibration set</span></span>
@@ -239,12 +222,12 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pit</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.04664277 0.32280556 0.58780953 0.94944249 0.67383645 0.15426510</span></span></code></pre></div>
 <p>Following these steps, you can then visualize the histogram and assess its fit to a uniform distribution using the <code><a href="reference/gg_PIT_global.html">gg_PIT_global()</a></code> function. For additional customization options, refer to the function’s documentation.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/gg_PIT_global.html">gg_PIT_global</a></span><span class="op">(</span><span class="va">pit</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/ggP.png" width="80%" style="display: block; margin: auto;"></p>
 <p>In this instance, as we are fitting a linear model (<code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>) to a heteroscedastic model it is expected that the histogram indicated miscalibration. Additionally, the image includes the p-value from the hypothesis testing using the Kolmogorov-Smirnov test, conducted with the <code><a href="https://rdrr.io/r/stats/ks.test.html" class="external-link">ks.test()</a></code> function from the stats package.</p>
 <p>It is also to use other visualization function of the package with the <code>gg_CD_global</code>. This graph shows the cumulative predictive distribution in the x-axis versus the empirical cumulative distribution and require four parameters.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/gg_CD_global.html">gg_CD_global</a></span><span class="op">(</span><span class="va">pit</span>,</span>
 <span>             <span class="va">y_cal</span>, </span>
 <span>             <span class="va">y_hat</span>, </span>
@@ -257,7 +240,7 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <p>However, relying solely on global calibration can be deceptive. A model may appear well-calibrated on a global scale, yet exhibit significant issues on a local level. For example, the model in question demonstrates a coverage close to 95%, aligning with the expected 95% confidence interval. Nonetheless, a closer inspection reveals that the distribution of erros is not consistent. In certain regions, the model consistently exhibits greater inaccuracies, indicating systematic errors.</p>
 <p>The observed disparities are evident in the graphs below. To analyze these, we first compute local PIT values using the <code><a href="reference/PIT_local.html">PIT_local()</a></code> function. This function divides the covariate space into ‘n’ clusters, with a default of 6, using a k-means algorithm. It then identifies neighbors around the centroids of each cluster.</p>
 <p>Observing this graph, we notice the model is uncalibrated in different ways thoughout the covariates space.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># calculating local PIT </span></span>
 <span><span class="va">pit_local</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/PIT_local.html">PIT_local</a></span><span class="op">(</span>xcal <span class="op">=</span> <span class="va">x_cal</span>, </span>
 <span>                       ycal<span class="op">=</span> <span class="va">y_cal</span>, </span>
@@ -268,7 +251,7 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <p><img src="reference/figures/plot1PL.png" width="80%" style="display: block; margin: auto;"></p>
 <p>In the initial segment, the model overestimates the variance while underestimating the mean. In contrast, the middle region shows better calibration, with the model’s predictions aligning more closely with observed values. Towards the end, however, it underestimates the variance. These distinct behaviors in different partitions of the data clearly suggest that the model would benefit from local calibration, as each section exhibits unique calibration needs.</p>
 <p>Alternatively you can observe the local miscalibration in the CD-graph.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/gg_CD_local.html">gg_CD_local</a></span><span class="op">(</span><span class="va">pit_local</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/gg_CD_local.html">gg_CD_local</a></span><span class="op">(</span><span class="va">pit_local</span>, facet <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/plotQL1.png" width="80%" style="display: block; margin: auto;"><img src="reference/figures/plotQL2.png" width="80%" style="display: block; margin: auto;"></p>
@@ -280,7 +263,7 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <p>The <code><a href="reference/recalibrate.html">recalibrate()</a></code> function implements the method described by Torres et al. (2023), drawing inspiration from Approximate Bayesian Computation. This method can be applied globally or locally. In our heteroscedastic example, local calibration shows superior performance. It employs a KNN algorithm to identify the nearest neighbors from the calibration set to the new or test set provided.</p>
 <p>To execute recalibration, it’s essential to supply the global PIT values, irrespective of the recalibration type, along with the Mean Squared Error of the calibration set. The neighbor search can be conducted at the covariate level, at any intermediate layer (as in a Neural Network), or even at the output layer.</p>
 <p>The function calculates the PIT values and employs the Inverse Transform Theorem to generate recalibrated samples. By default, the size of the vicinity is set at 20% of the calibration set, but this can be customized using the p_neighbours argument.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># new data </span></span>
 <span><span class="va">x_new</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">/</span><span class="fl">5</span>, <span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">y_hat_new</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">model</span>,</span>
@@ -297,19 +280,18 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <span>                   type <span class="op">=</span> <span class="st">"local"</span>,</span>
 <span>                   p_neighbours<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span></span></code></pre></div>
 <p>Now, we possess a list of new parameters and Monte Carlo samples from a predictive distribution that is expected to be calibrated. Although the exact form of this new distribution is unknown, we can estimate its parameters.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_yhat</span> <span class="op">&lt;-</span> <span class="va">rec</span><span class="op">$</span><span class="va">y_hat_calibrated</span> <span class="co"># calibrated means</span></span></code></pre></div>
 </div>
 </div>
-<div class="section level1">
-<div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="bonus-section-checking-if-it-worked">Bonus section: checking if it worked<a class="anchor" aria-label="anchor" href="#bonus-section-checking-if-it-worked"></a>
-</h1>
 </div>
+<div class="section level1">
+<h1 id="bonus-section-checking-if-it-worked">Bonus section: checking if it worked<a class="anchor" aria-label="anchor" href="#bonus-section-checking-if-it-worked"></a>
+</h1>
 <p>To look for more examples of successful application of this method in the calibration, please refer to Torres et. al (2023).</p>
 <p>For this exercise, we’ll deviate slightly from standard practices and assess the calibration on our test set, referred to here as the ‘new set.’ This deviation is permissible in our artificial example because we know the true model/process that generated the data. Consequently, we can compute the empirical PIT values to determine if the predictions are now better calibrated. It’s important to note that this is purely an educational exercise; in real-world scenarios, such an approach might not be feasible. Additionally, this specific evaluation method is not implemented in the package and is presented here solely to illustrate its effectiveness in this scenario.</p>
 <p>Note that since we dont know the real distribution, we can only calculate the empirical PIT-values, and not the ones provided ny the Inverse Transform Theorem.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># what youd be the real observations in this example</span></span>
 <span><span class="va">y_new_real</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">/</span><span class="fl">5</span>, </span>
 <span>                    <span class="fu">mu</span><span class="op">(</span><span class="va">x_new</span><span class="op">)</span>, </span>
@@ -327,7 +309,7 @@ Model coverage, true mean (red) and estimated mean (black dashed line).
 <span><span class="fu"><a href="reference/gg_PIT_global.html">gg_PIT_global</a></span><span class="op">(</span><span class="va">pit_new</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto;"></p>
 <p>We see now that the pit-values are approximately uniform, at least globally. Bellow, we also see that the local calibration is improved.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n_neighbours</span> <span class="op">&lt;-</span> <span class="fl">800</span></span>
 <span><span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fl">6</span></span>
 <span></span>
