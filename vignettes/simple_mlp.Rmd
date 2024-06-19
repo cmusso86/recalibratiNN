@@ -11,7 +11,6 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  eval = F, 
   comment = "#>"
 )
 ```
@@ -99,32 +98,18 @@ y_hat_test <- predict(model_nn, x_test)
 ```
 
 
-```{r eval=T}
-file_path1 <- system.file("extdata", "mse_cal.txt", package = "recalibratiNN")
-a <- read.table(file_path1) |> as.numeric()
-
-a
-```
-
-
-```{r, eval = T}
-file_path1 <- system.file("extdata", "mse_cal.rds", package = "recalibratiNN")
-b <- readRDS(file_path1)
-
-b
-
-```
-
-```{r, eval=F}
+```{r, echo = F}
 # carregar os vetores .rds
-file_path2 <- system.file("extdata", "y_hat_cal.rds", package = "recalibratiNN")
-y_hat_cal <- readRDS(file_path2)
 
-y_hat_test <- file_path3 <- system.file("extdata", "y_hat_test.rds", package = "recalibratiNN")
-y_hat_test <- readRDS(file_path3)
-y_hat_cal <- readRDS("y_hat_cal.rds") |> as.numeric()
-y_hat_test <- readRDS("y_hat_test.rds")|> as.numeric()
-MSE_cal <- readRDS("MSE_cal.rds")|> as.numeric()
+file_path1 <- system.file("extdata", "mse_cal.rds", package = "recalibratiNN")
+MSE_cal <- readRDS(file_path1)|> as.numeric()
+
+file_path2 <- system.file("extdata", "y_hat_cal.rds", package = "recalibratiNN")
+y_hat_cal <- readRDS(file_path2)|> as.numeric()
+
+file_path3 <- system.file("extdata", "y_hat_test.rds", package = "recalibratiNN")
+y_hat_test <- readRDS(file_path3)|> as.numeric()
+
 
 ```
 
