@@ -11,6 +11,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  eval = F, 
   comment = "#>"
 )
 ```
@@ -19,6 +20,10 @@ knitr::opts_chunk$set(
 library(recalibratiNN)
 ```
 
+
+```{r, eval = TRUE}
+knitr::include_graphics("teste.png")
+```
 
 
 ```{r}
@@ -99,7 +104,7 @@ y_hat_cal <- predict(model_nn, x_cal)
 y_hat_test <- predict(model_nn, x_test)
 ```
 
-```{r}
+```{r }
 # carregar os vetores .rds
 
 y_hat_cal <- readRDS("y_hat_cal.rds") |> as.numeric()
