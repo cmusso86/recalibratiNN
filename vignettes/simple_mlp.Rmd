@@ -101,8 +101,8 @@ y_hat_test <- predict(model_nn, x_test)
 
 ```{r, eval = T}
 file_path1 <- system.file("extdata", "MSE_cal.rds", package = "recalibratiNN")
-MSE_cal <-readRDS(file_path1)
-MSE_cal
+readRDS(file_path1)
+
 
 
 ```
