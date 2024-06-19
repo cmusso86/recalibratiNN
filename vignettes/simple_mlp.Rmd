@@ -98,12 +98,3 @@ model_nn |>
 y_hat_cal <- predict(model_nn, x_cal)
 y_hat_test <- predict(model_nn, x_test)
 ```
-
-```{r}
-# carregar os vetores .rds
-
-y_hat_cal <- readRDS("y_hat_cal.rds") |> as.numeric()
-y_hat_test <- readRDS("y_hat_test.rds")|> as.numeric()
-MSE_cal <- readRDS("MSE_cal.rds")|> as.numeric()
-
-```
