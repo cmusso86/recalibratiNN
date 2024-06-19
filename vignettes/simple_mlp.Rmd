@@ -11,6 +11,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  eval = F, 
   comment = "#>"
 )
 ```
@@ -98,21 +99,27 @@ y_hat_test <- predict(model_nn, x_test)
 ```
 
 
-```{r echo = F}
-file_path1 <- system.file("extdata", "MSE_cal.rds", package = "recalibratiNN")
-MSE_cal <-readRDS(file_path1)
+```{r eval=T}
+file_path1 <- system.file("extdata", "mse_cal.txt", package = "recalibratiNN")
+read.table(file_path1) |> as.numeric()
+```
 
+
+```{r, eval = T}
+file_path1 <- system.file("extdata", "mse_cal.rds", package = "recalibratiNN")
+readRDS(file_path1)
+
+
+
+```
+
+```{r, eval=F}
+# carregar os vetores .rds
 file_path2 <- system.file("extdata", "y_hat_cal.rds", package = "recalibratiNN")
 y_hat_cal <- readRDS(file_path2)
 
 y_hat_test <- file_path3 <- system.file("extdata", "y_hat_test.rds", package = "recalibratiNN")
 y_hat_test <- readRDS(file_path3)
-
-```
-
-```{r eval = F}
-# carregar os vetores .rds
-
 y_hat_cal <- readRDS("y_hat_cal.rds") |> as.numeric()
 y_hat_test <- readRDS("y_hat_test.rds")|> as.numeric()
 MSE_cal <- readRDS("MSE_cal.rds")|> as.numeric()
