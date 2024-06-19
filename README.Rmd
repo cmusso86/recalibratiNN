@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 
 
-<!-- # recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;"> -->
+# recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;">
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/recalibratiNN)](https://CRAN.R-project.org/package=recalibratiNN)
