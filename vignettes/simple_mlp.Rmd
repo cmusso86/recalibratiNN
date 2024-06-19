@@ -1,5 +1,5 @@
 ---
-title: "ANN ajusted to bivariate data"
+title: "simple_mlp"
 subtitle: "A visual example of how to recalibrate a neural network"
 output: rmarkdown::html_vignette
 vignette: >
