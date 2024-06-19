@@ -1,8 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;">
-
+<!-- # recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;"> -->
 <!-- badges: start -->
 
 [![CRAN
@@ -48,15 +46,24 @@ if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmplCTcu9/remotes1252e55c731ee/cmusso86-recalibratiNN-7d923e1/DESCRIPTION’ ... OK
-#> * preparing ‘recalibratiNN’:
-#> * checking DESCRIPTION meta-information ... OK
-#> * installing the package to process help pages
-#> Loading required namespace: recalibratiNN
-#> * saving partial Rd database
-#> * checking for LF line-endings in source and make files and shell scripts
-#> * checking for empty or unneeded directories
-#> * building ‘recalibratiNN_0.2.1.tar.gz’
+#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153672a5ed65e/cmusso86-recalibratiNN-eefdd97/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153672a5ed65e/cmusso86-recalibratiNN-eefdd97/DESCRIPTION’
+#>   ─  preparing ‘recalibratiNN’:
+#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>   ─  installing the package to process help pages
+#>      Loading required namespace: recalibratiNN
+#>   ─  saving partial Rd database
+#>   ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>        NB: this package now depends on R (>= 3.5.0)
+#>        WARNING: Added dependency on R >= 3.5.0 because serialized objects in
+#>      serialize/load version 3 cannot be read in older versions of R.
+#>      File(s) containing such objects:
+#>        ‘recalibratiNN/vignettes/mse_cal.rds’
+#>        ‘recalibratiNN/vignettes/y_hat_cal.rds’
+#>        ‘recalibratiNN/vignettes/y_hat_test.rds’
+#>   ─  building ‘recalibratiNN_0.2.1.tar.gz’
+#>      
+#> 
 ```
 
 ## Understanding calibration/miscalibration
@@ -148,14 +155,16 @@ data_predict %>%
     #> covr     (NA -> 3.6.4 ) [CRAN]
     #> 
     #> The downloaded binary packages are in
-    #>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmplCTcu9/downloaded_packages
+    #>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmpQ2Sh3N/downloaded_packages
     #> ── R CMD build ─────────────────────────────────────────────────────────────────
-    #> * checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmplCTcu9/remotes1252e8fec536/AllanCameron-geomtextpath-e1efb3f/DESCRIPTION’ ... OK
-    #> * preparing ‘geomtextpath’:
-    #> * checking DESCRIPTION meta-information ... OK
-    #> * checking for LF line-endings in source and make files and shell scripts
-    #> * checking for empty or unneeded directories
-    #> * building ‘geomtextpath_0.1.4.9000.tar.gz’
+    #>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153673e00997/AllanCameron-geomtextpath-e1efb3f/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpQ2Sh3N/remotes153673e00997/AllanCameron-geomtextpath-e1efb3f/DESCRIPTION’
+    #>   ─  preparing ‘geomtextpath’:
+    #>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+    #>   ─  checking for LF line-endings in source and make files and shell scripts
+    #>   ─  checking for empty or unneeded directories
+    #>   ─  building ‘geomtextpath_0.1.4.9000.tar.gz’
+    #>      
+    #> 
 
 <div class="figure" style="text-align: center">
 
