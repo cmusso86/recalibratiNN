@@ -20,7 +20,7 @@ library(recalibratiNN)
 ```
 
 
-```{r}
+```{r, eval=F}
 rm(list=ls())
 if(!require("pacman")) install.packages("pacman")
 pacman::p_load(
@@ -31,8 +31,18 @@ pacman::p_load(
   glue,
   RANN
 )
+```
 
+```{r, inlcude = F}
+library(dplyr)
+library(purrr)
+library(ggplot2)
+library(tidyr)
+library(glue)
+library(RANN)
+```
 
+```{r}
 set.seed(42)
 n <- 10000
 
@@ -247,7 +257,7 @@ as.data.frame(t(pits)) |>
   group_by(name) |>
   mutate(p_value =ks.test(value,
                           "punif")$p.value,
-         name = str_replace(name, "V", "part_")) |> 
+         name = gsub("V", "part_", name)) |> 
   ggplot()+
   geom_density(aes(value,
                    color = name,
