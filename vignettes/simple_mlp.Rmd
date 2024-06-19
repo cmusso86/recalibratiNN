@@ -109,9 +109,9 @@ a
 
 ```{r, eval = T}
 file_path1 <- system.file("extdata", "mse_cal.rds", package = "recalibratiNN")
-readRDS(file_path1)
+b <- readRDS(file_path1)
 
-
+b
 
 ```
 
