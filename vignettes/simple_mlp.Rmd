@@ -20,3 +20,81 @@ library(recalibratiNN)
 ```
 
 
+
+```{r}
+set.seed(42)
+n <- 10000
+
+x <- cbind(x1 = runif(n, -3, 3),
+           x2 = runif(n, -5, 5))
+
+mu_fun <- function(x) {
+  abs(x[,1]^3 - 50*sin(x[,2]) + 30)}
+
+mu <- mu_fun(x)
+y <- rnorm(n, 
+           mean = mu, 
+           sd=20*(abs(x[,2]/(x[,1]+ 10))))
+
+split1 <- 0.6
+split2 <- 0.8
+
+x_train <- x[1:(split1*n),]
+y_train <- y[1:(split1*n)]
+
+x_cal  <- x[(split1*n+1):(n*split2),]
+y_cal  <- y[(split1*n+1):(n*split2)]
+
+x_test <- x[(split2*n+1):n,]
+y_test  <- y[(split2*n+1):n]
+
+```
+
+
+```{r, eval=F}
+model_nn <- keras_model_sequential()
+
+model_nn |> 
+  layer_dense(input_shape=2,
+              units=800,
+              use_bias=T,
+              activation = "relu",
+              kernel_initializer="random_normal",
+              bias_initializer = "zeros") %>%
+  layer_dropout(rate = 0.1) %>%
+  layer_dense(units=800,
+              use_bias=T,
+              activation = "relu",
+              kernel_initializer="random_normal",
+              bias_initializer = "zeros") |> 
+  layer_dropout(rate = 0.1) |> 
+  layer_dense(units=800,
+              use_bias=T,
+              activation = "relu",
+              kernel_initializer="random_normal",
+              bias_initializer = "zeros") |> 
+   layer_batch_normalization() |> 
+  layer_dense(units = 1,
+              activation = "linear",
+              kernel_initializer = "zeros",
+              bias_initializer = "zeros")
+
+model_nn |> 
+  compile(optimizer=optimizer_adam( ),
+    loss = "mse")
+
+model_nn |> 
+  fit(x = x_train, 
+      y = y_train,
+      validation_data = list(x_cal, y_cal),
+      callbacks = callback_early_stopping(
+        monitor = "val_loss",
+        patience = 20,
+        restore_best_weights = T),
+      batch_size = 128,
+      epochs = 1000)
+
+
+y_hat_cal <- predict(model_nn, x_cal)
+y_hat_test <- predict(model_nn, x_test)
+```
