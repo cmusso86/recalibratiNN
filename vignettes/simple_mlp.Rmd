@@ -34,6 +34,7 @@ pacman::p_load(
 ```
 
 ```{r, inlcude = F}
+rm(list=ls())
 library(dplyr)
 library(purrr)
 library(ggplot2)
@@ -236,9 +237,9 @@ knn_cal <- nn2(x_test,
 
 
 # geting corresponding ys (real and estimated)
-y_real_local <- purrr::map(1:nrow(knn_cal),  ~y_test[knn_cal[.,]])
+y_real_local <- map(1:nrow(knn_cal),  ~y_test[knn_cal[.,]])
 
-y_hat_local <-purrr::map(1:nrow(knn_cal),  ~y_hat_rec[knn_cal[.,],])
+y_hat_local <- map(1:nrow(knn_cal),  ~y_hat_rec[knn_cal[.,],])
 
 
 # calculate pit_local
@@ -247,7 +248,7 @@ pits <- matrix(NA,
                ncol = n_neighbours)
 
 for (i in 1:n_clusters) {
-    pits[i,] <- purrr::map_dbl(1:n_neighbours, ~{
+    pits[i,] <- map_dbl(1:n_neighbours, ~{
       mean(y_hat_local[[i]][.,] <= y_hat_local[[i]][.])
     })
 }
