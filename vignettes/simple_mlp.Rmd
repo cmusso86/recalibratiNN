@@ -99,7 +99,7 @@ y_hat_test <- predict(model_nn, x_test)
 ```
 
 
-```{r}
+```{r eval=T}
 file_path1 <- system.file("extdata", "mse_cal.txt", package = "recalibratiNN")
 read.table(file_path1) |> as.numeric()
 ```
