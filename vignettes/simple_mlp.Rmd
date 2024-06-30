@@ -195,7 +195,6 @@ pit_local <- PIT_local(xcal = x_cal,
                        mse = MSE_cal
                        )
 
-library(patchwork)
 gg_PIT_local(pit_local)
 ```
 
