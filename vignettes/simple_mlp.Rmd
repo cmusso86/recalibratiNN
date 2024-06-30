@@ -1,22 +1,59 @@
 ---
-title: "ANN ajusted to bidimensional data"
-subtitle: "A visual example of how to recalibrate a neural network"
+title: "Recalibrating the predicitions of an ANN."
+subtitle: "A visual example of recalibration using bidimensional data."
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ANN ajusted to bidimensional data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+header-includes:
+  - \usepackage{amsmath}
 ---
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  message = FALSE,
   comment = "#>"
 )
 ```
 
+## PROBLEM
+
+The calibration of a model can be evaluated by comparing observed values with their respective estimated conditional (or predictive) distributions. This evaluation can be conducted globally, examining overall calibration, or locally, investigating calibration in specific parts of the covariate space. To better illustrate how the package can improve a models's calibration, let's consider some artificial examples.
+
 ```{r setup}
 library(recalibratiNN)
+```
+
+In the following example, we are going to recalibrate the predictions of an artificial neural network (ANN) model to non-linear heteroscedastic data. First we will simulate some data as follows:
+
+
+We define the sample size:
+\begin{equation}
+n = 10000
+\end{equation}
+
+The vectors \(x_1\) and \(x_2\) are generated from uniform distributions:
+\begin{equation}
+x_1 \sim \text{Uniform}(-3, 3)
+\end{equation}
+\begin{equation}
+x_2 \sim \text{Uniform}(-5, 5)
+\end{equation}
+
+We define the function \(\mu\) as:
+\begin{equation}
+\mu(x) = \left| x_1^3 - 50 \sin(x_2) + 30 \right|
+\end{equation}
+
+The response variable \(y\) is generated from a normal distribution with mean \(\mu\) and standard deviation \(20 \left| \frac{x_2}{x_1 + 10} \right|\):
+\begin{equation}
+y \sim \mathcal{N}\left(\mu, 20 \left| \frac{x_2}{x_1 + 10} \right|\right)
+\end{equation}
+
+```{r echo = F}
 
 library(glue)
 library(RANN)
@@ -56,6 +93,7 @@ y_test  <- y[(split2*n+1):n]
 
 ```
 
+Now, this toy model was trained using the Keras framework with TensorFlow backend. The ANN architecture consist of an ANN with 3 hidden layers with ReLU activation functions and dropout for regularization as follows:
 
 ```{r, eval=F}
 model_nn <- keras_model_sequential()
@@ -118,21 +156,26 @@ y_hat_cal <- readRDS(file_path2)|> as.numeric()
 file_path3 <- system.file("extdata", "y_hat_test.rds", package = "recalibratiNN")
 y_hat_test <- readRDS(file_path3)|> as.numeric()
 
-
 ```
 
+## MISCALIBRATION DISGNOSTICS
 
+Now, we can evaluate the calibration of the appropriate functions of the recalibratiNN package. Firstly, we will calculate the Probability Integral Transform (PIT) values using the `PIT_global` function and visualize them using the `gg_PIT_global` function.
+
+We can observe in this graph that, globally, the model shows significant miscalibration (deviating from a uniform distribution)
 
 ```{r}
-
 ## Global calibrations
 pit <- PIT_global(ycal = y_cal, 
                   yhat = y_hat_cal, 
                   mse = MSE_cal)
 
 gg_PIT_global(pit)
-
 ```
+
+For comparison, we will also calculate the local PIT values using the local functions. This is important because the model may be well calibrated globally but not locally. In other words, it may exhibit varying or even opposing patterns of miscalibration throughout the covariate space, which can be compensated for when analyzed globally.
+
+Here, we can see that the model is miscalibrated differently according to the regions. 
 
 ```{r}
 pit_local <- PIT_local(xcal = x_cal,
@@ -143,8 +186,15 @@ pit_local <- PIT_local(xcal = x_cal,
 
 gg_PIT_local(pit_local, 
              facet = TRUE)
-
 ```
+
+Since this example consists of bidimensional data, we visualize the calibration of the model on a surface representing the covariate space. In this graph, we used a 95% Confidence Interval centered on the mean predicted by the model, with a fixed variance estimated by the Mean Squared Error (MSE). When the true value falls within the interval, it is colored greenish; when it falls outside, it is colored red. 
+
+::: {.callout-note}
+Note that this visualization is not part of the recalibratiNN package since it can only be applied to bidimensional data, which is not typically the case when adjusting neural networks. This example was used specifically to demonstrate (mis)calibration visually and to make the concept more tangible.
+:::
+
+The following graph illustrates the original coverage of the model, which is around 90%. Thus, globally, we observe that the model underestimates the true uncertainty of the data (90% < 95%). However, despite the global coverage being approximately 90%, there are specific regions where the model consistently makes more incorrect predictions (falling well below the 95% mark), while accurately predicting (100%) within other regions. Although this last part may initially seem favorable (more accuracy is typically desirable), it indicates that the uncertainty of the predictions is not adequately captured by the model (overestimated) . This highlights the importance of interpreting predictions probabilistically, considering a distribution rather than just a point prediction.
 
 ```{r}
 coverage_model <- tibble(
@@ -160,11 +210,13 @@ mutate(lwr = qnorm(0.05, y_hat, sqrt(MSE_cal)),
 )
 
 coverage_model |> 
+  arrange(CI) |>   
   ggplot() +
   geom_point(aes(x1cal, 
                  x2cal, 
                  color = CI),
-             alpha = 0.8)+
+             alpha = 0.9,
+             size = 3)+
    labs(x="x1" , y="x2", 
         title = glue("Original coverage: {coverage_model$coverage[1]} %"))+
   scale_color_manual("Confidence Interval",
@@ -172,7 +224,7 @@ coverage_model |>
                                 "out" = "steelblue4"))+
   theme_classic()
 ```
-
+## 
 ```{r}
 recalibrated <- 
   recalibrate(

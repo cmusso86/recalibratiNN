@@ -42,7 +42,7 @@ and their respective weights calculated using an Epanechnikov kernel over the di
 \description{
 This function offers recalibration techniques for regression models that assume Gaussian distributions by using the
 Mean Squared Error (MSE) as the loss function. Based on the work by Torres R. et al. (2024), it supports
-both local and global recalibration approaches to provide samples from a recalibrated predictive distribution.
+both local and global recalibration approaches to provide samples from a recalibrated predictive distribution. A detailed algorithm can also be found in Musso C. (2023).
 }
 \details{
 The calibration technique implemented here draws inspiration from Approximate Bayesian Computation and Inverse Transform Theorem,
@@ -107,4 +107,5 @@ recalibrate(
 }
 \references{
 \insertRef{torres2024}{recalibratiNN}
+\insertRef{musso2023}{recalibratiNN}
 }
