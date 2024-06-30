@@ -46,11 +46,15 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
+#> crayon (1.5.2 -> 1.5.3) [CRAN]
+#> cli    (3.6.2 -> 3.6.3) [CRAN]
 #> 
+#> The downloaded binary packages are in
+#>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//Rtmpx2IcOw/downloaded_packages
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpCPgUPL/remotes159257e41e1ea/cmusso86-recalibratiNN-c947b5d/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpCPgUPL/remotes159257e41e1ea/cmusso86-recalibratiNN-c947b5d/DESCRIPTION’
+#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmpx2IcOw/remotes17f90582977a6/cmusso86-recalibratiNN-94d02e4/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/Rtmpx2IcOw/remotes17f90582977a6/cmusso86-recalibratiNN-94d02e4/DESCRIPTION’
 #>   ─  preparing ‘recalibratiNN’:
-#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>      checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
 #>   ─  installing the package to process help pages
 #>      Loading required namespace: recalibratiNN
 #>   ─  saving partial Rd database
@@ -60,6 +64,9 @@ pacman::p_load_current_gh("cmusso86/recalibratiNN")
 #>        WARNING: Added dependency on R >= 3.5.0 because serialized objects in
 #>      serialize/load version 3 cannot be read in older versions of R.
 #>      File(s) containing such objects:
+#>        ‘recalibratiNN/inst/extdata/mse_cal.rds’
+#>        ‘recalibratiNN/inst/extdata/y_hat_cal.rds’
+#>        ‘recalibratiNN/inst/extdata/y_hat_test.rds’
 #>        ‘recalibratiNN/vignettes/mse_cal.rds’
 #>        ‘recalibratiNN/vignettes/y_hat_cal.rds’
 #>        ‘recalibratiNN/vignettes/y_hat_test.rds’
