@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## PROBLEM
+## The problem
 
 The calibration of a model can be evaluated by comparing observed values with their respective estimated conditional (or predictive) distributions. This evaluation can be conducted globally, examining overall calibration, or locally, investigating calibration in specific parts of the covariate space. To better illustrate how the package can improve a models's calibration, let's consider some artificial examples.
 
@@ -64,8 +64,11 @@ library(ggplot2)
 
 ```
 
+The code bellow generates the data described above. 
+
 ```{r}
-set.seed(42)
+set.seed(42)   # The Answer to the Ultimate Question of Life, The Universe, and Everything
+
 n <- 10000
 
 x <- cbind(x1 = runif(n, -3, 3),
@@ -158,7 +161,7 @@ y_hat_test <- readRDS(file_path3)|> as.numeric()
 
 ```
 
-## MISCALIBRATION DISGNOSTICS
+## Observing miscalibration
 
 Now, we can evaluate the calibration of the appropriate functions of the recalibratiNN package. Firstly, we will calculate the Probability Integral Transform (PIT) values using the `PIT_global` function and visualize them using the `gg_PIT_global` function.
 
@@ -172,6 +175,14 @@ pit <- PIT_global(ycal = y_cal,
 
 gg_PIT_global(pit)
 ```
+A similar conclusion can be drawn when observing the comparison of true and predicted quantiles.
+
+```{r}
+gg_CD_global(pit, 
+             ycal = y_cal,      # true response of calibration set
+             yhat = y_hat_cal,  # predictions of calibration set
+             mse = MSE_cal)    # mse from training on calibration set
+```
 
 For comparison, we will also calculate the local PIT values using the local functions. This is important because the model may be well calibrated globally but not locally. In other words, it may exhibit varying or even opposing patterns of miscalibration throughout the covariate space, which can be compensated for when analyzed globally.
 
@@ -184,15 +195,16 @@ pit_local <- PIT_local(xcal = x_cal,
                        mse = MSE_cal
                        )
 
-gg_PIT_local(pit_local, 
-             facet = TRUE)
+gg_PIT_local(pit_local)
+```
+
+Similarly, we observe the miscalibration in:
+
+```{r}
+gg_CD_local(pit_local)
 ```
 
 Since this example consists of bidimensional data, we visualize the calibration of the model on a surface representing the covariate space. In this graph, we used a 95% Confidence Interval centered on the mean predicted by the model, with a fixed variance estimated by the Mean Squared Error (MSE). When the true value falls within the interval, it is colored greenish; when it falls outside, it is colored red. 
-
-::: {.callout-note}
-Note that this visualization is not part of the recalibratiNN package since it can only be applied to bidimensional data, which is not typically the case when adjusting neural networks. This example was used specifically to demonstrate (mis)calibration visually and to make the concept more tangible.
-:::
 
 The following graph illustrates the original coverage of the model, which is around 90%. Thus, globally, we observe that the model underestimates the true uncertainty of the data (90% < 95%). However, despite the global coverage being approximately 90%, there are specific regions where the model consistently makes more incorrect predictions (falling well below the 95% mark), while accurately predicting (100%) within other regions. Although this last part may initially seem favorable (more accuracy is typically desirable), it indicates that the uncertainty of the predictions is not adequately captured by the model (overestimated) . This highlights the importance of interpreting predictions probabilistically, considering a distribution rather than just a point prediction.
 
@@ -216,7 +228,7 @@ coverage_model |>
                  x2cal, 
                  color = CI),
              alpha = 0.9,
-             size = 3)+
+             size = 2)+
    labs(x="x1" , y="x2", 
         title = glue("Original coverage: {coverage_model$coverage[1]} %"))+
   scale_color_manual("Confidence Interval",
@@ -224,44 +236,35 @@ coverage_model |>
                                 "out" = "steelblue4"))+
   theme_classic()
 ```
-## 
+<span style="color:#DAA520; font-weight:bold; text-decoration:underline;">Note:</span> this visualization is not part of the recalibratiNN package since it can only be applied to bidimensional data, which is not typically the case when adjusting neural networks. This example was used specifically to demonstrate (mis)calibration visually and to make the concept more tangible.
+
+## Recalibration
+
+The primary function of the recalibratiNN package is recalibrate(). As of July 2024, this function includes one implemented method for recalibration. The method is thoroughly described in @torres_2024, with a simplified version discussed in @musso_2023. The method can be applied both globally and locally, with a preference for local application.The function returns a list that includes, among other things, recalibrated Monte Carlo samples weighted by the distance between true and predicted observations.
+
+
 ```{r}
 recalibrated <- 
   recalibrate(
-    yhat_new = y_hat_test,
-    space_cal = x_cal,
-    pit_values = pit,
-    space_new = x_test,
-    mse = MSE_cal, 
-    type="local",  
-    p_neighbours = 0.08)
+    yhat_new = y_hat_test, # predictions of test set
+    space_cal = x_cal,     # covariates of calibration set
+    pit_values = pit,      # global pit values calculated earlier.
+    space_new = x_test,    # covariates of test set
+    mse = MSE_cal,         # MSE from calibration set
+    type = "local",        # type of calibration
+    p_neighbours = 0.08)   # proportion of calibration to use as nearest neighbors
 
 y_hat_rec <- recalibrated$y_samples_calibrated_wt
 ```
 
-```{r}
- coverage_rec <- map_dfr( 1:nrow(x_test), ~ {
-  quantile(y_hat_rec[.,]
-           ,c(0.05, 0.95))}) |> 
-  mutate(
-    x1 = x_test[,1],
-    x2 = x_test[,2],
-    ytest = y_test,
-    CI = ifelse(ytest <= `95%`& ytest >= `5%`, 
-                "in", "out"),
-    coverage = round(mean(CI == "in")*100,1))
+That is it! These new values in `y_hat_rec` are, by definition, more calibrated than the original ones. This means that the uncertainty estimation, although not yet perfect, is better than before.
 
- coverage_rec |> 
-   ggplot() +
-   geom_point(aes(x1, x2, color = CI),
-              alpha = 0.7)+
-   labs(x="x1" , y="x2", 
-        title = glue("Recalibrated coverage: {coverage_rec$coverage[1]} %"))+
-  scale_color_manual("Confidence Interval",
-                     values = c("in" = "aquamarine3", 
-                                "out" = "steelblue4"))+
-  theme_classic()
-```
+Shall we see?
+
+Because we have the true observations, we can observe the PIT-values densities. This visualization is still not implemented as a function in the package, so the complete code is given below.
+
+We see that the predictions are more calibrated throughout the covariate space. 
+
 ```{r}
 
 n_clusters <- 6 
@@ -327,18 +330,49 @@ as.data.frame(t(pits)) |>
   facet_wrap(~name, scales = "free_y")
 ```
 
+Once again, because we are working with bidimensional data, we can observe the coverage on a surface. We notice that the global coverage has improved slightly, and responses that fall within and outside the confidence interval (CI) are much better distributed (though still not perfect). Fine-tuning to adjust the number of neighbors may be required, as it involves a trade-off between localization and Monte Carlo error.
+
 ```{r}
+ coverage_rec <- map_dfr( 1:nrow(x_test), ~ {
+  quantile(y_hat_rec[.,]
+           ,c(0.05, 0.95))}) |> 
+  mutate(
+    x1 = x_test[,1],
+    x2 = x_test[,2],
+    ytest = y_test,
+    CI = ifelse(ytest <= `95%`& ytest >= `5%`, 
+                "in", "out"),
+    coverage = round(mean(CI == "in")*100,1)) |> 
+  arrange(CI)
+
+ coverage_rec |> 
+   ggplot() +
+   geom_point(aes(x1, x2, color = CI),
+              alpha = 0.9,
+              size = 2)+
+   labs(x="x1" , y="x2", 
+        title = glue("Recalibrated coverage: {coverage_rec$coverage[1]} %"))+
+  scale_color_manual("Confidence Interval",
+                     values = c("in" = "aquamarine3", 
+                                "out" = "steelblue4"))+
+  theme_classic()
+```
+
+<!-- Lastly, we can observe that the point estimates have also improved. Baring in mind that when plotting true vs. estimated mean, we would expect a perfect line if the prediction were equal to the true observation. After calibration, we see that the recalibrated observations are more concentrated around the true mean and less scattered. -->
+
+```{r include = F}
 data.frame(
   real = mu_fun(x_test),
   desc = y_hat_test,
   recal = recalibrated$y_hat_calibrated
 ) |> 
   pivot_longer(-real) |> 
+  arrange(name) |> 
   ggplot()+
   geom_point(aes( x = value,
                   y = real,
                   color = name),
-             alpha = 0.8)+ 
+             alpha = 0.7)+ 
   scale_color_manual("", values = c( "#003366","#80b298"),
                      labels = c("Predicted", "Recalibrated"))+
   geom_abline(color="red", linetype="dashed")+
@@ -356,3 +390,4 @@ data.frame(
 
 ```
 
+"In the next example, we are going to recalibrate predictions of a more complex neural network/data.
