@@ -90,7 +90,7 @@ recalibration using bidimensional data.</h3>
     
     
 <div class="section level2">
-<h2 id="problem">PROBLEM<a class="anchor" aria-label="anchor" href="#problem"></a>
+<h2 id="the-problem">The problem<a class="anchor" aria-label="anchor" href="#the-problem"></a>
 </h2>
 <p>The calibration of a model can be evaluated by comparing observed
 values with their respective estimated conditional (or predictive)
@@ -123,8 +123,10 @@ generated from a normal distribution with mean <span class="math inline">\(\mu\)
 y \sim \mathcal{N}\left(\mu, 20 \left| \frac{x_2}{x_1 + 10}
 \right|\right)
 \end{equation}\]</span></p>
+<p>The code bellow generates the data described above.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span>   <span class="co"># The Answer to the Ultimate Question of Life, The Universe, and Everything</span></span>
+<span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10000</span></span>
 <span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span>, <span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>,</span>
@@ -201,7 +203,7 @@ follows:</p>
 <span><span class="va">y_hat_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">model_nn</span>, <span class="va">x_test</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="miscalibration-disgnostics">MISCALIBRATION DISGNOSTICS<a class="anchor" aria-label="anchor" href="#miscalibration-disgnostics"></a>
+<h2 id="observing-miscalibration">Observing miscalibration<a class="anchor" aria-label="anchor" href="#observing-miscalibration"></a>
 </h2>
 <p>Now, we can evaluate the calibration of the appropriate functions of
 the recalibratiNN package. Firstly, we will calculate the Probability
@@ -217,7 +219,15 @@ significant miscalibration (deviating from a uniform distribution)</p>
 <span>                  mse <span class="op">=</span> <span class="va">MSE_cal</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/gg_PIT_global.html">gg_PIT_global</a></span><span class="op">(</span><span class="va">pit</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simple_mlp_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="simple_mlp_files/figure-html/unnamed-chunk-6-1.png" width="700">
+A similar conclusion can be drawn when observing the comparison of true
+and predicted quantiles.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/gg_CD_global.html">gg_CD_global</a></span><span class="op">(</span><span class="va">pit</span>, </span>
+<span>             ycal <span class="op">=</span> <span class="va">y_cal</span>,      <span class="co"># true response of calibration set</span></span>
+<span>             yhat <span class="op">=</span> <span class="va">y_hat_cal</span>,  <span class="co"># predictions of calibration set</span></span>
+<span>             mse <span class="op">=</span> <span class="va">MSE_cal</span><span class="op">)</span>    <span class="co"># mse from training on calibration set</span></span></code></pre></div>
+<p><img src="simple_mlp_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>For comparison, we will also calculate the local PIT values using the
 local functions. This is important because the model may be well
 calibrated globally but not locally. In other words, it may exhibit
@@ -226,29 +236,25 @@ covariate space, which can be compensated for when analyzed
 globally.</p>
 <p>Here, we can see that the model is miscalibrated differently
 according to the regions.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pit_local</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PIT_local.html">PIT_local</a></span><span class="op">(</span>xcal <span class="op">=</span> <span class="va">x_cal</span>,</span>
 <span>                       ycal <span class="op">=</span> <span class="va">y_cal</span>, </span>
 <span>                       yhat <span class="op">=</span> <span class="va">y_hat_cal</span>, </span>
 <span>                       mse <span class="op">=</span> <span class="va">MSE_cal</span></span>
 <span>                       <span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/gg_PIT_local.html">gg_PIT_local</a></span><span class="op">(</span><span class="va">pit_local</span>, </span>
-<span>             facet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simple_mlp_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<span><span class="fu"><a href="../reference/gg_PIT_local.html">gg_PIT_local</a></span><span class="op">(</span><span class="va">pit_local</span><span class="op">)</span></span></code></pre></div>
+<p><img src="simple_mlp_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p>Similarly, we observe the miscalibration in:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/gg_CD_local.html">gg_CD_local</a></span><span class="op">(</span><span class="va">pit_local</span><span class="op">)</span></span></code></pre></div>
+<p><img src="simple_mlp_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>Since this example consists of bidimensional data, we visualize the
 calibration of the model on a surface representing the covariate space.
 In this graph, we used a 95% Confidence Interval centered on the mean
 predicted by the model, with a fixed variance estimated by the Mean
 Squared Error (MSE). When the true value falls within the interval, it
 is colored greenish; when it falls outside, it is colored red.</p>
-<div class="callout-note">
-<p>Note that this visualization is not part of the recalibratiNN package
-since it can only be applied to bidimensional data, which is not
-typically the case when adjusting neural networks. This example was used
-specifically to demonstrate (mis)calibration visually and to make the
-concept more tangible.</p>
-</div>
 <p>The following graph illustrates the original coverage of the model,
 which is around 90%. Thus, globally, we observe that the model
 underestimates the true uncertainty of the data (90% &lt; 95%). However,
@@ -261,7 +267,7 @@ uncertainty of the predictions is not adequately captured by the model
 (overestimated) . This highlights the importance of interpreting
 predictions probabilistically, considering a distribution rather than
 just a point prediction.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">coverage_model</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
 <span>  x1cal <span class="op">=</span> <span class="va">x_test</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, </span>
 <span>  x2cal <span class="op">=</span> <span class="va">x_test</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>,</span>
@@ -281,51 +287,54 @@ just a point prediction.</p>
 <span>                 <span class="va">x2cal</span>, </span>
 <span>                 color <span class="op">=</span> <span class="va">CI</span><span class="op">)</span>,</span>
 <span>             alpha <span class="op">=</span> <span class="fl">0.9</span>,</span>
-<span>             size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">+</span></span>
+<span>             size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">+</span></span>
 <span>   <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"x1"</span> , y<span class="op">=</span><span class="st">"x2"</span>, </span>
 <span>        title <span class="op">=</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"Original coverage: {coverage_model$coverage[1]} %"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu">scale_color_manual</span><span class="op">(</span><span class="st">"Confidence Interval"</span>,</span>
 <span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"in"</span> <span class="op">=</span> <span class="st">"aquamarine3"</span>, </span>
 <span>                                <span class="st">"out"</span> <span class="op">=</span> <span class="st">"steelblue4"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simple_mlp_files/figure-html/unnamed-chunk-8-1.png" width="700">
-##</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p><img src="simple_mlp_files/figure-html/unnamed-chunk-10-1.png" width="700"><span style="color:#DAA520; font-weight:bold; text-decoration:underline;">Note:</span>
+this visualization is not part of the recalibratiNN package since it can
+only be applied to bidimensional data, which is not typically the case
+when adjusting neural networks. This example was used specifically to
+demonstrate (mis)calibration visually and to make the concept more
+tangible.</p>
+</div>
+<div class="section level2">
+<h2 id="recalibration">Recalibration<a class="anchor" aria-label="anchor" href="#recalibration"></a>
+</h2>
+<p>The primary function of the recalibratiNN package is recalibrate().
+As of July 2024, this function includes one implemented method for
+recalibration. The method is thoroughly described in <span class="citation">@torres_2024</span>, with a simplified version
+discussed in <span class="citation">@musso_2023</span>. The method can
+be applied both globally and locally, with a preference for local
+application.The function returns a list that includes, among other
+things, recalibrated Monte Carlo samples weighted by the distance
+between true and predicted observations.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">recalibrated</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu"><a href="../reference/recalibrate.html">recalibrate</a></span><span class="op">(</span></span>
-<span>    yhat_new <span class="op">=</span> <span class="va">y_hat_test</span>,</span>
-<span>    space_cal <span class="op">=</span> <span class="va">x_cal</span>,</span>
-<span>    pit_values <span class="op">=</span> <span class="va">pit</span>,</span>
-<span>    space_new <span class="op">=</span> <span class="va">x_test</span>,</span>
-<span>    mse <span class="op">=</span> <span class="va">MSE_cal</span>, </span>
-<span>    type<span class="op">=</span><span class="st">"local"</span>,  </span>
-<span>    p_neighbours <span class="op">=</span> <span class="fl">0.08</span><span class="op">)</span></span>
+<span>    yhat_new <span class="op">=</span> <span class="va">y_hat_test</span>, <span class="co"># predictions of test set</span></span>
+<span>    space_cal <span class="op">=</span> <span class="va">x_cal</span>,     <span class="co"># covariates of calibration set</span></span>
+<span>    pit_values <span class="op">=</span> <span class="va">pit</span>,      <span class="co"># global pit values calculated earlier.</span></span>
+<span>    space_new <span class="op">=</span> <span class="va">x_test</span>,    <span class="co"># covariates of test set</span></span>
+<span>    mse <span class="op">=</span> <span class="va">MSE_cal</span>,         <span class="co"># MSE from calibration set</span></span>
+<span>    type <span class="op">=</span> <span class="st">"local"</span>,        <span class="co"># type of calibration</span></span>
+<span>    p_neighbours <span class="op">=</span> <span class="fl">0.08</span><span class="op">)</span>   <span class="co"># proportion of calibration to use as nearest neighbors</span></span>
 <span></span>
 <span><span class="va">y_hat_rec</span> <span class="op">&lt;-</span> <span class="va">recalibrated</span><span class="op">$</span><span class="va">y_samples_calibrated_wt</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="va">coverage_rec</span> <span class="op">&lt;-</span> <span class="fu">map_dfr</span><span class="op">(</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x_test</span><span class="op">)</span>, <span class="op">~</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">y_hat_rec</span><span class="op">[</span><span class="va">.</span>,<span class="op">]</span></span>
-<span>           ,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span></span>
-<span>    x1 <span class="op">=</span> <span class="va">x_test</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,</span>
-<span>    x2 <span class="op">=</span> <span class="va">x_test</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>,</span>
-<span>    ytest <span class="op">=</span> <span class="va">y_test</span>,</span>
-<span>    CI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">ytest</span> <span class="op">&lt;=</span> <span class="va">`95%`</span><span class="op">&amp;</span> <span class="va">ytest</span> <span class="op">&gt;=</span> <span class="va">`5%`</span>, </span>
-<span>                <span class="st">"in"</span>, <span class="st">"out"</span><span class="op">)</span>,</span>
-<span>    coverage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">CI</span> <span class="op">==</span> <span class="st">"in"</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span> <span class="va">coverage_rec</span> <span class="op">|&gt;</span> </span>
-<span>   <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>   <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, color <span class="op">=</span> <span class="va">CI</span><span class="op">)</span>,</span>
-<span>              alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span><span class="op">+</span></span>
-<span>   <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"x1"</span> , y<span class="op">=</span><span class="st">"x2"</span>, </span>
-<span>        title <span class="op">=</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"Recalibrated coverage: {coverage_rec$coverage[1]} %"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu">scale_color_manual</span><span class="op">(</span><span class="st">"Confidence Interval"</span>,</span>
-<span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"in"</span> <span class="op">=</span> <span class="st">"aquamarine3"</span>, </span>
-<span>                                <span class="st">"out"</span> <span class="op">=</span> <span class="st">"steelblue4"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simple_mlp_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>That is it! These new values in <code>y_hat_rec</code> are, by
+definition, more calibrated than the original ones. This means that the
+uncertainty estimation, although not yet perfect, is better than
+before.</p>
+<p>Shall we see?</p>
+<p>Because we have the true observations, we can observe the PIT-values
+densities. This visualization is still not implemented as a function in
+the package, so the complete code is given below.</p>
+<p>We see that the predictions are more calibrated throughout the
+covariate space.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">n_clusters</span> <span class="op">&lt;-</span> <span class="fl">6</span> </span>
 <span><span class="va">n_neighbours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">y_hat_test</span><span class="op">)</span><span class="op">*</span><span class="fl">0.08</span></span>
@@ -395,40 +404,42 @@ just a point prediction.</p>
 <span><span class="co">#&gt; Caused by warning in `ks.test.default()`:</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> ties should not be present for the one-sample Kolmogorov-Smirnov test</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 5 remaining warnings.</span></span></code></pre></div>
-<p><img src="simple_mlp_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  real <span class="op">=</span> <span class="fu">mu_fun</span><span class="op">(</span><span class="va">x_test</span><span class="op">)</span>,</span>
-<span>  desc <span class="op">=</span> <span class="va">y_hat_test</span>,</span>
-<span>  recal <span class="op">=</span> <span class="va">recalibrated</span><span class="op">$</span><span class="va">y_hat_calibrated</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="op">-</span><span class="va">real</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span> x <span class="op">=</span> <span class="va">value</span>,</span>
-<span>                  y <span class="op">=</span> <span class="va">real</span>,</span>
-<span>                  color <span class="op">=</span> <span class="va">name</span><span class="op">)</span>,</span>
-<span>             alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span><span class="op">+</span> </span>
-<span>  <span class="fu">scale_color_manual</span><span class="op">(</span><span class="st">""</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> <span class="st">"#003366"</span>,<span class="st">"#80b298"</span><span class="op">)</span>,</span>
-<span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Predicted"</span>, <span class="st">"Recalibrated"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu">geom_abline</span><span class="op">(</span>color<span class="op">=</span><span class="st">"red"</span>, linetype<span class="op">=</span><span class="st">"dashed"</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Estimated Mean"</span>, y<span class="op">=</span><span class="st">"True Mean"</span><span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu">theme_bw</span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme</span><span class="op">(</span>axis.title.y<span class="op">=</span><span class="fu">element_text</span><span class="op">(</span>colour<span class="op">=</span><span class="st">"black"</span><span class="op">)</span>,</span>
-<span>        axis.title.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>colour<span class="op">=</span><span class="st">"black"</span><span class="op">)</span>,</span>
-<span>        axis.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
-<span>        legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.2</span><span class="op">)</span>,</span>
-<span>        panel.border <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>        panel.grid.major <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>, </span>
-<span>        panel.grid.minor <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,</span>
-<span>        axis.line <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
-<span>        plot.margin <span class="op">=</span> <span class="fu">margin</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0.2</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2</span></span>
-<span><span class="co">#&gt; 3.5.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use the `legend.position.inside` argument of `theme()` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
 <p><img src="simple_mlp_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<p>Once again, because we are working with bidimensional data, we can
+observe the coverage on a surface. We notice that the global coverage
+has improved slightly, and responses that fall within and outside the
+confidence interval (CI) are much better distributed (though still not
+perfect). Fine-tuning to adjust the number of neighbors may be required,
+as it involves a trade-off between localization and Monte Carlo
+error.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span> <span class="va">coverage_rec</span> <span class="op">&lt;-</span> <span class="fu">map_dfr</span><span class="op">(</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x_test</span><span class="op">)</span>, <span class="op">~</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">y_hat_rec</span><span class="op">[</span><span class="va">.</span>,<span class="op">]</span></span>
+<span>           ,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    x1 <span class="op">=</span> <span class="va">x_test</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,</span>
+<span>    x2 <span class="op">=</span> <span class="va">x_test</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>,</span>
+<span>    ytest <span class="op">=</span> <span class="va">y_test</span>,</span>
+<span>    CI <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">ytest</span> <span class="op">&lt;=</span> <span class="va">`95%`</span><span class="op">&amp;</span> <span class="va">ytest</span> <span class="op">&gt;=</span> <span class="va">`5%`</span>, </span>
+<span>                <span class="st">"in"</span>, <span class="st">"out"</span><span class="op">)</span>,</span>
+<span>    coverage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">CI</span> <span class="op">==</span> <span class="st">"in"</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">CI</span><span class="op">)</span></span>
+<span></span>
+<span> <span class="va">coverage_rec</span> <span class="op">|&gt;</span> </span>
+<span>   <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, color <span class="op">=</span> <span class="va">CI</span><span class="op">)</span>,</span>
+<span>              alpha <span class="op">=</span> <span class="fl">0.9</span>,</span>
+<span>              size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">+</span></span>
+<span>   <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"x1"</span> , y<span class="op">=</span><span class="st">"x2"</span>, </span>
+<span>        title <span class="op">=</span> <span class="fu">glue</span><span class="op">(</span><span class="st">"Recalibrated coverage: {coverage_rec$coverage[1]} %"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">scale_color_manual</span><span class="op">(</span><span class="st">"Confidence Interval"</span>,</span>
+<span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"in"</span> <span class="op">=</span> <span class="st">"aquamarine3"</span>, </span>
+<span>                                <span class="st">"out"</span> <span class="op">=</span> <span class="st">"steelblue4"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="simple_mlp_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<!-- Lastly, we can observe that the point estimates have also improved. Baring in mind that when plotting true vs. estimated mean, we would expect a perfect line if the prediction were equal to the true observation. After calibration, we see that the recalibrated observations are more concentrated around the true mean and less scattered. -->
+<p>“In the next example, we are going to recalibrate predictions of a
+more complex neural network/data.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
