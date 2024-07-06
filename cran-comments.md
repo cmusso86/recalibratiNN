@@ -2,8 +2,8 @@
 
 0 errors | 0 warnings | 1 note
 
-As soon as it was available on CRAN other authors noticed many typos in the documentation that needed correction. Also, the description filed of each function was improved. Nothing was changed in the code. 
+Improvement in the documentation of the functions and correction of typos.
 
-I also included a sentence in the main DESCRIPTION file to emphasize the theoretical background.
+Inclusion of a vignette with application on a Neural Network.
 
-I hope it is alright. Thanks for the patience.
+Inclusion of a new reference (my undergrad thesis) for see a more detailed documentation of the functions. I also included the link of this work on the description file. However, as it does not have a DOI, I dont know if I did it correctly. 
