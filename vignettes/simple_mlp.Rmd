@@ -96,7 +96,7 @@ y_test  <- y[(split2*n+1):n]
 
 ```
 
-Now, this toy model was trained using the Keras framework with TensorFlow backend. The ANN architecture consist of an ANN with 3 hidden layers with ReLU activation functions and dropout for regularization as follows:
+Now, this toy model was trained using the Keras framework with TensorFlow backend. The ANN architecture consist of an ANN with 3 fully connected hidden layers with ReLU activation functions. The first two layers are followed by a dropout layer for regularization and the final hidden layer id followed by a batch normalization. The output layer has a linear activation function to predict the mean of the response variable. The model was trained using the Adam optimizer and the mean squared error as the loss function. If we want to interpret the results probabilistically, then my using the MSE we are assuming a Gaussian distribution of the response variable (since it is equivalent to the maximum likelihood estimation. The training was stopped early using the EarlyStopping callback with a patience of 20 epochs. The code below trains the model and predicts the response variable for the calibration and test sets.
 
 ```{r, eval=F}
 model_nn <- keras_model_sequential()
