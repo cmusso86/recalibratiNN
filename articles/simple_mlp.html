@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">recalibratiNN</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -152,9 +152,19 @@ y \sim \mathcal{N}\left(\mu, 20 \left| \frac{x_2}{x_1 + 10}
 <span><span class="va">x_test</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="op">(</span><span class="va">split2</span><span class="op">*</span><span class="va">n</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="va">n</span>,<span class="op">]</span></span>
 <span><span class="va">y_test</span>  <span class="op">&lt;-</span> <span class="va">y</span><span class="op">[</span><span class="op">(</span><span class="va">split2</span><span class="op">*</span><span class="va">n</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="va">n</span><span class="op">]</span></span></code></pre></div>
 <p>Now, this toy model was trained using the Keras framework with
-TensorFlow backend. The ANN architecture consist of an ANN with 3 hidden
-layers with ReLU activation functions and dropout for regularization as
-follows:</p>
+TensorFlow backend. The ANN architecture consist of an ANN with 3 fully
+connected hidden layers with ReLU activation functions. The first two
+layers are followed by a dropout layer for regularization and the final
+hidden layer id followed by a batch normalization. The output layer has
+a linear activation function to predict the mean of the response
+variable. The model was trained using the Adam optimizer and the mean
+squared error as the loss function. If we want to interpret the results
+probabilistically, then my using the MSE we are assuming a Gaussian
+distribution of the response variable (since it is equivalent to the
+maximum likelihood estimation. The training was stopped early using the
+EarlyStopping callback with a patience of 20 epochs. The code below
+trains the model and predicts the response variable for the calibration
+and test sets.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model_nn</span> <span class="op">&lt;-</span> <span class="fu">keras_model_sequential</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
