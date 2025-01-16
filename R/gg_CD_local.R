@@ -9,6 +9,7 @@
 #' For advanced customization of the plot layers, refer to the ggplot2 User Guide.
 #'
 #'@param pit_local A data frame of local PIT-values, typically obtained from `PIT_local()`.
+#'@param mse Mean Squared Error calculated from the calibration dataset.
 #'@param psz Double indicating the size of the points on the plot. Default is 0.001.
 #'@param pal Palette name from RColorBrewer for coloring the plot. Default is "Set2".
 #'@param abline Color of the diagonal line. Default color is "red".
@@ -54,14 +55,16 @@
 #'
 #' pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
 #'
-#' gg_CD_local(pit_local)
-#' gg_CD_local(pit_local, facet=TRUE)
+#' gg_CD_local(pit_local, mse=MSE_cal)
+#' gg_CD_local(pit_local, facet=TRUE, mse=MSE_cal)
 #'
 gg_CD_local <- function(pit_local,
+                        mse,
                         psz=0.01,
                         abline="black",
                         pal="Set2",
                         facet=FALSE,
+
                          ...){
 
   df <- do.call(rbind, purrr::map(unique(pit_local$part),~{
@@ -75,7 +78,7 @@ gg_CD_local <- function(pit_local,
     c(part=loc$part[1],
       pit_emp =mean(loc[,2] <= qnorm(p=dplyr::pull(loc[.,4]),
                                        mean=dplyr::pull(loc[,3]),
-                                       sd=sqrt(MSE_cal))),
+                                       sd=sqrt(mse))),
       pit_pred = dplyr::pull(loc[.,4]))
     }))
   })) |>  as.data.frame()

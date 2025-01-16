@@ -271,8 +271,8 @@ In the initial segment, the model overestimates the variance while underestimati
 Alternatively you can observe the local miscalibration in the CD-graph.
 
 ```{r, eval=F}
-gg_CD_local(pit_local)
-gg_CD_local(pit_local, facet = T)
+gg_CD_local(pit_local, mse = MSE_cal)
+gg_CD_local(pit_local, mse = MSE_cal, facet = T)
 
 ```
 

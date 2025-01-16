@@ -46,6 +46,52 @@ download.
 ``` r
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load_current_gh("cmusso86/recalibratiNN")
+#> ps          (1.8.0   -> 1.8.1 ) [CRAN]
+#> processx    (3.8.4   -> 3.8.5 ) [CRAN]
+#> pkgbuild    (1.4.4   -> 1.4.6 ) [CRAN]
+#> fs          (1.6.4   -> 1.6.5 ) [CRAN]
+#> xfun        (0.49    -> 0.50  ) [CRAN]
+#> evaluate    (1.0.0   -> 1.0.3 ) [CRAN]
+#> tinytex     (0.53    -> 0.54  ) [CRAN]
+#> fontawesome (0.5.2   -> 0.5.3 ) [CRAN]
+#> pillar      (1.9.0   -> 1.10.1) [CRAN]
+#> gtable      (0.3.5   -> 0.3.6 ) [CRAN]
+#> rmarkdown   (2.28    -> 2.29  ) [CRAN]
+#> rstudioapi  (0.16.0  -> 0.17.1) [CRAN]
+#> waldo       (0.5.3   -> 0.6.1 ) [CRAN]
+#> rbibutils   (2.2.16  -> 2.3   ) [CRAN]
+#> htmlTable   (2.4.2   -> 2.4.3 ) [CRAN]
+#> data.table  (1.15.4  -> 1.16.4) [CRAN]
+#> cpp11       (0.4.7   -> 0.5.1 ) [CRAN]
+#> testthat    (3.2.1.1 -> 3.2.3 ) [CRAN]
+#> Rdpack      (2.6     -> 2.6.2 ) [CRAN]
+#> Hmisc       (5.1-3   -> 5.2-2 ) [CRAN]
+#> RANN        (2.6.1   -> 2.6.2 ) [CRAN]
+#> 
+#> The downloaded binary packages are in
+#>  /var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T//RtmpHWRETJ/downloaded_packages
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#>      checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpHWRETJ/remotes3d6b567635d1/cmusso86-recalibratiNN-9e48ed2/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/rp/h9_9qkdd7c57z9_hytk4306h0000gn/T/RtmpHWRETJ/remotes3d6b567635d1/cmusso86-recalibratiNN-9e48ed2/DESCRIPTION’
+#>   ─  preparing ‘recalibratiNN’:
+#>    checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+#>   ─  installing the package to process help pages
+#>      Loading required namespace: recalibratiNN
+#>   ─  saving partial Rd database
+#>   ─  checking for LF line-endings in source and make files and shell scripts
+#>   ─  checking for empty or unneeded directories
+#>        NB: this package now depends on R (>= 3.5.0)
+#>        WARNING: Added dependency on R >= 3.5.0 because serialized objects in
+#>      serialize/load version 3 cannot be read in older versions of R.
+#>      File(s) containing such objects:
+#>        ‘recalibratiNN/inst/extdata/mse_cal.rds’
+#>        ‘recalibratiNN/inst/extdata/y_hat_cal.rds’
+#>        ‘recalibratiNN/inst/extdata/y_hat_test.rds’
+#>        ‘recalibratiNN/vignettes/mse_cal.rds’
+#>        ‘recalibratiNN/vignettes/y_hat_cal.rds’
+#>        ‘recalibratiNN/vignettes/y_hat_test.rds’
+#>   ─  building ‘recalibratiNN_0.3.0.tar.gz’
+#>      
+#> 
 ```
 
 ## Understanding calibration/miscalibration
@@ -247,8 +293,8 @@ each section exhibits unique calibration needs.
 Alternatively you can observe the local miscalibration in the CD-graph.
 
 ``` r
-gg_CD_local(pit_local)
-gg_CD_local(pit_local, facet = T)
+gg_CD_local(pit_local, mse = MSE_cal)
+gg_CD_local(pit_local, mse = MSE_cal, facet = T)
 ```
 
 <img src="man/figures/plotQL1.png" width="80%" style="display: block; margin: auto;" /><img src="man/figures/plotQL2.png" width="80%" style="display: block; margin: auto;" />
