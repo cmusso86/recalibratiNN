@@ -6,6 +6,7 @@
 \usage{
 gg_CD_local(
   pit_local,
+  mse,
   psz = 0.01,
   abline = "black",
   pal = "Set2",
@@ -15,6 +16,8 @@ gg_CD_local(
 }
 \arguments{
 \item{pit_local}{A data frame of local PIT-values, typically obtained from \code{PIT_local()}.}
+
+\item{mse}{Mean Squared Error calculated from the calibration dataset.}
 
 \item{psz}{Double indicating the size of the points on the plot. Default is 0.001.}
 
@@ -70,7 +73,7 @@ MSE_cal <- mean((y_hat - y_cal)^2)
 
 pit_local <- PIT_local(xcal = x_cal, ycal=y_cal, yhat=y_hat, mse=MSE_cal)
 
-gg_CD_local(pit_local)
-gg_CD_local(pit_local, facet=TRUE)
+gg_CD_local(pit_local, mse=MSE_cal)
+gg_CD_local(pit_local, facet=TRUE, mse=MSE_cal)
 
 }

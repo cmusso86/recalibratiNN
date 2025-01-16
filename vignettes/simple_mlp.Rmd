@@ -201,7 +201,7 @@ gg_PIT_local(pit_local)
 Similarly, we observe the miscalibration in:
 
 ```{r}
-gg_CD_local(pit_local)
+gg_CD_local(pit_local, mse = MSE_cal)
 ```
 
 Since this example consists of bidimensional data, we visualize the calibration of the model on a surface representing the covariate space. In this graph, we used a 95% Confidence Interval centered on the mean predicted by the model, with a fixed variance estimated by the Mean Squared Error (MSE). When the true value falls within the interval, it is colored greenish; when it falls outside, it is colored red. 
