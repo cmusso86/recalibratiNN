@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 
 
-# recalibratiNN 
+# recalibratiNN
 
 <img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;">
 
