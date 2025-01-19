@@ -1,7 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;">
+# recalibratiNN
+
+<img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;">
 
 <!-- badges: start -->
 
@@ -247,8 +249,8 @@ each section exhibits unique calibration needs.
 Alternatively you can observe the local miscalibration in the CD-graph.
 
 ``` r
-gg_CD_local(pit_local)
-gg_CD_local(pit_local, facet = T)
+gg_CD_local(pit_local, mse = MSE_cal)
+gg_CD_local(pit_local, mse = MSE_cal, facet = T)
 ```
 
 <img src="man/figures/plotQL1.png" width="80%" style="display: block; margin: auto;" /><img src="man/figures/plotQL2.png" width="80%" style="display: block; margin: auto;" />

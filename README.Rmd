@@ -19,7 +19,9 @@ knitr::opts_chunk$set(
 
 
 
-# recalibratiNN <img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;">
+# recalibratiNN
+
+<img src="man/figures/recalibratiNN.png" align="right" height="180" style="float:right; height:180px;">
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/recalibratiNN)](https://CRAN.R-project.org/package=recalibratiNN)
@@ -271,8 +273,8 @@ In the initial segment, the model overestimates the variance while underestimati
 Alternatively you can observe the local miscalibration in the CD-graph.
 
 ```{r, eval=F}
-gg_CD_local(pit_local)
-gg_CD_local(pit_local, facet = T)
+gg_CD_local(pit_local, mse = MSE_cal)
+gg_CD_local(pit_local, mse = MSE_cal, facet = T)
 
 ```
 
